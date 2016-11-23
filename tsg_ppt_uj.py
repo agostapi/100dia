@@ -372,7 +372,7 @@ for asdf,my_organi in enumerate(structure.list5):
   else:
     tsg_ppt=Presentation('tsg_templ.pptx')
     fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?", my_means_5[asdf])
-    fill_table_slide(tsg_ppt, structure.list5[asdf], str(round(float(level4_filledin_users[asdf] / float(level4_numbers[asdf]))*100,2)) + '%')
+    fill_table_slide(tsg_ppt, structure.list5[asdf], str(round(float(level5_filledin_users[asdf] / float(level5_numbers[asdf]))*100,2)) + '%')
     for i in range(1, 12):
       fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
     for i in range(0, 12):
