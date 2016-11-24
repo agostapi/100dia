@@ -4,6 +4,23 @@
 #org - short + long version
 #5 szabály tesztelés, kiiratni kieso orgokat level3on lesz ilyen
 #test-4levelppts
+
+#2. dia - táblázat helyett template
+#egység fölötti összes szint eredménye + egy szintig az alatta levő eredmények (org-onként)
+#százalékos arányok
+
+#3.dia
+#csak az adott organizáció eredménye minden kérdésre
+#az előző évihez képest mennyit változott százalékban
+
+#4.dia
+#első kérdés minden szervezeti egységre (fölötte összes szint, alatta egy szint)
+#előző évhez képest %-os változás a 4-5 válaszra
+#1. az 1-2 válasz, 2. a 3. válasz, 3. a 4-5 válasz
+
+#6-7 dia
+#marad az 5 válasz
+#egység fölötti összes szint, egység alatt egy szint
 ###############/TODO#############
  
 
@@ -60,6 +77,7 @@ def fill_slide_title(tsg_ppt, a, org_all):
   #return -1: if the func doesnwork, we get with this parancs info about the wrong working, egyebkent exit and error code 
 
 def fill_slide_common(tsg_ppt, org_all, a, c1, c2, c3, c4, c5, data, box=None):
+#will be fill_slide_common(tsg_ppt, org_all, a):
   common_slide=tsg_ppt.slides[a]
   mittelwert = common_slide.placeholders[18]
   text_frame = mittelwert.text_frame
@@ -360,12 +378,31 @@ finally:
 structure.fill_in_org()
 print str(len(org_long)) + " " + str(len(org_short))
 
+############
+#Fill in org lists
 
-######org1-4 repeat:
-#org5:
 level5_users,level5_numbers,level5_filledin_users = structure.fill_in_users(structure.list5, "u_org_5", structure.users_number5)
 list_full_5 = (structure.printout(structure.list5,level5_users))
 filled_list_5,my_sums_5,my_means_5 = structure.count_percent(list_full_5, level5_numbers)
+
+level4_users,level4_numbers,level4_filledin_users = structure.fill_in_users(structure.list4, "u_org_4", structure.users_number4)
+list_full_4 = (structure.printout(structure.list4,level4_users))
+filled_list_4,my_sums_4,my_means_4 = structure.count_percent(list_full_4, level4_numbers)
+
+level3_users,level3_numbers,level3_filledin_users = structure.fill_in_users(structure.list3, "u_org_3", structure.users_number3)
+list_full_3 = (structure.printout(structure.list3,level3_users))
+filled_list_3,my_sums_3,my_means_3 = structure.count_percent(list_full_3, level3_numbers)
+
+level2_users,level2_numbers,level2_filledin_users = structure.fill_in_users(structure.list2, "u_org_2", structure.users_number2)
+list_full_2 = (structure.printout(structure.list2,level2_users))
+filled_list_2,my_sums_2,my_means_2 = structure.count_percent(list_full_2, level2_numbers)
+
+level1_users,level1_numbers,level1_filledin_users = structure.fill_in_users(structure.list1, "u_org_1", structure.users_number1)
+list_full_1 = (structure.printout(structure.list1,level1_users))
+filled_list_1,my_sums_1,my_means_1 = structure.count_percent(list_full_1, level1_numbers)
+
+######
+#create ppt for 5th level
 for asdf,my_organi in enumerate(structure.list5):
   if (level5_filledin_users[asdf] < 5):
     print 'not created: '+my_organi
@@ -378,17 +415,20 @@ for asdf,my_organi in enumerate(structure.list5):
     for i in range(0, 12):
       if (6 <= i <=12 or i==3):
         fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_5[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_5[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_5[asdf][i-3])) #org_long_name
+        #will be:
+        #1. tsg_ppt
+        #2. org name
+        #3. number of slide
+        #??? pass other orgs, or search in function??
+        #fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i)
       elif (i==4):
         fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_5[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_5[asdf][i-3]))
       elif (i==5):
         fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_5[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_5[asdf][i-3]))
     tsg_ppt.save("out1/"+(structure.list5[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
-##//repeat
 
-
-level4_users,level4_numbers,level4_filledin_users = structure.fill_in_users(structure.list4, "u_org_4", structure.users_number4)
-list_full_4 = (structure.printout(structure.list4,level4_users))
-filled_list_4,my_sums_4,my_means_4 = structure.count_percent(list_full_4, level4_numbers)
+######
+#create ppt for 4th level
 for asdf,my_organi in enumerate(structure.list4):
   if (level4_filledin_users[asdf] < 5):
     print 'not created: '+my_organi
@@ -407,16 +447,8 @@ for asdf,my_organi in enumerate(structure.list4):
         fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_4[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_4[asdf][i-3]))
     tsg_ppt.save("out1/"+(structure.list4[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
 
-level3_users,level3_numbers,level3_filledin_users = structure.fill_in_users(structure.list3, "u_org_3", structure.users_number3)
-#print level3_numbers
-#print structure.list3
-#print "\n"
-list_full_3 = (structure.printout(structure.list3,level3_users))
-#for lust_a in list_full_3:
-#  print lust_a
-#print "\n"
-#print list_full_3
-filled_list_3,my_sums_3,my_means_3 = structure.count_percent(list_full_3, level3_numbers)
+######
+#create ppt for 3th level
 for asdf,my_organi in enumerate(structure.list3):
   if (level3_filledin_users[asdf] < 5):
     print 'not created: '+my_organi
@@ -434,10 +466,9 @@ for asdf,my_organi in enumerate(structure.list3):
       elif (i==5):
         fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_3[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_3[asdf][i-3]))
     tsg_ppt.save("out1/"+(structure.list3[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
-#
-level2_users,level2_numbers,level2_filledin_users = structure.fill_in_users(structure.list2, "u_org_2", structure.users_number2)
-list_full_2 = (structure.printout(structure.list2,level2_users))
-filled_list_2,my_sums_2,my_means_2 = structure.count_percent(list_full_2, level2_numbers)
+
+######
+#create ppt for 2th level
 for asdf,my_organi in enumerate(structure.list2):
   if (level2_filledin_users[asdf] < 5):
     print 'not created: '+my_organi
@@ -455,10 +486,9 @@ for asdf,my_organi in enumerate(structure.list2):
       elif (i==5):
         fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_2[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_2[asdf][i-3]))
     tsg_ppt.save("out1/"+(structure.list2[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
-#
-level1_users,level1_numbers,level1_filledin_users = structure.fill_in_users(structure.list1, "u_org_1", structure.users_number1)
-list_full_1 = (structure.printout(structure.list1,level1_users))
-filled_list_1,my_sums_1,my_means_1 = structure.count_percent(list_full_1, level1_numbers)
+
+#####
+#create ppt for 1th level
 for asdf,my_organi in enumerate(structure.list1):
   if (level1_filledin_users[asdf] < 5):
     print 'not created: '+my_organi
@@ -477,15 +507,8 @@ for asdf,my_organi in enumerate(structure.list1):
       elif (i==5):
         fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_1[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_1[asdf][i-3]))
     tsg_ppt.save("out1/"+(structure.list1[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
-#
-#-------------
 
-#tsg_ppt.save(org_text_short.replace(" ", "_") + "_TSG_Leadership_Survey"+".pptx")
-#boxra kell egy fuggveny ami osszerakja a szoveget
-#for list in org_all:
-  #for org in list:
-    #fill_slide_title(first_title_text, tsg_ppt, org)
-    #for i in range (0..8):
-    #fill_slide_common(data, tsg_ppt, "Leadership survey@TSG", org, question_texts[i], i+3, box)
-
-
+#################MAIN ENDS HERE###################
+#dict to fill in from old file in structure.py
+#dict_1 = {'ORG1': 73, 'ORG2': 54}
+#dict_2 = {'ORG3': 34, 'ORG34': 234}
