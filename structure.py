@@ -93,27 +93,27 @@ def fill_in_org():
       list1.append(rows[my_header.index('u_org_1')])
       #if the org does not exist in structure, add it with the first child
       if rows[my_header.index('u_org_1')] not in orgstructure.keys():
-        orgstructure.update({rows[my_header.index('u_org_1')] : { 'parent' : None, 'child' : []}})
+        orgstructure.update({rows[my_header.index('u_org_1')] : { 'parent' : None, 'child' : [], 'level' : 1}})
     if rows[my_header.index('u_org_2')] not in list2 and rows[my_header.index('u_org_2')] and rows[my_header.index('u_org_2')] != '-99':
       list2.append(rows[my_header.index('u_org_2')])
       #if the org does not exist in structure, add it with the parent, and add itself to the parent's child list
       if rows[my_header.index('u_org_2')] not in orgstructure.keys():
-        orgstructure.update({rows[my_header.index('u_org_2')] : { 'parent' : rows[my_header.index('u_org_1')], 'child' : []}})
+        orgstructure.update({rows[my_header.index('u_org_2')] : { 'parent' : rows[my_header.index('u_org_1')], 'child' : [], 'level' : 2}})
         orgstructure[rows[my_header.index('u_org_1')]]['child'].append(rows[my_header.index('u_org_2')])
     if rows[my_header.index('u_org_3')] not in list3 and rows[my_header.index('u_org_3')] and rows[my_header.index('u_org_3')] != '-99':
       list3.append(rows[my_header.index('u_org_3')])
       if rows[my_header.index('u_org_3')] not in orgstructure.keys():
-        orgstructure.update({rows[my_header.index('u_org_3')] : { 'parent' : [rows[my_header.index('u_org_2')],rows[my_header.index('u_org_1')]] , 'child' : []}})
+        orgstructure.update({rows[my_header.index('u_org_3')] : { 'parent' : [rows[my_header.index('u_org_2')],rows[my_header.index('u_org_1')]] , 'child' : [], 'level' : 3}})
         orgstructure[rows[my_header.index('u_org_2')]]['child'].append(rows[my_header.index('u_org_3')])
     if rows[my_header.index('u_org_4')] not in list4 and rows[my_header.index('u_org_4')] and rows[my_header.index('u_org_4')] != '-99':
       list4.append(rows[my_header.index('u_org_4')])
       if rows[my_header.index('u_org_4')] not in orgstructure.keys():
-        orgstructure.update({rows[my_header.index('u_org_4')] : { 'parent' : [rows[my_header.index('u_org_3')], rows[my_header.index('u_org_2')],rows[my_header.index('u_org_1')]], 'child' : [] }})
+        orgstructure.update({rows[my_header.index('u_org_4')] : { 'parent' : [rows[my_header.index('u_org_3')], rows[my_header.index('u_org_2')],rows[my_header.index('u_org_1')]], 'child' : [], 'level' : 4 }})
         orgstructure[rows[my_header.index('u_org_3')]]['child'].append(rows[my_header.index('u_org_4')])
     if rows[my_header.index('u_org_5')] not in list5 and rows[my_header.index('u_org_5')] and rows[my_header.index('u_org_5')] != '-99':
       list5.append(rows[my_header.index('u_org_5')])
       if rows[my_header.index('u_org_5')] not in orgstructure.keys():
-        orgstructure.update({rows[my_header.index('u_org_5')] : { 'parent' : [rows[my_header.index('u_org_4')], rows[my_header.index('u_org_3')], rows[my_header.index('u_org_2')],rows[my_header.index('u_org_1')]], 'child' : None }})
+        orgstructure.update({rows[my_header.index('u_org_5')] : { 'parent' : [rows[my_header.index('u_org_4')], rows[my_header.index('u_org_3')], rows[my_header.index('u_org_2')],rows[my_header.index('u_org_1')]], 'child' : None , 'level' : 5}})
         orgstructure[rows[my_header.index('u_org_4')]]['child'].append(rows[my_header.index('u_org_5')])
 
   for rows in orgstructure.keys():
