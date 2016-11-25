@@ -11,30 +11,6 @@ import os
 import itertools
 import copy
 
-structure =\
-{
-'list': ['TSG'],
-'TSG': {'list': ['GF OG','GF F/CON'],
-        'users': ['user1','dispcode1','valasz1','valasz5'],
-       'GF OG':{
-               'list': ['VLD','PVD'],
-               'users': ['user1','dispcode1','valasz1','valasz5'],
-               'VLD':{
-                     'list': ['RVL N','RVL O'],
-                     'RVL N':{
-                             'VKG 1 N': [['user1','dispcode1','valasz1','valasz5'],['user2','dispcode2','valasz1','valasz5'],['usern','dispcoden','valasz1','valasz5']]
-#                             'VKG 7 N': [['user1','dispcode1','valasz1',...,'valasz5'],['user2','dispcode2','valasz1',...,'valasz5'],...,['usern','dispcoden','valasz1',...,'valasz5']],
-#                             .
-#                             .
-#                             .
-                             },
-                     'RVL O':{}
-                     },
-                'PVD':{}
-                },
-       'GF F/CON':{}
-       }
-}
 
 orgstructure = {}
 
@@ -91,12 +67,12 @@ def fill_in_org():
   for rows in my_content:
     if rows[my_header.index('u_org_1')] not in list1 and rows[my_header.index('u_org_1')] and rows[my_header.index('u_org_1')] != '-99':
       list1.append(rows[my_header.index('u_org_1')])
-      #if the org does not exist in structure, add it with the first child
+      #if the org does not exist in structure, add it
       if rows[my_header.index('u_org_1')] not in orgstructure.keys():
         orgstructure.update({rows[my_header.index('u_org_1')] : { 'parent' : None, 'child' : [], 'level' : 1}})
     if rows[my_header.index('u_org_2')] not in list2 and rows[my_header.index('u_org_2')] and rows[my_header.index('u_org_2')] != '-99':
       list2.append(rows[my_header.index('u_org_2')])
-      #if the org does not exist in structure, add it with the parent, and add itself to the parent's child list
+      #if the org does not exist in structure, add it with all the parents, and add itself to the parent's child list
       if rows[my_header.index('u_org_2')] not in orgstructure.keys():
         orgstructure.update({rows[my_header.index('u_org_2')] : { 'parent' : rows[my_header.index('u_org_1')], 'child' : [], 'level' : 2}})
         orgstructure[rows[my_header.index('u_org_1')]]['child'].append(rows[my_header.index('u_org_2')])
