@@ -352,7 +352,7 @@ def id_to_questiontexts(v_id):
 
 ##################MAIN###########################
 
-tsg_ppt=Presentation('tsg_templ.pptx')
+tsg_ppt=Presentation('tsg_templ_3.pptx')
 
 #while (van_graph_element):
 #fill_slide_title(tsg_ppt, 2, "Telekom Shop Vertriebsgesellschaft mbH")
