@@ -310,8 +310,18 @@ def fill_slide_mean(tsg_ppt, org_all, a, a1, a2, a3, a4, a5, a6, a7, data, box=N
   common_slide=tsg_ppt.slides[a]
   return tsg_ppt
 
-
-
+#org is the organization, lista is the list on level org-1, listb is the list with the answers
+def getchildresults(org, lista, listb): 
+  children = []
+  results = []
+  for child in structure.orgstructure[org]['child']:
+    children.append(child)
+  print(children)
+  for child in children:
+    results.append(listb[lista.index(child)])
+    #print(listb.index(child))
+  return children, results
+    
 
 
 
@@ -401,6 +411,78 @@ level1_users,level1_numbers,level1_filledin_users = structure.fill_in_users(stru
 list_full_1 = (structure.printout(structure.list1,level1_users))
 filled_list_1,my_sums_1,my_means_1 = structure.count_percent(list_full_1, level1_numbers)
 
+#print(filled_list_2)
+#print(structure.list2)
+#lista1, lista2 = getchildresults('TSG', structure.list2, filled_list_2)
+#print(structure.list2)
+#print(lista1, lista2)
+
+def fill_in_orgstruct_questions():
+
+  for org in structure.list1:
+    structure.orgstructure[org]['q1'] = filled_list_1[structure.list1.index(org)][0]
+    structure.orgstructure[org]['q2'] = filled_list_1[structure.list1.index(org)][1]
+    structure.orgstructure[org]['q3'] = filled_list_1[structure.list1.index(org)][2]
+    structure.orgstructure[org]['q4'] = filled_list_1[structure.list1.index(org)][3]
+    structure.orgstructure[org]['q5'] = filled_list_1[structure.list1.index(org)][4]
+    structure.orgstructure[org]['q6'] = filled_list_1[structure.list1.index(org)][5]
+    structure.orgstructure[org]['q7'] = filled_list_1[structure.list1.index(org)][6]
+    structure.orgstructure[org]['q8'] = filled_list_1[structure.list1.index(org)][7]
+    structure.orgstructure[org]['q9'] = filled_list_1[structure.list1.index(org)][8]
+
+  for org in structure.list2:
+    structure.orgstructure[org]['q1'] = filled_list_2[structure.list2.index(org)][0]
+    structure.orgstructure[org]['q2'] = filled_list_2[structure.list2.index(org)][1]
+    structure.orgstructure[org]['q3'] = filled_list_2[structure.list2.index(org)][2]
+    structure.orgstructure[org]['q4'] = filled_list_2[structure.list2.index(org)][3]
+    structure.orgstructure[org]['q5'] = filled_list_2[structure.list2.index(org)][4]
+    structure.orgstructure[org]['q6'] = filled_list_2[structure.list2.index(org)][5]
+    structure.orgstructure[org]['q7'] = filled_list_2[structure.list2.index(org)][6]
+    structure.orgstructure[org]['q8'] = filled_list_2[structure.list2.index(org)][7]
+    structure.orgstructure[org]['q9'] = filled_list_2[structure.list2.index(org)][8]
+
+  for org in structure.list3:
+    structure.orgstructure[org]['q1'] = filled_list_3[structure.list3.index(org)][0]
+    structure.orgstructure[org]['q2'] = filled_list_3[structure.list3.index(org)][1]
+    structure.orgstructure[org]['q3'] = filled_list_3[structure.list3.index(org)][2]
+    structure.orgstructure[org]['q4'] = filled_list_3[structure.list3.index(org)][3]
+    structure.orgstructure[org]['q5'] = filled_list_3[structure.list3.index(org)][4]
+    structure.orgstructure[org]['q6'] = filled_list_3[structure.list3.index(org)][5]
+    structure.orgstructure[org]['q7'] = filled_list_3[structure.list3.index(org)][6]
+    structure.orgstructure[org]['q8'] = filled_list_3[structure.list3.index(org)][7]
+    structure.orgstructure[org]['q9'] = filled_list_3[structure.list3.index(org)][8]
+
+  for org in structure.list4:
+    structure.orgstructure[org]['q1'] = filled_list_4[structure.list4.index(org)][0]
+    structure.orgstructure[org]['q2'] = filled_list_4[structure.list4.index(org)][1]
+    structure.orgstructure[org]['q3'] = filled_list_4[structure.list4.index(org)][2]
+    structure.orgstructure[org]['q4'] = filled_list_4[structure.list4.index(org)][3]
+    structure.orgstructure[org]['q5'] = filled_list_4[structure.list4.index(org)][4]
+    structure.orgstructure[org]['q6'] = filled_list_4[structure.list4.index(org)][5]
+    structure.orgstructure[org]['q7'] = filled_list_4[structure.list4.index(org)][6]
+    structure.orgstructure[org]['q8'] = filled_list_4[structure.list4.index(org)][7]
+    structure.orgstructure[org]['q9'] = filled_list_4[structure.list4.index(org)][8]
+
+  for org in structure.list5:
+    structure.orgstructure[org]['q1'] = filled_list_5[structure.list5.index(org)][0]
+    structure.orgstructure[org]['q2'] = filled_list_5[structure.list5.index(org)][1]
+    structure.orgstructure[org]['q3'] = filled_list_5[structure.list5.index(org)][2]
+    structure.orgstructure[org]['q4'] = filled_list_5[structure.list5.index(org)][3]
+    structure.orgstructure[org]['q5'] = filled_list_5[structure.list5.index(org)][4]
+    structure.orgstructure[org]['q6'] = filled_list_5[structure.list5.index(org)][5]
+    structure.orgstructure[org]['q7'] = filled_list_5[structure.list5.index(org)][6]
+    structure.orgstructure[org]['q8'] = filled_list_5[structure.list5.index(org)][7]
+    structure.orgstructure[org]['q9'] = filled_list_5[structure.list5.index(org)][8]
+
+
+
+fill_in_orgstruct_questions()
+#print(structure.orgstructure)
+
+for rows in structure.orgstructure.keys():
+  print(rows + ": ", structure.orgstructure[rows])
+print(filled_list_2[0][0])
+#
 ######
 #create ppt for 5th level
 for asdf,my_organi in enumerate(structure.list5):
