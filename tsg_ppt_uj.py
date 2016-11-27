@@ -21,6 +21,13 @@
 #6-7 dia
 #marad az 5 válasz
 #egység fölötti összes szint, egység alatt egy szint
+
+#####
+##
+#####
+##
+#####
+
 ###############/TODO#############
  
 
@@ -131,9 +138,6 @@ def fill_slide_common(tsg_ppt, org_all, a, c1, c2, c3, c4, c5, data, box=None):
   #bar_plot = chart.plots[0]
   #bar_plot.gap_width = 20
   #bar_plot.overlap = -20
-  #print data
-  #if (box):
-    #print box
   
   chart.replace_data(chart_data)
   return tsg_ppt
@@ -223,9 +227,6 @@ def fill_slide_not_common(tsg_ppt, org_all, a, c1, c2, c3, c4, c5,data ,box=None
   bar_plot = chart.plots[0]
   bar_plot.gap_width = 20
   bar_plot.overlap = -20
-  #print data
-  #if (box):
-    #print box
   
   chart.replace_data(chart_data)
   return tsg_ppt
@@ -268,9 +269,6 @@ def fill_slide_not_common_2(tsg_ppt, org_all, a, c1, c2, c3, c4, c5,data, box=No
   bar_plot = chart.plots[0]
   bar_plot.gap_width = 20
   bar_plot.overlap = -20
-  #print data
-  #if (box):
-    #print box
   
   chart.replace_data(chart_data)
   return tsg_ppt
@@ -386,7 +384,6 @@ finally:
   file1_in.close()
 
 structure.fill_in_org()
-print str(len(org_long)) + " " + str(len(org_short))
 
 ############
 #Fill in org lists
@@ -411,185 +408,174 @@ level1_users,level1_numbers,level1_filledin_users = structure.fill_in_users(stru
 list_full_1 = (structure.printout(structure.list1,level1_users))
 filled_list_1,my_sums_1,my_means_1 = structure.count_percent(list_full_1, level1_numbers)
 
-#print(filled_list_2)
-#print(structure.list2)
 #lista1, lista2 = getchildresults('TSG', structure.list2, filled_list_2)
-#print(structure.list2)
-#print(lista1, lista2)
+
 
 def fill_in_orgstruct_questions():
-
   for org in structure.list1:
-    structure.orgstructure[org]['q1'] = filled_list_1[structure.list1.index(org)][0]
-    structure.orgstructure[org]['q2'] = filled_list_1[structure.list1.index(org)][1]
-    structure.orgstructure[org]['q3'] = filled_list_1[structure.list1.index(org)][2]
-    structure.orgstructure[org]['q4'] = filled_list_1[structure.list1.index(org)][3]
-    structure.orgstructure[org]['q5'] = filled_list_1[structure.list1.index(org)][4]
-    structure.orgstructure[org]['q6'] = filled_list_1[structure.list1.index(org)][5]
-    structure.orgstructure[org]['q7'] = filled_list_1[structure.list1.index(org)][6]
-    structure.orgstructure[org]['q8'] = filled_list_1[structure.list1.index(org)][7]
-    structure.orgstructure[org]['q9'] = filled_list_1[structure.list1.index(org)][8]
+    for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+      structure.orgstructure[org][qq] = filled_list_1[structure.list1.index(org)][ij]
 
   for org in structure.list2:
-    structure.orgstructure[org]['q1'] = filled_list_2[structure.list2.index(org)][0]
-    structure.orgstructure[org]['q2'] = filled_list_2[structure.list2.index(org)][1]
-    structure.orgstructure[org]['q3'] = filled_list_2[structure.list2.index(org)][2]
-    structure.orgstructure[org]['q4'] = filled_list_2[structure.list2.index(org)][3]
-    structure.orgstructure[org]['q5'] = filled_list_2[structure.list2.index(org)][4]
-    structure.orgstructure[org]['q6'] = filled_list_2[structure.list2.index(org)][5]
-    structure.orgstructure[org]['q7'] = filled_list_2[structure.list2.index(org)][6]
-    structure.orgstructure[org]['q8'] = filled_list_2[structure.list2.index(org)][7]
-    structure.orgstructure[org]['q9'] = filled_list_2[structure.list2.index(org)][8]
+    for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+      structure.orgstructure[org][qq] = filled_list_2[structure.list2.index(org)][ij]
 
   for org in structure.list3:
-    structure.orgstructure[org]['q1'] = filled_list_3[structure.list3.index(org)][0]
-    structure.orgstructure[org]['q2'] = filled_list_3[structure.list3.index(org)][1]
-    structure.orgstructure[org]['q3'] = filled_list_3[structure.list3.index(org)][2]
-    structure.orgstructure[org]['q4'] = filled_list_3[structure.list3.index(org)][3]
-    structure.orgstructure[org]['q5'] = filled_list_3[structure.list3.index(org)][4]
-    structure.orgstructure[org]['q6'] = filled_list_3[structure.list3.index(org)][5]
-    structure.orgstructure[org]['q7'] = filled_list_3[structure.list3.index(org)][6]
-    structure.orgstructure[org]['q8'] = filled_list_3[structure.list3.index(org)][7]
-    structure.orgstructure[org]['q9'] = filled_list_3[structure.list3.index(org)][8]
+    for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+      structure.orgstructure[org][qq] = filled_list_3[structure.list3.index(org)][ij]
 
   for org in structure.list4:
-    structure.orgstructure[org]['q1'] = filled_list_4[structure.list4.index(org)][0]
-    structure.orgstructure[org]['q2'] = filled_list_4[structure.list4.index(org)][1]
-    structure.orgstructure[org]['q3'] = filled_list_4[structure.list4.index(org)][2]
-    structure.orgstructure[org]['q4'] = filled_list_4[structure.list4.index(org)][3]
-    structure.orgstructure[org]['q5'] = filled_list_4[structure.list4.index(org)][4]
-    structure.orgstructure[org]['q6'] = filled_list_4[structure.list4.index(org)][5]
-    structure.orgstructure[org]['q7'] = filled_list_4[structure.list4.index(org)][6]
-    structure.orgstructure[org]['q8'] = filled_list_4[structure.list4.index(org)][7]
-    structure.orgstructure[org]['q9'] = filled_list_4[structure.list4.index(org)][8]
+    for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+      structure.orgstructure[org][qq] = filled_list_4[structure.list4.index(org)][ij]
 
   for org in structure.list5:
-    structure.orgstructure[org]['q1'] = filled_list_5[structure.list5.index(org)][0]
-    structure.orgstructure[org]['q2'] = filled_list_5[structure.list5.index(org)][1]
-    structure.orgstructure[org]['q3'] = filled_list_5[structure.list5.index(org)][2]
-    structure.orgstructure[org]['q4'] = filled_list_5[structure.list5.index(org)][3]
-    structure.orgstructure[org]['q5'] = filled_list_5[structure.list5.index(org)][4]
-    structure.orgstructure[org]['q6'] = filled_list_5[structure.list5.index(org)][5]
-    structure.orgstructure[org]['q7'] = filled_list_5[structure.list5.index(org)][6]
-    structure.orgstructure[org]['q8'] = filled_list_5[structure.list5.index(org)][7]
-    structure.orgstructure[org]['q9'] = filled_list_5[structure.list5.index(org)][8]
-
+    for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+      structure.orgstructure[org][qq] = filled_list_5[structure.list5.index(org)][ij]
 
 
 fill_in_orgstruct_questions()
+
+def fill_slide_1(org, tsg_ppt):
+  #datum=get_date
+  first_slide=tsg_ppt.slides[0]
+  common_slide=tsg_ppt.slides[a]
+  org_1 = first_slide.placeholders[1]
+  org = common_slide.placeholders[17]
+  #text_frame = org.text_frame
+  #text_frame.clear()
+  #p = text_frame.paragraphs[0]
+  #run = p.add_run()
+  org.text=org_all
+  org_1.text = org_all + "\n"+(time.strftime("%d.%m.%Y"))
+  #subtitle = first_slide.placeholders[1] 
+  #subtitle_2 = common_slide.placeholders[17]
+  #subtitle.text=org_all
+  return tsg_ppt
+  #return -1: if the func doesnwork, we get with this parancs info about the wrong working, egyebkent exit and error code 
+
+
+def create_ppt(org):
+  tsg_ppt=Presentation('tsg_templ.pptx')
+  fill_slide_1(org, tsg_ppt)
+
+
+#create ppts from new structure:
+for org in structure.orgstructure.keys():
+  create_ppt(org)
+
+#print(level1_users)
 #print(structure.orgstructure)
 
-for rows in structure.orgstructure.keys():
-  print(rows + ": ", structure.orgstructure[rows])
-print(filled_list_2[0][0])
+#for rows in structure.orgstructure.keys():
+#  print(rows + ": ", structure.orgstructure[rows])
+##
+#######
+#create ppt for 5th level
+#for asdf,my_organi in enumerate(structure.list5):
+#  if (level5_filledin_users[asdf] < 5):
+#    print 'not created: '+my_organi
+#  else:
+#    tsg_ppt=Presentation('tsg_templ.pptx')
+#    fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?", my_means_5[asdf])
+#    fill_table_slide(tsg_ppt, structure.list5[asdf], str(round(float(level5_filledin_users[asdf] / float(level5_numbers[asdf]))*100,2)) + '%')
+#    for i in range(1, 12):
+#      fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
+#    for i in range(0, 12):
+#      if (6 <= i <=12 or i==3):
+#        fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_5[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_5[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_5[asdf][i-3])) #org_long_name
+#        #will be:
+#        #1. tsg_ppt
+#        #2. org name
+#        #3. number of slide
+#        #??? pass other orgs, or search in function??
+#        #fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i)
+#      elif (i==4):
+#        fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_5[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_5[asdf][i-3]))
+#      elif (i==5):
+#        fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_5[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_5[asdf][i-3]))
+#    tsg_ppt.save("out1/"+(structure.list5[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
+#
+#######
+##create ppt for 4th level
+#for asdf,my_organi in enumerate(structure.list4):
+#  if (level4_filledin_users[asdf] < 5):
+#    print 'not created: '+my_organi
+#  else:
+#    tsg_ppt=Presentation('tsg_templ.pptx')
+#    fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?",my_means_4[asdf])
+#    fill_table_slide(tsg_ppt, level4_numbers[asdf], level4_filledin_users[asdf], str(round(float(level4_filledin_users[asdf] / float(level4_numbers[asdf]))*100,2)) + '%')
+#    for i in range(1, 12):
+#      fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
+#    for i in range(0, 12):
+#      if (6 <= i <=12 or i==3):
+#        fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_4[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_4[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_4[asdf][i-3])) #org_long_name
+#      elif (i==4):
+#        fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_4[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_4[asdf][i-3]))
+#      elif (i==5):
+#        fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_4[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_4[asdf][i-3]))
+#    tsg_ppt.save("out1/"+(structure.list4[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
+#
+#######
+##create ppt for 3th level
+#for asdf,my_organi in enumerate(structure.list3):
+#  if (level3_filledin_users[asdf] < 5):
+#    print 'not created: '+my_organi
+#  else: 
+#    tsg_ppt=Presentation('tsg_templ.pptx')
+#    fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?",my_means_3[asdf])
+#    fill_table_slide(tsg_ppt, level3_numbers[asdf], level3_filledin_users[asdf], str(round(float(level3_filledin_users[asdf] / float(level3_numbers[asdf]))*100,2)) + '%')
+#    for i in range(1, 12):
+#      fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
+#    for i in range(0, 12):
+#      if (6 <= i <=12 or i==3):
+#        fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_3[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_3[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_3[asdf][i-3])) #org_long_name
+#      elif (i==4):
+#        fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_3[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_3[asdf][i-3]))
+#      elif (i==5):
+#        fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_3[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_3[asdf][i-3]))
+#    tsg_ppt.save("out1/"+(structure.list3[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
+#
+#######
+##create ppt for 2th level
+#for asdf,my_organi in enumerate(structure.list2):
+#  if (level2_filledin_users[asdf] < 5):
+#    print 'not created: '+my_organi
+#  else:
+#    tsg_ppt=Presentation('tsg_templ.pptx')
+#    fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?",my_means_2[asdf])
+#    fill_table_slide(tsg_ppt, level2_numbers[asdf], level2_filledin_users[asdf], str(round(float(level2_filledin_users[asdf] / float(level2_numbers[asdf]))*100,2)) + '%')
+#    for i in range(1, 12):
+#      fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
+#    for i in range(0, 12):
+#      if (6 <= i <=12 or i==3):
+#        fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_2[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_2[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_2[asdf][i-3])) #org_long_name
+#      elif (i==4):
+#        fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_2[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_2[asdf][i-3]))
+#      elif (i==5):
+#        fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_2[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_2[asdf][i-3]))
+#    tsg_ppt.save("out1/"+(structure.list2[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
 #
 ######
-#create ppt for 5th level
-for asdf,my_organi in enumerate(structure.list5):
-  if (level5_filledin_users[asdf] < 5):
-    print 'not created: '+my_organi
-  else:
-    tsg_ppt=Presentation('tsg_templ.pptx')
-    fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?", my_means_5[asdf])
-    fill_table_slide(tsg_ppt, structure.list5[asdf], str(round(float(level5_filledin_users[asdf] / float(level5_numbers[asdf]))*100,2)) + '%')
-    for i in range(1, 12):
-      fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
-    for i in range(0, 12):
-      if (6 <= i <=12 or i==3):
-        fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_5[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_5[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_5[asdf][i-3])) #org_long_name
-        #will be:
-        #1. tsg_ppt
-        #2. org name
-        #3. number of slide
-        #??? pass other orgs, or search in function??
-        #fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i)
-      elif (i==4):
-        fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_5[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_5[asdf][i-3]))
-      elif (i==5):
-        fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_5[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_5[asdf][i-3]))
-    tsg_ppt.save("out1/"+(structure.list5[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
-
-######
-#create ppt for 4th level
-for asdf,my_organi in enumerate(structure.list4):
-  if (level4_filledin_users[asdf] < 5):
-    print 'not created: '+my_organi
-  else:
-    tsg_ppt=Presentation('tsg_templ.pptx')
-    fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?",my_means_4[asdf])
-    fill_table_slide(tsg_ppt, level4_numbers[asdf], level4_filledin_users[asdf], str(round(float(level4_filledin_users[asdf] / float(level4_numbers[asdf]))*100,2)) + '%')
-    for i in range(1, 12):
-      fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
-    for i in range(0, 12):
-      if (6 <= i <=12 or i==3):
-        fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_4[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_4[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_4[asdf][i-3])) #org_long_name
-      elif (i==4):
-        fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_4[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_4[asdf][i-3]))
-      elif (i==5):
-        fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_4[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_4[asdf][i-3]))
-    tsg_ppt.save("out1/"+(structure.list4[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
-
-######
-#create ppt for 3th level
-for asdf,my_organi in enumerate(structure.list3):
-  if (level3_filledin_users[asdf] < 5):
-    print 'not created: '+my_organi
-  else: 
-    tsg_ppt=Presentation('tsg_templ.pptx')
-    fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?",my_means_3[asdf])
-    fill_table_slide(tsg_ppt, level3_numbers[asdf], level3_filledin_users[asdf], str(round(float(level3_filledin_users[asdf] / float(level3_numbers[asdf]))*100,2)) + '%')
-    for i in range(1, 12):
-      fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
-    for i in range(0, 12):
-      if (6 <= i <=12 or i==3):
-        fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_3[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_3[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_3[asdf][i-3])) #org_long_name
-      elif (i==4):
-        fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_3[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_3[asdf][i-3]))
-      elif (i==5):
-        fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_3[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_3[asdf][i-3]))
-    tsg_ppt.save("out1/"+(structure.list3[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
-
-######
-#create ppt for 2th level
-for asdf,my_organi in enumerate(structure.list2):
-  if (level2_filledin_users[asdf] < 5):
-    print 'not created: '+my_organi
-  else:
-    tsg_ppt=Presentation('tsg_templ.pptx')
-    fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?",my_means_2[asdf])
-    fill_table_slide(tsg_ppt, level2_numbers[asdf], level2_filledin_users[asdf], str(round(float(level2_filledin_users[asdf] / float(level2_numbers[asdf]))*100,2)) + '%')
-    for i in range(1, 12):
-      fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
-    for i in range(0, 12):
-      if (6 <= i <=12 or i==3):
-        fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_2[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_2[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_2[asdf][i-3])) #org_long_name
-      elif (i==4):
-        fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_2[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_2[asdf][i-3]))
-      elif (i==5):
-        fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_2[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_2[asdf][i-3]))
-    tsg_ppt.save("out1/"+(structure.list2[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
-
-#####
-#create ppt for 1th level
-for asdf,my_organi in enumerate(structure.list1):
-  if (level1_filledin_users[asdf] < 5):
-    print 'not created: '+my_organi
-  else:
-    tsg_ppt=Presentation('tsg_templ.pptx')
-    fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?",my_means_1[asdf])
-    fill_table_slide(tsg_ppt, level1_numbers[asdf], level1_filledin_users[asdf], str(round(float(level1_filledin_users[asdf] / float(level1_numbers[asdf]))*100,2)) + '%')
-    #fill_slide_not_common(1, tsg_ppt, "Telekom Shop Vertriebgesellschaft mbH", 4, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", "\n"+"\n"+"N=289")
-    for i in range(1, 12):
-      fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
-    for i in range(0, 12):
-      if (6 <= i <=12 or i==3):
-        fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_1[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_1[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_1[asdf][i-3])) #org_long_name
-      elif (i==4):
-        fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_1[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_1[asdf][i-3]))
-      elif (i==5):
-        fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_1[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_1[asdf][i-3]))
-    tsg_ppt.save("out1/"+(structure.list1[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
-
+##create ppt for 1th level
+#for asdf,my_organi in enumerate(structure.list1):
+#  if (level1_filledin_users[asdf] < 5):
+#    print 'not created: '+my_organi
+#  else:
+#    tsg_ppt=Presentation('tsg_templ.pptx')
+#    fill_slide_mean(tsg_ppt, my_organi,  2, "Ich gebe meiner Führungskraft Feedback.", "Am Ende des Feedbackgesprächs werden Absprachen getroffen.", "Ich erhalte Feedback zu meinem Beitrag zum Teamerfolg.", "Das Feedback hilft mir, mein Verhalten zu verändern.", "Das Feedbackgespräch baut auf vorherigem Feedback auf.", "Ich erhalte Rückmeldungen zu meiner Gesprächsführung im Kundenkontakt (interner/externer Kunde).", "Wie häufig erhalte ich Rückmeldung zu meiner Leistung von meiner Führungskraft?",my_means_1[asdf])
+#    fill_table_slide(tsg_ppt, level1_numbers[asdf], level1_filledin_users[asdf], str(round(float(level1_filledin_users[asdf] / float(level1_numbers[asdf]))*100,2)) + '%')
+#    #fill_slide_not_common(1, tsg_ppt, "Telekom Shop Vertriebgesellschaft mbH", 4, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", "\n"+"\n"+"N=289")
+#    for i in range(1, 12):
+#      fill_slide_title(tsg_ppt, i, org_long[org_short.index(my_organi)]) #org_long_name
+#    for i in range(0, 12):
+#      if (6 <= i <=12 or i==3):
+#        fill_slide_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "Trifft überhaupt nicht zu", "Trifft eher nicht zu", "Teils-teils", "Trifft eher zu", "Trifft voll zu", filled_list_1[asdf][i-3],'Mittelwert auf fünfstufiger Skala:'+'\n'+str(my_means_1[asdf][i-3])+'\n'+"Gültige Antworten:"+'\n'+str(my_sums_1[asdf][i-3])) #org_long_name
+#      elif (i==4):
+#        fill_slide_not_common(tsg_ppt, org_long[org_short.index(my_organi)], i, "täglich", "maximal 1x pro Woche", "bis zu 1x pro Monat", "halbjährlich", "seltener", filled_list_1[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_1[asdf][i-3]))
+#      elif (i==5):
+#        fill_slide_not_common_2(tsg_ppt, org_long[org_short.index(my_organi)], i, "1-3 min", "3-5 min", "5-15 min", "15-30 min", "länger", filled_list_1[asdf][i-3],"\n"+"Gültige Antworten:"+"\n"+str(my_sums_1[asdf][i-3]))
+#    tsg_ppt.save("out1/"+(structure.list1[asdf].replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
+#
 #################MAIN ENDS HERE###################
 #dict to fill in from old file in structure.py
 #dict_1 = {'ORG1': 73, 'ORG2': 54}

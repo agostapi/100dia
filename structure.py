@@ -92,8 +92,8 @@ def fill_in_org():
         orgstructure.update({rows[my_header.index('u_org_5')] : { 'parent' : [rows[my_header.index('u_org_4')], rows[my_header.index('u_org_3')], rows[my_header.index('u_org_2')],rows[my_header.index('u_org_1')]], 'child' : None , 'level' : 5}})
         orgstructure[rows[my_header.index('u_org_4')]]['child'].append(rows[my_header.index('u_org_5')])
 
-  for rows in orgstructure.keys():
-    print(rows + ": ", orgstructure[rows])
+  #for rows in orgstructure.keys():
+  #print(rows + ": ", orgstructure[rows])
 
 def printout(a,users_list):
   answers_out = [] #[[0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0]] #0,0,0,0,0]
