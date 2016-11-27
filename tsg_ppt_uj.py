@@ -46,6 +46,7 @@ from pptx.enum.dml import MSO_THEME_COLOR
 from pptx.enum.chart import XL_LEGEND_POSITION
 import time
 import structure
+import orgs
 import csv
 import sys
 import os
@@ -57,9 +58,7 @@ sys.setdefaultencoding('utf8')
 
 #UTF8Writer = codecs.getwriter('utf8')
 
-org_short=['TSG','GF OG','VLD','RVL N','VKG 1 N','VKG 7 N','VKG 5 N','VKG 4 N','VKG 3 N','VKG 6 N','VKG 11 N','VKG 2 N','VKG 10 N','VKG 9 N','VKG 8 N','VB Nord','VKG 70 N','SP N','RVL O','VKG 49 O','VKG 50 O','VKG 51 O','VKG 52 O','VKG 53 O','VKG 54 O','VKG 55 O','VKG 56 O','VKG 57 O','VKG 58 O','VKG 74 O','VB Ost','SP O','RVL W','VB West','VKG 14 W','VKG 15 W','VKG 16 W','VKG 17 W','VKG 18 W','VKG 19 W','VKG 20 W','VKG 21 W','VKG 22 W','VKG 23 W','VKG 24 W','VKG 25 W','VKG 71 W','SP W','RVL M','VB Mitte','VKG 61 M','VKG 62 M','VKG 63 M','VKG 64 M','VKG 65 M','VKG 66 M','VKG 67 M','VKG 75 M','SP M','RVL SW','VB Südwest','VKG 28 SW','VKG 29 SW','VKG 30 SW','VKG 31 SW','VKG 32 SW','VKG 33 SW','VKG 34 SW','VKG 35 SW','VKG 36 SW','VKG 72 SW','SP SW','RVL S','VB Süd','VKG 39 S','VKG 40 S','VKG 41 S','VKG 42 S','VKG 43 S','VKG 44 S','VKG 45 S','VKG 46 S','VKG 73 S','VKG 47 S','SP S ','PVD','SO','VSS','HM','RSP','ZM','GF F/CON','F','CORM','HPS','GF HR','HR-DV','HR-MV','HR-BP','BR/SchwbV']
 
-org_long=['Telekom Shop Vertriebsgesellschaft mbH','GF Operatives Geschäft S/M/V','Verkauf Deutschland','Regionale Vertriebsleitung Nord','Verkaufsgebiet 1 Nord Holstein West','Verkaufsgebiet 7 Nord Braunschweig','Verkaufsgebiet 5 Nord Bremen','Verkaufsgebiet 4 Nord Hamburg 2','Verkaufsgebiet 3 Nord Hamburg 1','Verkaufsgebiet 6 Nord Hannover','Verkaufsgebiet 11 Nord Göttingen','Verkaufsgebiet 2 Nord Kiel','Verkaufsgebiet 10 Nord Bielefeld','Verkaufsgebiet 9 Nord Münster','Verkaufsgebiet 8 Nord Osnabrück','Verkaufsbüro Nord','Verkaufsgebiet 70 Nord Partner','Springer Region Nord','Regionale Vertriebsleitung Ost','Verkaufsgebiet 49 Ost Berlin I','Verkaufsgebiet 50 Ost Berlin II','Verkaufsgebiet 51 Ost Berlin III','Verkaufsgebiet 52 Ost Chemnitz','Verkaufsgebiet 53 Ost Dresden','Verkaufsgebiet 54 Ost Erfurt','Verkaufsgebiet 55 Ost Leipzig','Verkaufsgebiet 56 Ost Mecklenburg-Vorpom','Verkaufsgebiet 57 Ost Magdeburg','Verkaufsgebiet 58 Ost Cottbus','Verkaufsgebiet 74 Ost  Partner','Verkaufsbüro Ost','Springer Region Ost','Regionale Vertriebsleitung West','Verkaufsbüro West','Verkaufsgebiet 14 West Wesel','Verkaufsgebiet 15 West Dortmund','Verkaufsgebiet 16 West Soest','Verkaufsgebiet 17 West Duisburg','Verkaufsgebiet 18 West Essen','Verkaufsgebiet 19 West Mönchengladbach','Verkaufsgebiet 20 West Düsseldorf','Verkaufsgebiet 21 West Wuppertal','Verkaufsgebiet 22 West Hagen','Verkaufsgebiet 23 West Aachen','Verkaufsgebiet 24 West Köln','Verkaufsgebiet 25 West Bonn','Verkaufsgebiet 71 West Partner','Springer Region West','Regionale Vertriebsleitung Mitte','Verkaufsbüro Mitte','Verkaufsgebiet 61 Mitte Bad Homburg','Verkaufsgebiet 62 Mitte Darmstadt','Verkaufsgebiet 63 MitteFrankfurt','Verkaufsgebiet 64 MitteGießen','Verkaufsgebiet 65 Mitte Kassel','Verkaufsgebiet 66 Mitte Koblenz','Verkaufsgebiet 67 Mitte Trier','Verkaufsgebiet 75 Mitte Partner','Springer Region Mitte','Regionale Vertriebsleitung SüdWest','Verkaufsbüro Südwest','Verkaufsgebiet 28 Südwest Saarbrücken','Verkaufsgebiet 29 Südwest Mannheim','Verkaufsgebiet 30 Südwest Karlsruhe','Verkaufsgebiet 31 Südwest Heilbronn','Verkaufsgebiet 32 Südwest Stuttgart','Verkaufsgebiet 33 Südwest Freiburg','Verkaufsgebiet 34 Südwest Tübingen','Verkaufsgebiet 35 Südwest Ulm','Verkaufsgebiet 36 Südwest Konstanz','Verkaufsgebiet 72 Südwest Partner','Springer Region Südwest','Regionale Vertriebsleitung Süd','Verkaufsbüro Süd','Verkaufsgebiet 39 Süd Würzburg','Verkaufsgebiet 40 Süd Bayreuth','Verkaufsgebiet 41 Süd Nürnberg','Verkaufsgebiet 42 Süd Regensburg','Verkaufsgebiet 43 Süd Augsburg','Verkaufsgebiet 44 Süd  München','Verkaufsgebiet 45 Süd Kempten','Verkaufsgebiet 46 Süd Rosenheim','Verkaufsgebiet 73 Süd Partner','Verkaufsgebiet 47 Süd Flagship München','Springer Region Süd ','Partner Vertrieb Deutschland','Shop-Oberflächen-Mgt.','Vertriebs-und Servicesteuerung','Handelsmarketing','Retail Strategie & Projekte','Zubehörmanagement','GF Finanzen und Controlling','Finanzen','Compliance & Risk Management','Handelsprozesse und -systeme','GF Personal','HR Development','CC HRM Vertrieb','HR Business Partner','Betriebsrat/Schwerbehindertenvertretung']
 
 #box: default erteket allitunk be, ha negy parametert kap akkor nem lesz box, ha otot akkor hasznalja
 #a=the number of the slide
@@ -436,7 +435,7 @@ def fill_in_orgstruct_questions():
 fill_in_orgstruct_questions()
 
 def fill_slide_1(org, tsg_ppt):
-  orglongname = org_long[org_short.index(org)]
+  orglongname = orgs.org_long[orgs.org_short.index(org)]
   first_slide = tsg_ppt.slides[0]
   org_1 = first_slide.placeholders[1]
   org_1.text = orglongname + "\n"+(time.strftime("%d.%m.%Y"))
