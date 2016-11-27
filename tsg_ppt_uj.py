@@ -436,27 +436,15 @@ def fill_in_orgstruct_questions():
 fill_in_orgstruct_questions()
 
 def fill_slide_1(org, tsg_ppt):
-  #datum=get_date
-  first_slide=tsg_ppt.slides[0]
-  common_slide=tsg_ppt.slides[a]
+  orglongname = org_long[org_short.index(org)]
+  first_slide = tsg_ppt.slides[0]
   org_1 = first_slide.placeholders[1]
-  org = common_slide.placeholders[17]
-  #text_frame = org.text_frame
-  #text_frame.clear()
-  #p = text_frame.paragraphs[0]
-  #run = p.add_run()
-  org.text=org_all
-  org_1.text = org_all + "\n"+(time.strftime("%d.%m.%Y"))
-  #subtitle = first_slide.placeholders[1] 
-  #subtitle_2 = common_slide.placeholders[17]
-  #subtitle.text=org_all
-  return tsg_ppt
-  #return -1: if the func doesnwork, we get with this parancs info about the wrong working, egyebkent exit and error code 
-
+  org_1.text = orglongname + "\n"+(time.strftime("%d.%m.%Y"))
 
 def create_ppt(org):
   tsg_ppt=Presentation('tsg_templ.pptx')
   fill_slide_1(org, tsg_ppt)
+  tsg_ppt.save("out1/"+(org.replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
 
 
 #create ppts from new structure:

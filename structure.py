@@ -140,6 +140,9 @@ def printout(a,users_list):
     #print(answers_out)
     #print(users_list[0][0][1])
     #print(answers)
+
+  #def fill_answers(org):
+    
     
 
   #for a,rows in enumerate(users_list):
@@ -185,8 +188,6 @@ def count_percent(list_a, numbers):
      
       
   return list_a, my_sums, my_means
-
-
 
 ########MAIN################
 

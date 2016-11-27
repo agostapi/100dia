@@ -67,6 +67,8 @@ def fill_slide_1(tsg_ppt, org_names, org_percents):
   x,y,cx,cy = Inches(0.3), Inches(2.0), Inches(5.38), Inches(3)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_CLUSTERED, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
+  chart.series[0].fill.solid()
+  chart.series[0].fill.fore_color.rgb = RGBColor(226, 0, 116)
   value_axis = chart.value_axis
   value_axis.maximum_scale = 100.0
   plot = chart.plots[0]
@@ -79,6 +81,7 @@ def fill_slide_1(tsg_ppt, org_names, org_percents):
   category_axis.minor_tick_mark = XL_TICK_MARK.NONE
   category_axis.tick_labels.font.size = Pt(12)
   bar_plot = chart.plots[0]
+  #bar_plot.ChartFormat()
   bar_plot.gap_width = 20
   bar_plot.overlap = -20
   value_axis.minor_tick_mark = XL_TICK_MARK.NONE
@@ -227,11 +230,11 @@ def difference_in_shape(tsg_ppt):
   table.columns[1].width = Inches(0.39)
   table.cell(0, 0).text = "+3"
   table.cell(1, 0).text = "+5"
-  img_path = 'pirosnyil.png'
+  #img_path = 'pirosnyil.png'
   pleft = Inches(6.25)
   height = Inches(0.3)
   top = Inches(2)
-  pic = gesamt_slide.shapes.add_picture(img_path, pleft, top, height=height)
+  #pic = gesamt_slide.shapes.add_picture(img_path, pleft, top, height=height)
   #table.cell(0, 1).text = pic
   cell = table.rows[0].cells[0]
   cellb = table.rows[1].cells[0]
@@ -288,20 +291,20 @@ def picture_insert(tsg_ppt, a, n, h):
       table.cell(i, 0).fill.solid()
       table.cell(i, 0).fill.fore_color.rgb = RGBColor(124,124,124)
       table.cell(i, 1).fill.background()
-      img_path = "pirosnyil.png"
+      #img_path = "pirosnyil.png"
       left = Inches(6.25)
       height = Cm(h/2.05)
       if n==3:
         t = (h+2.21*i)+5.3
       print(t)
       top = Cm(t)
-      pic = slide.shapes.add_picture(img_path, left, top, height=height)
+      #pic = slide.shapes.add_picture(img_path, left, top, height=height)
 
 
 
 
 ############MAIN#####################  
-tsg_ppt=Presentation('tsg_templ_uj.pptx')
+tsg_ppt=Presentation('tsg_templ.pptx')
 orglongname = "Verkauf Deutschland"
 orgshortname = "VLD"
 org_names = ["TSG", "GF OG", "VLD", "RVL N", "RVL O", "RVL W", "RVL M", "RVL SW", "RVL S"] #tomb1
