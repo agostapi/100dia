@@ -515,10 +515,243 @@ def fill_slide_2(org_name, tsg_ppt):
   #bar_plot.fill.solid()
   #bar_plot.fill.fore_color.rgb=RGBColor(0,0,0)
 
+def fill_slide_3(org_name, org, tsg_ppt, diff=1): #, diff):
+  #5 chart
+  #1. chart_data: q1, q2 válaszok (1+2,3,4+5) ; a: q4, b: q1
+  # c: q6, d: q5
+  #q9, q8, q7
+  #g: q2
+  #h: q3
+  slide = tsg_ppt.slides[2]
+  chart_data = ChartData()
+  chart_data_2 =  ChartData()
+  chart_data_3 =  ChartData()
+  chart_data_4 = ChartData()
+  chart_data_5 = ChartData()
+  chart_data.categories=['1', '2']
+  chart_data_2.categories=['1', '2']
+  chart_data_3.categories=['1', '2', '3']
+  chart_data_4.categories=['1', '2']
+  chart_data_5.categories=['1', '2']
+  chart_data.add_series('2', (org['q4'][0]+org['q4'][1], org['q1'][0]+org['q1'][1])) #(a[0], b[0]))
+  chart_data.add_series('3', (org['q4'][2], org['q1'][2])) #(a[1], b[1]))
+  chart_data.add_series('4', (org['q4'][3]+org['q4'][4], org['q1'][3]+org['q1'][4])) #(a[2], b[2]))
+  chart_data_2.add_series('2', (org['q6'][0]+org['q6'][1], org['q5'][0]+org['q5'][1])) #(c[0], d[0]))
+  chart_data_2.add_series('3',(org['q6'][2], org['q5'][2]))  #(c[1], d[1]))
+  chart_data_2.add_series('4',(org['q6'][3]+org['q6'][4], org['q5'][3]+org['q5'][4])) #(c[2], d[2]))
+  chart_data_3.add_series('2',(org['q9'][0]+org['q9'][1], org['q8'][0]+org['q8'][1], org['q7'][0]+org['q7'][1])) #(e[0], f[0], g[0]))
+  chart_data_3.add_series('2',(org['q9'][2], org['q8'][2], org['q7'][2])) #(e[1], f[1], g[1]))
+  chart_data_3.add_series('2',(org['q9'][3]+org['q9'][4], org['q8'][3]+org['q8'][4], org['q7'][3]+org['q7'][4])) #(e[2], f[2], g[2]))
+  chart_data_4.add_series('3',(0, org['q2'][0]))
+  chart_data_4.add_series('4',(0, org['q2'][1]))
+  chart_data_4.add_series('5',(0, org['q2'][2]))
+  chart_data_4.add_series('6',(0, org['q2'][3]))
+  chart_data_4.add_series('4',(0, org['q2'][4]))
+  chart_data_5.add_series('3',(0, org['q3'][0]))
+  chart_data_5.add_series('4',(0, org['q3'][1]))
+  chart_data_5.add_series('5',(0, org['q3'][2]))
+  chart_data_5.add_series('6',(0, org['q3'][3]))
+  chart_data_5.add_series('4',(0, org['q3'][4]))
+  #chart_data_4.add_series('4',(h[5], g[5]))
+
+  x,y,cx,cy = Cm(10.5), Cm(4.5), Cm(4.6), Cm(3)
+  graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
+  chart = graphic_frame.chart
+  value_axis = chart.value_axis
+  chart.plots[0].has_data_labels = True
+  data_labels = chart.plots[0].data_labels
+  bar_plot = chart.plots[0]
+  bar_plot.gap_width = 10
+  #nehasznaaalddata_labels.position = XL_LABEL_POSITION.OUTSIDE_END
+  chart.has_legend = False
+  data_labels.font.size = Pt(12)
+  data_labels.number_format = '0'
+  data_labels.font.color.rgb = RGBColor(0, 0, 0)
+  data_labels.font.bold = True
+  category_axis = chart.category_axis
+  category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
+  category_axis.tick_labels.font.size = Pt(12)
+  value_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.major_tick_mark = XL_TICK_MARK.NONE
+  value_axis.major_tick_mark = XL_TICK_MARK.NONE
+  category_axis.has_major_gridlines = False
+  value_axis.has_major_gridlines = False
+  value_axis.visible = False
+  category_axis.visible = False
+  x,y,cx,cy = Cm(10.5), Cm(6.68), Cm(4.6), Cm(3)
+  graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data_2)
+  chart = graphic_frame.chart
+  value_axis = chart.value_axis
+  chart.plots[0].has_data_labels = True
+  data_labels = chart.plots[0].data_labels
+  bar_plot = chart.plots[0]
+  bar_plot.gap_width = 10
+  data_labels.font.bold = True
+  chart.has_legend = False
+  data_labels.font.size = Pt(12)
+  data_labels.number_format = '0'
+  data_labels.font.color.rgb = RGBColor(0, 0, 0)
+  category_axis = chart.category_axis
+  category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
+  category_axis.tick_labels.font.size = Pt(12)
+  value_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.major_tick_mark = XL_TICK_MARK.NONE
+  value_axis.major_tick_mark = XL_TICK_MARK.NONE
+  category_axis.has_major_gridlines = False
+  value_axis.has_major_gridlines = False
+  value_axis.visible = False
+  category_axis.visible = False
+
+  x,y,cx,cy = Cm(10.5), Cm(8.86), Cm(4.6), Cm(4.1)
+  graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data_3)
+  chart = graphic_frame.chart
+  value_axis = chart.value_axis
+  chart.plots[0].has_data_labels = True
+  data_labels = chart.plots[0].data_labels
+  bar_plot = chart.plots[0]
+  bar_plot.gap_width = 10
+  data_labels.font.bold = True
+  chart.has_legend = False
+  data_labels.font.size = Pt(12)
+  data_labels.number_format = '0'
+  data_labels.font.color.rgb = RGBColor(0, 0, 0)
+  category_axis = chart.category_axis
+  category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
+  category_axis.tick_labels.font.size = Pt(12)
+  value_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.major_tick_mark = XL_TICK_MARK.NONE
+  value_axis.major_tick_mark = XL_TICK_MARK.NONE
+  category_axis.has_major_gridlines = False
+  value_axis.has_major_gridlines = False
+  value_axis.visible = False
+  category_axis.visible = False
+
+  x,y,cx,cy = Cm(10.5), Cm(12.18), Cm(4.6), Cm(3)
+  graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data_4)
+  chart = graphic_frame.chart
+  value_axis = chart.value_axis
+  chart.plots[0].has_data_labels = True
+  data_labels = chart.plots[0].data_labels
+  data_labels.font.bold = True
+  bar_plot = chart.plots[0]
+  bar_plot.gap_width = 10
+  #nehasznaaalddata_labels.position = XL_LABEL_POSITION.OUTSIDE_END
+  chart.has_legend = False
+  data_labels.font.size = Pt(12)
+  data_labels.number_format = '0'
+  data_labels.font.color.rgb = RGBColor(255, 255, 255)
+  category_axis = chart.category_axis
+  category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
+  category_axis.tick_labels.font.size = Pt(12)
+  value_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.major_tick_mark = XL_TICK_MARK.NONE
+  value_axis.major_tick_mark = XL_TICK_MARK.NONE
+  category_axis.has_major_gridlines = False
+  value_axis.has_major_gridlines = False
+  value_axis.visible = False
+  category_axis.visible = False
+  chart.series[0].fill.solid()
+  chart.series[0].fill.fore_color.rgb = RGBColor(8, 49, 87)
+  chart.series[1].fill.solid()
+  chart.series[1].fill.fore_color.rgb = RGBColor(12, 74, 130)
+  chart.series[2].fill.solid()
+  chart.series[2].fill.fore_color.rgb = RGBColor(164, 164, 164)
+  chart.series[3].fill.solid()
+  chart.series[3].fill.fore_color.rgb = RGBColor(149, 159, 44)
+  chart.series[4].fill.solid()
+  chart.series[4].fill.fore_color.rgb = RGBColor(99, 106, 29)
+
+  x,y,cx,cy = Cm(10.5), Cm(13.28), Cm(4.6), Cm(3)
+  graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data_5)
+  chart = graphic_frame.chart
+  value_axis = chart.value_axis
+  chart.plots[0].has_data_labels = True
+  data_labels = chart.plots[0].data_labels
+  data_labels.font.bold = True
+  bar_plot = chart.plots[0]
+  bar_plot.gap_width = 10
+  #nehasznaaalddata_labels.position = XL_LABEL_POSITION.OUTSIDE_END
+  chart.has_legend = False
+  data_labels.font.size = Pt(12)
+  data_labels.number_format = '0'
+  data_labels.font.color.rgb = RGBColor(255, 255, 255)
+  category_axis = chart.category_axis
+  category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
+  category_axis.tick_labels.font.size = Pt(12)
+  value_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.major_tick_mark = XL_TICK_MARK.NONE
+  value_axis.major_tick_mark = XL_TICK_MARK.NONE
+  category_axis.has_major_gridlines = False
+  value_axis.has_major_gridlines = False
+  value_axis.visible = False
+  category_axis.visible = False
+  chart.series[0].fill.solid()
+  chart.series[0].fill.fore_color.rgb = RGBColor(14, 87, 81)
+  chart.series[1].fill.solid()
+  chart.series[1].fill.fore_color.rgb = RGBColor(20, 130, 122)
+  chart.series[2].fill.solid()
+  chart.series[2].fill.fore_color.rgb = RGBColor(147, 147, 147)
+  chart.series[3].fill.solid()
+  chart.series[3].fill.fore_color.rgb = RGBColor(222, 176, 0)
+  chart.series[4].fill.solid()
+  chart.series[4].fill.fore_color.rgb = RGBColor(148, 118, 0)
+
+#chart.replace_data(chart_data)
+  
+  
+  rows=1
+  cols=1
+  left = Inches(5.83)
+  top = Inches(1.94)
+  width = Inches(0.8)
+  height = Inches (0.425)# set column widths
+  table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+  table.columns[0].width = Inches(0.39)
+  if diff[0] > 0:
+    table.cell(0, 0).text = "+" + str(diff[0])
+  elif diff[0] < 0:
+    table.cell(0, 0).text = " " + str(diff[0])
+  elif diff[0]==0:
+    table.cell(0, 0).text = " " + str(diff[0])
+  left = Inches(6.25)
+  height = Inches(0.3)
+  top = Inches(2)
+  #pic = slide.shapes.add_picture(img_path, left, top, height=height)
+  #return tsg_ppt
+  #table.cell(0, 0).text = str(d)
+  cell = table.rows[0].cells[0]
+  paragraph = cell.textframe.paragraphs[0]
+  paragraph.font.size = Pt(12)
+  paragraph.font.color.rgb = RGBColor(255, 255, 255)
+  cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+  cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+  cell.fill.solid()
+  cell.fill.fore_color.rgb = RGBColor(124,124,124)
+  if diff[0] > 0:
+    img_path='zoldnyil.png'
+    left = Inches(6.25)
+    height = Cm(0.6)
+    top = Inches(2)
+    pic = slide.shapes.add_picture(img_path, left, top, height=height)
+  elif diff[0] < 0:
+    img_path='pirosnyil.png'
+    left = Inches(6.25)
+    height = Cm(0.6)
+    top = Inches(2)
+    pic = slide.shapes.add_picture(img_path, left, top, height=height)
+  else:
+    img_path='keknyil.png'
+    left = Inches(6.25)
+    height = Cm(0.43)
+    top = Inches(2.05)
+    pic = slide.shapes.add_picture(img_path, left, top, height=height)
+  return tsg_ppt
+
 def create_ppt(org_name, org):
   tsg_ppt=Presentation('tsg_templ_uj.pptx')
   fill_slide_1(org, tsg_ppt)
   fill_slide_2(org_name, tsg_ppt)
+  #fill_slide_3(org_name, org, tsg_ppt)
   tsg_ppt.save("out1/"+(org_name.replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
 
 
@@ -526,6 +759,8 @@ def create_ppt(org_name, org):
 for org in structure.orgstructure.keys():
   if org != 'TSG' and structure.orgstructure[org]['filled_in_users'] > 5:
     create_ppt(org, structure.orgstructure[org])
+    if org == 'GF OG':
+      print(structure.orgstructure[org])
 
 #print(level1_users)
 #print(structure.orgstructure)
