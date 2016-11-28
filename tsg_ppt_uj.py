@@ -415,27 +415,32 @@ def fill_in_orgstruct_questions():
   for org in structure.list1:
     for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_1[structure.list1.index(org)][ij]
-    structure.orgstructure[org]['filled_percent'] = round(float(level1_filledin_users[structure.list1.index(org)]) / float(level1_numbers[structure.list1.index(org)])*100,2)
+    structure.orgstructure[org]['filled_percent'] = round(float(level1_filledin_users[structure.list1.index(org)]) / float(level1_numbers[structure.list1.index(org)])*100)
+    structure.orgstructure[org]['filled_in_users'] = level1_filledin_users[structure.list1.index(org)]
 
   for org in structure.list2:
     for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_2[structure.list2.index(org)][ij]
-    structure.orgstructure[org]['filled_percent'] = round(float(level2_filledin_users[structure.list2.index(org)]) / float(level2_numbers[structure.list2.index(org)])*100,2)
+    structure.orgstructure[org]['filled_percent'] = round(float(level2_filledin_users[structure.list2.index(org)]) / float(level2_numbers[structure.list2.index(org)])*100)
+    structure.orgstructure[org]['filled_in_users'] = level2_filledin_users[structure.list2.index(org)]
 
   for org in structure.list3:
     for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_3[structure.list3.index(org)][ij]
-    structure.orgstructure[org]['filled_percent'] = round(float(level3_filledin_users[structure.list3.index(org)]) / float(level3_numbers[structure.list3.index(org)])*100,2)
+    structure.orgstructure[org]['filled_percent'] = round(float(level3_filledin_users[structure.list3.index(org)]) / float(level3_numbers[structure.list3.index(org)])*100)
+    structure.orgstructure[org]['filled_in_users'] = level3_filledin_users[structure.list3.index(org)]
 
   for org in structure.list4:
     for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_4[structure.list4.index(org)][ij]
-    structure.orgstructure[org]['filled_percent'] = round(float(level4_filledin_users[structure.list4.index(org)]) / float(level4_numbers[structure.list4.index(org)])*100,2)
+    structure.orgstructure[org]['filled_percent'] = round(float(level4_filledin_users[structure.list4.index(org)]) / float(level4_numbers[structure.list4.index(org)])*100)
+    structure.orgstructure[org]['filled_in_users'] = level4_filledin_users[structure.list4.index(org)]
 
   for org in structure.list5:
     for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_5[structure.list5.index(org)][ij]
-    structure.orgstructure[org]['filled_percent'] = round(float(level5_filledin_users[structure.list5.index(org)]) / float(level5_numbers[structure.list5.index(org)])*100,2)
+    structure.orgstructure[org]['filled_percent'] = round(float(level5_filledin_users[structure.list5.index(org)]) / float(level5_numbers[structure.list5.index(org)])*100)
+    structure.orgstructure[org]['filled_in_users'] = level5_filledin_users[structure.list5.index(org)]
 
 #print(structure.orgstructure)
 
@@ -519,7 +524,7 @@ def create_ppt(org_name, org):
 
 #create ppts from new structure:
 for org in structure.orgstructure.keys():
-  if org != 'TSG':
+  if org != 'TSG' and structure.orgstructure[org]['filled_in_users'] > 5:
     create_ppt(org, structure.orgstructure[org])
 
 #print(level1_users)
