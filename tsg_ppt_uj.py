@@ -457,6 +457,7 @@ def fill_slide_1(org, tsg_ppt):
   #print(org)
   orglongname = org['long name'] #orgs.org_long[orgs.org_short.index(org)]
   first_slide = tsg_ppt.slides[0]
+
   org_1 = first_slide.placeholders[1]
   org_1.text = orglongname + "\n"+(time.strftime("%d.%m.%Y"))
 
@@ -467,7 +468,7 @@ def asdftemp(org_name, tsg_ppt):
     my_orgs.extend(structure.orgstructure[org_name]['child'])
     print(my_orgs)
 
-def fill_slide_2(org_name, tsg_ppt):
+def fill_slide_2(org_name, org, tsg_ppt):
   #own, one above, first, one below
   my_level = structure.orgstructure[org_name]['level']
   if my_level == 2: # 2 1 3
@@ -483,6 +484,8 @@ def fill_slide_2(org_name, tsg_ppt):
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
   my_percents = get_percent(my_orgs)
   slide = tsg_ppt.slides[1]
+  asdf_text = slide.placeholders[17]
+  asdf_text.text = org['long name']
   chart_data = ChartData()
   chart_data.categories= my_orgs #org_names
   series=chart_data.add_series('01', my_percents)
@@ -524,6 +527,8 @@ def fill_slide_3(org_name, org, tsg_ppt, diff=1): #, diff):
   #g: q2
   #h: q3
   slide = tsg_ppt.slides[2]
+  asdf_text = slide.placeholders[17]
+  asdf_text.text = org['long name']
   chart_data = ChartData()
   chart_data_2 =  ChartData()
   chart_data_3 =  ChartData()
@@ -749,11 +754,767 @@ def fill_slide_3(org_name, org, tsg_ppt, diff=1): #, diff):
     pic = slide.shapes.add_picture(img_path, left, top, height=height)
   return tsg_ppt
 
+def fill_slide_4(org_name, org, tsg_ppt, diff=1):
+  #1. kérdéshez minden org
+  #+ diff -- TODO
+
+  my_level = structure.orgstructure[org_name]['level']
+  if my_level == 2: # 2 1 3
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
+  elif my_level == 3: # 3 2 1 4
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
+  elif my_level == 4: # 4 3 1 5
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
+  elif my_level == 5: # 5 4 1
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
+
+  slide = tsg_ppt.slides[3]  
+  chart_data = ChartData()
+  chart_data.categories = my_orgs[::-1]
+
+  if len(my_orgs)==3: #n: orgs tömb
+    #nevek. 1: utolsó org
+    #  2: TSG
+    # 3: saját
+    #a[0]: utolsó org 1. kérdés 1+2 válasz
+    #b[0]: TSG 1. kérdés 1+2 válasz
+    #c[0] self, 1+2 válasz
+    chart_data.add_series('1', tuple([structure.orgstructure[my_orgs[-1]]['q1'][0]+structure.orgstructure[my_orgs[-1]]['q1'][1], structure.orgstructure[my_orgs[-2]]['q1'][0]+structure.orgstructure[my_orgs[-2]]['q1'][1], structure.orgstructure[my_orgs[-3]]['q1'][0]+structure.orgstructure[my_orgs[-3]]['q1'][1]]))
+    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2]]))
+    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4]]))
+    my_bar_plot_gap_width = 248
+  elif n==5:
+    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1]]))
+    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2]])) 
+    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4]]))
+    my_bar_plot_gap_width = 108
+  elif n==8:
+    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1]]))
+    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2]])) #(a[1], b[1], c[1], d[1], e[1], f[1], ii[1], ji[1]))
+    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4]])) #(a[2], b[2], c[2], d[2], e[2], f[2], ii[2], ji[2]))
+    my_bar_plot_gap_width = 33
+  elif n==9:  
+    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1]]))
+    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2]]))
+    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4]]))
+    my_bar_plot_gap_width = 23
+  elif n==11:  
+    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1], my_orgs[-10]['q1'][0]+my_orgs[-10]['q1'][1], my_orgs[-11]['q1'][0]+my_orgs[-11]['q1'][1]]))
+    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2], my_orgs[-10]['q1'][2], my_orgs[-11]['q1'][2]]))
+    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4], my_orgs[-10]['q1'][3]+my_orgs[-10]['q1'][4], my_orgs[-11]['q1'][3]+my_orgs[-11]['q1'][4]]))
+    my_bar_plot_gap_width = 13
+  elif n==13:  
+    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1], my_orgs[-10]['q1'][0]+my_orgs[-10]['q1'][1], my_orgs[-11]['q1'][0]+my_orgs[-11]['q1'][1], my_orgs[-12]['q1'][0]+my_orgs[-12]['q1'][1], my_orgs[-13]['q1'][0]+my_orgs[-13]['q1'][1]]))
+    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2], my_orgs[-10]['q1'][2], my_orgs[-11]['q1'][2], my_orgs[-12]['q1'][2], my_orgs[-13]['q1'][2]]))
+    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4], my_orgs[-10]['q1'][3]+my_orgs[-10]['q1'][4], my_orgs[-11]['q1'][3]+my_orgs[-11]['q1'][4], my_orgs[-12]['q1'][3]+my_orgs[-12]['q1'][4], my_orgs[-13]['q1'][3]+my_orgs[-13]['q1'][4]]))
+    my_bar_plot_gap_width = 13
+  elif n==14:  
+    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1], my_orgs[-10]['q1'][0]+my_orgs[-10]['q1'][1], my_orgs[-11]['q1'][0]+my_orgs[-11]['q1'][1], my_orgs[-12]['q1'][0]+my_orgs[-12]['q1'][1], my_orgs[-13]['q1'][0]+my_orgs[-13]['q1'][1], my_orgs[-14]['q1'][0]+my_orgs[-14]['q1'][1]]))
+    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2], my_orgs[-10]['q1'][2], my_orgs[-11]['q1'][2], my_orgs[-12]['q1'][2], my_orgs[-13]['q1'][2],  my_orgs[-14]['q1'][2]]))
+    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4], my_orgs[-10]['q1'][3]+my_orgs[-10]['q1'][4], my_orgs[-11]['q1'][3]+my_orgs[-11]['q1'][4], my_orgs[-12]['q1'][3]+my_orgs[-12]['q1'][4], my_orgs[-13]['q1'][3]+my_orgs[-13]['q1'][4], my_orgs[-14]['q1'][3]+my_orgs[-14]['q1'][4]]))
+    my_bar_plot_gap_width = 13
+  elif n==15:  
+    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1], my_orgs[-10]['q1'][0]+my_orgs[-10]['q1'][1], my_orgs[-11]['q1'][0]+my_orgs[-11]['q1'][1], my_orgs[-12]['q1'][0]+my_orgs[-12]['q1'][1], my_orgs[-13]['q1'][0]+my_orgs[-13]['q1'][1], my_orgs[-14]['q1'][0]+my_orgs[-14]['q1'][1], my_orgs[-15]['q1'][0]+my_orgs[-15]['q1'][1]]))
+    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2], my_orgs[-10]['q1'][2], my_orgs[-11]['q1'][2], my_orgs[-12]['q1'][2], my_orgs[-13]['q1'][2],  my_orgs[-14]['q1'][2], my_orgs[-15]['q1'][2]]))
+    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4], my_orgs[-10]['q1'][3]+my_orgs[-10]['q1'][4], my_orgs[-11]['q1'][3]+my_orgs[-11]['q1'][4], my_orgs[-12]['q1'][3]+my_orgs[-12]['q1'][4], my_orgs[-13]['q1'][3]+my_orgs[-13]['q1'][4], my_orgs[-14]['q1'][3]+my_orgs[-14]['q1'][4], my_orgs[-15]['q1'][3]+my_orgs[-15]['q1'][4]]))
+    my_bar_plot_gap_width = 13
+  elif n==16:  
+    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1], my_orgs[-10]['q1'][0]+my_orgs[-10]['q1'][1], my_orgs[-11]['q1'][0]+my_orgs[-11]['q1'][1], my_orgs[-12]['q1'][0]+my_orgs[-12]['q1'][1], my_orgs[-13]['q1'][0]+my_orgs[-13]['q1'][1], my_orgs[-14]['q1'][0]+my_orgs[-14]['q1'][1], my_orgs[-15]['q1'][0]+my_orgs[-15]['q1'][1], my_orgs[-16]['q1'][0]+my_orgs[-16]['q1'][1]]))
+    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2], my_orgs[-10]['q1'][2], my_orgs[-11]['q1'][2], my_orgs[-12]['q1'][2], my_orgs[-13]['q1'][2],  my_orgs[-14]['q1'][2], my_orgs[-15]['q1'][2], my_orgs[-16]['q1'][2]]))
+    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4], my_orgs[-10]['q1'][3]+my_orgs[-10]['q1'][4], my_orgs[-11]['q1'][3]+my_orgs[-11]['q1'][4], my_orgs[-12]['q1'][3]+my_orgs[-12]['q1'][4], my_orgs[-13]['q1'][3]+my_orgs[-13]['q1'][4], my_orgs[-14]['q1'][3]+my_orgs[-14]['q1'][4], my_orgs[-15]['q1'][3]+my_orgs[-15]['q1'][4], my_orgs[-16]['q1'][3]+my_orgs[-16]['q1'][4]]))
+    my_bar_plot_gap_width = 13
+
+  x,y,cx,cy = Inches(0.3), Inches(2.25), Cm(14.14), Cm(11.39)
+  graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
+  chart = graphic_frame.chart
+  value_axis = chart.value_axis
+  chart.plots[0].has_data_labels = True
+  data_labels = chart.plots[0].data_labels
+  bar_plot = chart.plots[0]
+  bar_plot.gap_width = my_bar_plot_gap_width
+  chart.has_legend = False
+  data_labels.font.size = Pt(12)
+  data_labels.number_format = '0'
+  data_labels.font.color.rgb = RGBColor(0, 0, 0)
+  data_labels.font.bold = True
+  category_axis = chart.category_axis
+  category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
+  category_axis.tick_labels.font.size = Pt(12)
+  value_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.major_tick_mark = XL_TICK_MARK.NONE
+  value_axis.major_tick_mark = XL_TICK_MARK.NONE
+  category_axis.has_major_gridlines = False
+  value_axis.has_major_gridlines = False
+  value_axis.visible = False
+    
+  for i in range(0, n):
+    be=10
+    if n==3:
+      t=7.34
+      he=3.55
+      if diff > 0:
+        img_path='zoldnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = "+" + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+	paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      elif diff < 0:
+        img_path='pirosnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+	pic = slide.shapes.add_picture(img_path, left, top, height=height)
+      	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      else:
+        img_path='keknyil.png'
+        left = Inches(6.25)
+        height = Cm(0.43)
+        top = Cm(t+0.33+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+       	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t-0.02+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+    elif n==5:
+      t=6.66
+      he=2.12
+      if diff > 0:
+        img_path='zoldnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = "+" + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      elif diff < 0:
+        img_path='pirosnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+	pic = slide.shapes.add_picture(img_path, left, top, height=height)
+      	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      else:
+        img_path='keknyil.png'
+        left = Inches(6.25)
+        height = Cm(0.43)
+        top = Cm(t+0.2+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+       	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+    elif n==8:
+      t=6.26
+      he=1.32
+      if diff > 0:
+        img_path='zoldnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = "+" + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      elif diff < 0:
+        img_path='pirosnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+	pic = slide.shapes.add_picture(img_path, left, top, height=height)
+      	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      else:
+        img_path='keknyil.png'
+        left = Inches(6.25)
+        height = Cm(0.43)
+        top = Cm(t+0.2+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+       	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+    elif n==9:
+      t=6.18
+      he=1.18
+      if diff > 0:
+        img_path='zoldnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = "+" + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      elif diff < 0:
+        img_path='pirosnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+	pic = slide.shapes.add_picture(img_path, left, top, height=height)
+      	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      else:
+        img_path='keknyil.png'
+        left = Inches(6.25)
+        height = Cm(0.43)
+        top = Cm(t+0.2+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+       	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Inches (0.425)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Inches(0.39)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+    elif n==11:
+      t=6.15
+      he=0.97
+      if diff > 0:
+        img_path='zoldnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(0.9)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = "+" + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      elif diff < 0:
+        img_path='pirosnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+	pic = slide.shapes.add_picture(img_path, left, top, height=height)
+      	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(0.9)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      else:
+        img_path='keknyil.png'
+        left = Inches(6.25)
+        height = Cm(0.43)
+        top = Cm(t+0.2+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+       	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(0.9)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+    elif n==13:
+      t=6.15
+      he=0.815
+      if diff > 0:
+        img_path='zoldnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(0.8)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = "+" + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      elif diff < 0:
+        img_path='pirosnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+	pic = slide.shapes.add_picture(img_path, left, top, height=height)
+      	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(0.8)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      else:
+        img_path='keknyil.png'
+        left = Inches(6.25)
+        height = Cm(0.43)
+        top = Cm(t+0.2+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+       	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(0.8)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+    elif n==14:
+      be=10
+      ch=0.68
+      t=6.15
+      he=0.76
+      if diff > 0:
+        img_path='zoldnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(ch)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = "+" + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      elif diff < 0:
+        img_path='pirosnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+	pic = slide.shapes.add_picture(img_path, left, top, height=height)
+      	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(ch)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      else:
+        img_path='keknyil.png'
+        left = Inches(6.25)
+        height = Cm(0.43)
+        top = Cm(t+0.2+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+       	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(ch)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+    elif n==15:
+      be=10
+      ch=0.68
+      t=6.12
+      he=0.71
+      if diff > 0:
+        img_path='zoldnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(ch)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = "+" + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      elif diff < 0:
+        img_path='pirosnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+	pic = slide.shapes.add_picture(img_path, left, top, height=height)
+      	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(ch)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      else:
+        img_path='keknyil.png'
+        left = Inches(6.25)
+        height = Cm(0.43)
+        top = Cm(t+0.2+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+       	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(ch)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+    elif n==16:
+      be=10
+      ch=0.68
+      t=6.1
+      he=0.665
+      if diff > 0:
+        img_path='zoldnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(ch)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = "+" + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      elif diff < 0:
+        img_path='pirosnyil.png'
+        left = Inches(6.25)
+        height = Cm(0.6)
+        top = Cm(t+i*he)
+	pic = slide.shapes.add_picture(img_path, left, top, height=height)
+      	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(ch)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      else:
+        img_path='keknyil.png'
+        left = Inches(6.25)
+        height = Cm(0.43)
+        top = Cm(t+0.2+i*he)
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+       	rows=1
+        cols=1
+        left = Inches(5.83)
+        top = Cm(t+i*he)
+        width = Inches(0.8)
+        height = Cm(ch)# set column widths
+        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+        table.columns[0].width = Cm(1)
+        table.cell(0, 0).text = " " + str(diff)
+  	cell = table.rows[0].cells[0]
+        paragraph = cell.textframe.paragraphs[0]
+        paragraph.font.size = Pt(be)
+        paragraph.font.color.rgb = RGBColor(255, 255, 255)
+        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+  return tsg_ppt   
+
+
 def create_ppt(org_name, org):
   tsg_ppt=Presentation('tsg_templ_uj.pptx')
   fill_slide_1(org, tsg_ppt)
-  fill_slide_2(org_name, tsg_ppt)
+  fill_slide_2(org_name, org, tsg_ppt)
   fill_slide_3(org_name, org, tsg_ppt)
+  fill_slide_4(org_name, org, tsg_ppt)
   tsg_ppt.save("out1/"+(org_name.replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
 
 
