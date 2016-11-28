@@ -1242,14 +1242,14 @@ def fill_slide_3(tsg_ppt, n):
         cell.fill.fore_color.rgb = RGBColor(124,124,124)
   return tsg_ppt   
 
-def fill_slide_4_to_10(tsg_ppt, a, n):
-  slide = tsg_ppt.slides[a]
+def fill_slide_4_to_10(tsg_ppt, s, n):
+  slide = tsg_ppt.slides[s]
   chart_data = ChartData()
-  chart_data.categories = ['1', '2', '3']
+  chart_data.categories = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
   chart_data.add_series('1', (a[0], b[0], c[0], d[0], e[0], f[0], ii[0], ji[0], k[0]))
   chart_data.add_series('2', (a[1], b[1], c[1], d[1], e[1], f[1], ii[1], ji[1], k[1]))
   chart_data.add_series('3', (a[2], b[2], c[2], d[2], e[2], f[2], ii[2], ji[2], k[2]))
-  x,y,cx,cy = Inches(0.3), Inches(2.25), Cm(14.14), Cm(11.39)
+  x,y,cx,cy = Inches(0.3), Inches(2.25), Cm(23.34), Cm(11.39)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
@@ -1272,6 +1272,43 @@ def fill_slide_4_to_10(tsg_ppt, a, n):
   value_axis.has_major_gridlines = False
   value_axis.visible = False
   return tsg_ppt
+
+def fill_slide_11_12(tsg_ppt, s, n):
+  slide = tsg_ppt.slides[s]
+  chart_data = ChartData()
+  chart_data.categories = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+  chart_data.add_series('1', (a2[0], b2[0], c2[0], d2[0], e2[0], f2[0], ii2[0], ji2[0], k2[0]))
+  chart_data.add_series('2', (a2[1], b2[1], c2[1], d2[1], e2[1], f2[1], ii2[1], ji2[1], k2[1]))
+  chart_data.add_series('3', (a2[2], b2[2], c2[2], d2[2], e2[2], f2[2], ii2[2], ji2[2], k2[2]))
+  chart_data.add_series('4', (a2[3], b2[3], c2[3], d2[3], e2[3], f2[3], ii2[3], ji2[3], k2[3]))
+  chart_data.add_series('5', (a2[4], b2[4], c2[4], d2[4], e2[4], f2[4], ii2[4], ji2[4], k2[4]))
+  x,y,cx,cy = Inches(0.3), Inches(2.25), Cm(23.34), Cm(11.39)
+  graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
+  chart = graphic_frame.chart
+  value_axis = chart.value_axis
+  chart.plots[0].has_data_labels = True
+  data_labels = chart.plots[0].data_labels
+  data_labels.font.bold = True
+  bar_plot = chart.plots[0]
+  bar_plot.gap_width = 13
+  chart.has_legend = False
+  data_labels.font.size = Pt(12)
+  data_labels.number_format = '0'
+  data_labels.font.color.rgb = RGBColor(0, 0, 0)
+  category_axis = chart.category_axis
+  category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
+  category_axis.tick_labels.font.size = Pt(12)
+  value_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.major_tick_mark = XL_TICK_MARK.NONE
+  value_axis.major_tick_mark = XL_TICK_MARK.NONE
+  category_axis.has_major_gridlines = False
+  value_axis.has_major_gridlines = False
+  value_axis.visible = False
+  return tsg_ppt
+
+
+
+
 ############MAIN#####################  
 tsg_ppt=Presentation('tsg_templ_uj.pptx')
 orglongname = "Verkauf Deutschland"
@@ -1279,25 +1316,37 @@ orgshortname = "VLD"
 q1 = ("20", "30", "50")
 
 h = 1.6
-a = [30, 40, 30]
-b = [20, 30, 50]
-c = [20, 59.4, 20.6]
-d = [34, 16, 50]
-e = [10, 20, 70]
-f = [15, 75, 10]
+a = (30, 40, 30)
+b = (0, 30, 50)
+c = (20, 59.4, 20.6)
+d = (34, 16, 50)
+e = (10, 20, 70)
+f = (15, 75, 10)
 g = [34, 26, 10, 20 ,10 ]
 h = [15, 24, 11, 30, 20 ]
-ii = [18, 22, 70]
-ji = [20, 30, 50]
-k = [30,40,30]
-l = [20,30, 50]
-m = [20,59.4,20.6]
+ii = (18, 22, 70)
+ji = (20, 30, 50)
+k = (30,40,30)
+l = (20,30, 50)
+m = (20,59.4,20.6)
 nn = [34, 16, 50]
 o = [10, 20, 70]
 p = [15, 75, 10]
 q = [34, 26, 40]
 r = [15, 24, 61]
 s = [18, 22, 70]
+a2 = (30, 40, 10, 10, 10)
+b2 = (0, 30, 20, 10, 20)
+c2 = (20, 59.4, 10, 10, 0.6)
+d2 = (34, 16, 15, 25, 10)
+e2 = (10, 20, 30, 25, 15)
+f2 = (15, 75, 2, 2, 6)
+g2 = [34, 26, 10, 20 ,10 ]
+h2 = [15, 24, 11, 30, 20 ]
+ii2 = (18, 22, 30, 22, 18)
+ji2 = (20, 30, 13, 23, 4)
+k2 = (30,40,3,7, 20)
+
 org_names = ["TSG", "GF OG", "VLD", "RVL N", "RVL O", "RVL W", "RVL M", "RVL SW", "RVL S"] #tomb1
 org_percents = (("23", "22", "55"), ("10", "40", "50"), ("25", "35", "40"))
 org_participants = ("40", "42", "33", "23", "55", "15", "67", "89", "56")
@@ -1309,6 +1358,9 @@ fill_slide_0_and_titles(tsg_ppt, orglongname)
 fill_slide_1(tsg_ppt, org_names, org_participants)  
 fill_slide_2(tsg_ppt, diff)
 fill_slide_3(tsg_ppt, n)
-fill_slide_4_to_10(tsg_ppt, 4, n)
+for i in range(4, 10):
+  fill_slide_4_to_10(tsg_ppt, i, n)
+for i in range(10, 12):
+  fill_slide_11_12(tsg_ppt, i, n)
 tsg_ppt.save("outteszt/"+"Abkurzung_der_OrgEinheit_TSG_Leadership_Survey"+".pptx")
 
