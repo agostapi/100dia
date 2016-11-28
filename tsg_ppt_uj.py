@@ -45,6 +45,7 @@ from pptx.util import Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.dml import MSO_THEME_COLOR
 from pptx.enum.chart import XL_LEGEND_POSITION
+from pptx.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE
 import time
 import structure
 import orgs
@@ -413,31 +414,31 @@ filled_list_1,my_sums_1,my_means_1 = structure.count_percent(list_full_1, level1
 
 def fill_in_orgstruct_questions():
   for org in structure.list1:
-    for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+    for ij, qq in enumerate(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_1[structure.list1.index(org)][ij]
     structure.orgstructure[org]['filled_percent'] = round(float(level1_filledin_users[structure.list1.index(org)]) / float(level1_numbers[structure.list1.index(org)])*100)
     structure.orgstructure[org]['filled_in_users'] = level1_filledin_users[structure.list1.index(org)]
 
   for org in structure.list2:
-    for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+    for ij, qq in enumerate(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_2[structure.list2.index(org)][ij]
     structure.orgstructure[org]['filled_percent'] = round(float(level2_filledin_users[structure.list2.index(org)]) / float(level2_numbers[structure.list2.index(org)])*100)
     structure.orgstructure[org]['filled_in_users'] = level2_filledin_users[structure.list2.index(org)]
 
   for org in structure.list3:
-    for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+    for ij, qq in enumerate(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_3[structure.list3.index(org)][ij]
     structure.orgstructure[org]['filled_percent'] = round(float(level3_filledin_users[structure.list3.index(org)]) / float(level3_numbers[structure.list3.index(org)])*100)
     structure.orgstructure[org]['filled_in_users'] = level3_filledin_users[structure.list3.index(org)]
 
   for org in structure.list4:
-    for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+    for ij, qq in enumerate(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_4[structure.list4.index(org)][ij]
     structure.orgstructure[org]['filled_percent'] = round(float(level4_filledin_users[structure.list4.index(org)]) / float(level4_numbers[structure.list4.index(org)])*100)
     structure.orgstructure[org]['filled_in_users'] = level4_filledin_users[structure.list4.index(org)]
 
   for org in structure.list5:
-    for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+    for ij, qq in enumerate(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_5[structure.list5.index(org)][ij]
     structure.orgstructure[org]['filled_percent'] = round(float(level5_filledin_users[structure.list5.index(org)]) / float(level5_numbers[structure.list5.index(org)])*100)
     structure.orgstructure[org]['filled_in_users'] = level5_filledin_users[structure.list5.index(org)]
@@ -707,12 +708,12 @@ def fill_slide_3(org_name, org, tsg_ppt, diff=1): #, diff):
   height = Inches (0.425)# set column widths
   table = slide.shapes.add_table(rows, cols, left, top, width, height).table
   table.columns[0].width = Inches(0.39)
-  if diff[0] > 0:
-    table.cell(0, 0).text = "+" + str(diff[0])
-  elif diff[0] < 0:
-    table.cell(0, 0).text = " " + str(diff[0])
-  elif diff[0]==0:
-    table.cell(0, 0).text = " " + str(diff[0])
+  if diff > 0:
+    table.cell(0, 0).text = "+" + str(diff)
+  elif diff < 0:
+    table.cell(0, 0).text = " " + str(diff)
+  elif diff==0:
+    table.cell(0, 0).text = " " + str(diff)
   left = Inches(6.25)
   height = Inches(0.3)
   top = Inches(2)
@@ -723,17 +724,17 @@ def fill_slide_3(org_name, org, tsg_ppt, diff=1): #, diff):
   paragraph = cell.textframe.paragraphs[0]
   paragraph.font.size = Pt(12)
   paragraph.font.color.rgb = RGBColor(255, 255, 255)
-  cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+  #cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
   cell.vertical_anchor = MSO_ANCHOR.MIDDLE
   cell.fill.solid()
   cell.fill.fore_color.rgb = RGBColor(124,124,124)
-  if diff[0] > 0:
+  if diff > 0:
     img_path='zoldnyil.png'
     left = Inches(6.25)
     height = Cm(0.6)
     top = Inches(2)
     pic = slide.shapes.add_picture(img_path, left, top, height=height)
-  elif diff[0] < 0:
+  elif diff < 0:
     img_path='pirosnyil.png'
     left = Inches(6.25)
     height = Cm(0.6)
@@ -751,7 +752,7 @@ def create_ppt(org_name, org):
   tsg_ppt=Presentation('tsg_templ_uj.pptx')
   fill_slide_1(org, tsg_ppt)
   fill_slide_2(org_name, tsg_ppt)
-  #fill_slide_3(org_name, org, tsg_ppt)
+  fill_slide_3(org_name, org, tsg_ppt)
   tsg_ppt.save("out1/"+(org_name.replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
 
 
