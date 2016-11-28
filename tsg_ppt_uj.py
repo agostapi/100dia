@@ -39,6 +39,7 @@ from pptx.enum.chart import XL_TICK_MARK
 from pptx.enum.chart import XL_LABEL_POSITION
 from pptx.util import Inches
 from pptx.util import Pt
+from pptx.util import Cm
 from pptx.dml.color import RGBColor
 from pptx.util import Pt
 from pptx.dml.color import RGBColor
@@ -414,42 +415,112 @@ def fill_in_orgstruct_questions():
   for org in structure.list1:
     for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_1[structure.list1.index(org)][ij]
+    structure.orgstructure[org]['filled_percent'] = round(float(level1_filledin_users[structure.list1.index(org)]) / float(level1_numbers[structure.list1.index(org)])*100,2)
 
   for org in structure.list2:
     for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_2[structure.list2.index(org)][ij]
+    structure.orgstructure[org]['filled_percent'] = round(float(level2_filledin_users[structure.list2.index(org)]) / float(level2_numbers[structure.list2.index(org)])*100,2)
 
   for org in structure.list3:
     for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_3[structure.list3.index(org)][ij]
+    structure.orgstructure[org]['filled_percent'] = round(float(level3_filledin_users[structure.list3.index(org)]) / float(level3_numbers[structure.list3.index(org)])*100,2)
 
   for org in structure.list4:
     for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_4[structure.list4.index(org)][ij]
+    structure.orgstructure[org]['filled_percent'] = round(float(level4_filledin_users[structure.list4.index(org)]) / float(level4_numbers[structure.list4.index(org)])*100,2)
 
   for org in structure.list5:
     for ij, qq in enumerate(['q1', 'q1', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
       structure.orgstructure[org][qq] = filled_list_5[structure.list5.index(org)][ij]
+    structure.orgstructure[org]['filled_percent'] = round(float(level5_filledin_users[structure.list5.index(org)]) / float(level5_numbers[structure.list5.index(org)])*100,2)
 
+#print(structure.orgstructure)
 
 fill_in_orgstruct_questions()
 
+def get_percent(org_list):
+  my_percent_list = []
+  for orgs in org_list:
+    my_percent_list.append(structure.orgstructure[orgs]['filled_percent'])
+  return my_percent_list
+
 def fill_slide_1(org, tsg_ppt):
   #print(org)
-  orglongname = structure.orgstructure[org]['long name'] #orgs.org_long[orgs.org_short.index(org)]
+  orglongname = org['long name'] #orgs.org_long[orgs.org_short.index(org)]
   first_slide = tsg_ppt.slides[0]
   org_1 = first_slide.placeholders[1]
   org_1.text = orglongname + "\n"+(time.strftime("%d.%m.%Y"))
 
-def create_ppt(org):
+def asdftemp(org_name, tsg_ppt):
+  my_level = structure.orgstructure[org_name]['level']
+  if my_level == 2: # 2 1 3
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
+    print(my_orgs)
+
+def fill_slide_2(org_name, tsg_ppt):
+  #own, one above, first, one below
+  my_level = structure.orgstructure[org_name]['level']
+  if my_level == 2: # 2 1 3
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
+  elif my_level == 3: # 3 2 1 4
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
+  elif my_level == 4: # 4 3 1 5
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
+  elif my_level == 5: # 5 4 1
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
+  my_percents = get_percent(my_orgs)
+  slide = tsg_ppt.slides[1]
+  chart_data = ChartData()
+  chart_data.categories= my_orgs #org_names
+  series=chart_data.add_series('01', my_percents)
+  x,y,cx,cy = Inches(0.3), Inches(2.0), Cm(13.7), Cm(11.9)
+  graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_CLUSTERED, x, y, cx, cy, chart_data)
+  chart = graphic_frame.chart
+  chart.series[0].fill.solid()
+  chart.series[0].fill.fore_color.rgb = RGBColor(82, 154, 214)
+  value_axis = chart.value_axis
+  value_axis.maximum_scale = 100.0
+  plot = chart.plots[0]
+  plot.has_data_labels = True
+  data_labels = plot.data_labels
+  data_labels.font.size = Pt(12)
+  data_labels.font.bold = True
+  data_labels.font.color.rgb = RGBColor(0, 0, 0)
+  data_labels.position = XL_LABEL_POSITION.INSIDE_BASE
+  category_axis = chart.category_axis
+  category_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.tick_labels.font.size = Pt(12)
+  bar_plot = chart.plots[0]
+  #bar_plot.ChartFormat()
+  bar_plot.gap_width = 20
+  bar_plot.overlap = -20
+  value_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.major_tick_mark = XL_TICK_MARK.NONE
+  value_axis.major_tick_mark = XL_TICK_MARK.NONE
+  category_axis.has_major_gridlines = False
+  value_axis.has_major_gridlines = False
+  value_axis.visible = False
+  #bar_plot.fill.solid()
+  #bar_plot.fill.fore_color.rgb=RGBColor(0,0,0)
+
+def create_ppt(org_name, org):
   tsg_ppt=Presentation('tsg_templ_uj.pptx')
   fill_slide_1(org, tsg_ppt)
-  tsg_ppt.save("out1/"+(org.replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
+  fill_slide_2(org_name, tsg_ppt)
+  tsg_ppt.save("out1/"+(org_name.replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
 
 
 #create ppts from new structure:
 for org in structure.orgstructure.keys():
-  create_ppt(org)
+  if org != 'TSG':
+    create_ppt(org, structure.orgstructure[org])
 
 #print(level1_users)
 #print(structure.orgstructure)
