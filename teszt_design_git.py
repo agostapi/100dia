@@ -59,11 +59,11 @@ def fill_slide_0_and_titles(tsg_ppt, orglongname):
 
 # fill the first slide with the percents of the participants pro org
 
-def fill_slide_1(tsg_ppt, org_names, org_percents):
+def fill_slide_1(tsg_ppt, org_names, org_participants):
   slide = tsg_ppt.slides[1]
   chart_data = ChartData()
   chart_data.categories= org_names
-  series=chart_data.add_series('01', org_percents)
+  series=chart_data.add_series('01', org_participants)
   x,y,cx,cy = Inches(0.3), Inches(2.0), Cm(13.7), Cm(11.9)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_CLUSTERED, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
@@ -1242,20 +1242,46 @@ def fill_slide_3(tsg_ppt, n):
         cell.fill.fore_color.rgb = RGBColor(124,124,124)
   return tsg_ppt   
 
-def fill_slide_4_to_10(tsg_ppt, n)
+def fill_slide_4_to_10(tsg_ppt, a, n):
   slide = tsg_ppt.slides[a]
+  chart_data = ChartData()
+  chart_data.categories = ['1', '2', '3']
+  chart_data.add_series('1', (a[0], b[0], c[0], d[0], e[0], f[0], ii[0], ji[0], k[0]))
+  chart_data.add_series('2', (a[1], b[1], c[1], d[1], e[1], f[1], ii[1], ji[1], k[1]))
+  chart_data.add_series('3', (a[2], b[2], c[2], d[2], e[2], f[2], ii[2], ji[2], k[2]))
+  x,y,cx,cy = Inches(0.3), Inches(2.25), Cm(14.14), Cm(11.39)
+  graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
+  chart = graphic_frame.chart
+  value_axis = chart.value_axis
+  chart.plots[0].has_data_labels = True
+  data_labels = chart.plots[0].data_labels
+  data_labels.font.bold = True
+  bar_plot = chart.plots[0]
+  bar_plot.gap_width = 13
+  chart.has_legend = False
+  data_labels.font.size = Pt(12)
+  data_labels.number_format = '0'
+  data_labels.font.color.rgb = RGBColor(0, 0, 0)
+  category_axis = chart.category_axis
+  category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
+  category_axis.tick_labels.font.size = Pt(12)
+  value_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.major_tick_mark = XL_TICK_MARK.NONE
+  value_axis.major_tick_mark = XL_TICK_MARK.NONE
+  category_axis.has_major_gridlines = False
+  value_axis.has_major_gridlines = False
+  value_axis.visible = False
+  return tsg_ppt
 ############MAIN#####################  
 tsg_ppt=Presentation('tsg_templ_uj.pptx')
 orglongname = "Verkauf Deutschland"
 orgshortname = "VLD"
-org_names = ["TSG", "GF OG", "VLD", "RVL N", "RVL O", "RVL W", "RVL M", "RVL SW", "RVL S"] #tomb1
-org_percents = ("41", "40", "40", "27", "53", "37", "28", "50", "44")
 q1 = ("20", "30", "50")
-n = 16
+
 h = 1.6
-a = [30,40,30]
-b = [20,30, 50]
-c = [20,59.4,20.6]
+a = [30, 40, 30]
+b = [20, 30, 50]
+c = [20, 59.4, 20.6]
 d = [34, 16, 50]
 e = [10, 20, 70]
 f = [15, 75, 10]
@@ -1272,12 +1298,17 @@ p = [15, 75, 10]
 q = [34, 26, 40]
 r = [15, 24, 61]
 s = [18, 22, 70]
-
+org_names = ["TSG", "GF OG", "VLD", "RVL N", "RVL O", "RVL W", "RVL M", "RVL SW", "RVL S"] #tomb1
+org_percents = (("23", "22", "55"), ("10", "40", "50"), ("25", "35", "40"))
+org_participants = ("40", "42", "33", "23", "55", "15", "67", "89", "56")
+n = 9#len(org_names)
+print(n)
 diff = [1, 1, 0, -1, 9, 2, -3, 2, 0, 1, -1, 5, -8, -14, 5, 0] 
 #picture_insert(tsg_ppt, 3, n, h)
 fill_slide_0_and_titles(tsg_ppt, orglongname)
-fill_slide_1(tsg_ppt, org_names, org_percents)  
+fill_slide_1(tsg_ppt, org_names, org_participants)  
 fill_slide_2(tsg_ppt, diff)
 fill_slide_3(tsg_ppt, n)
+fill_slide_4_to_10(tsg_ppt, 4, n)
 tsg_ppt.save("outteszt/"+"Abkurzung_der_OrgEinheit_TSG_Leadership_Survey"+".pptx")
 
