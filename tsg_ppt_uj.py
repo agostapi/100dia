@@ -435,13 +435,14 @@ def fill_in_orgstruct_questions():
 fill_in_orgstruct_questions()
 
 def fill_slide_1(org, tsg_ppt):
-  orglongname = orgs.org_long[orgs.org_short.index(org)]
+  #print(org)
+  orglongname = structure.orgstructure[org]['long name'] #orgs.org_long[orgs.org_short.index(org)]
   first_slide = tsg_ppt.slides[0]
   org_1 = first_slide.placeholders[1]
   org_1.text = orglongname + "\n"+(time.strftime("%d.%m.%Y"))
 
 def create_ppt(org):
-  tsg_ppt=Presentation('tsg_templ.pptx')
+  tsg_ppt=Presentation('tsg_templ_uj.pptx')
   fill_slide_1(org, tsg_ppt)
   tsg_ppt.save("out1/"+(org.replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
 
