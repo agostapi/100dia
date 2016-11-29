@@ -71,9 +71,17 @@ def fill_slide_1(tsg_ppt, org_names, org_participants):
   chart.series[0].fill.fore_color.rgb = RGBColor(82, 154, 214)
   value_axis = chart.value_axis
   value_axis.maximum_scale = 100.0
+  #for i, asdf in enumerate(org_participants):
   plot = chart.plots[0]
   plot.has_data_labels = True
   data_labels = plot.data_labels
+  #  if asdf == "0":
+  data_labels.has_text_frame = True
+  #text_frame = plot.text.text_frame
+  #    text_frame.clear()
+  #  else:
+  #    data_labels.has_text_frame = True 
+ # chart.plots[0][0].has_data_labels = False
   data_labels.font.size = Pt(12)
   data_labels.font.bold = True
   data_labels.font.color.rgb = RGBColor(0, 0, 0)
@@ -412,7 +420,7 @@ def fill_slide_3(tsg_ppt, n):
   elif n==9:  
     slide = tsg_ppt.slides[3]  
     chart_data = ChartData()
-    chart_data.categories = ['1', '2', '3']
+    chart_data.categories = org_names
     chart_data.add_series('1', (a[0], b[0], c[0], d[0], e[0], f[0], ii[0], ji[0], k[0]))
     chart_data.add_series('2', (a[1], b[1], c[1], d[1], e[1], f[1], ii[1], ji[1], k[1]))
     chart_data.add_series('3', (a[2], b[2], c[2], d[2], e[2], f[2], ii[2], ji[2], k[2]))
@@ -1245,7 +1253,7 @@ def fill_slide_3(tsg_ppt, n):
 def fill_slide_4_to_10(tsg_ppt, s, n):
   slide = tsg_ppt.slides[s]
   chart_data = ChartData()
-  chart_data.categories = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+  chart_data.categories = org_names
   chart_data.add_series('1', (a[0], b[0], c[0], d[0], e[0], f[0], ii[0], ji[0], k[0]))
   chart_data.add_series('2', (a[1], b[1], c[1], d[1], e[1], f[1], ii[1], ji[1], k[1]))
   chart_data.add_series('3', (a[2], b[2], c[2], d[2], e[2], f[2], ii[2], ji[2], k[2]))
@@ -1276,7 +1284,7 @@ def fill_slide_4_to_10(tsg_ppt, s, n):
 def fill_slide_11_12(tsg_ppt, s, n):
   slide = tsg_ppt.slides[s]
   chart_data = ChartData()
-  chart_data.categories = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+  chart_data.categories = org_names
   chart_data.add_series('1', (a2[0], b2[0], c2[0], d2[0], e2[0], f2[0], ii2[0], ji2[0], k2[0]))
   chart_data.add_series('2', (a2[1], b2[1], c2[1], d2[1], e2[1], f2[1], ii2[1], ji2[1], k2[1]))
   chart_data.add_series('3', (a2[2], b2[2], c2[2], d2[2], e2[2], f2[2], ii2[2], ji2[2], k2[2]))
@@ -1311,8 +1319,8 @@ def fill_slide_11_12(tsg_ppt, s, n):
 
 ############MAIN#####################  
 tsg_ppt=Presentation('tsg_templ_uj.pptx')
-orglongname = "Verkauf Deutschland"
-orgshortname = "VLD"
+orglongname = "Ganz Name der OrgEinheit"
+orgshortname = "AbkürzDerOrgEinheit"
 q1 = ("20", "30", "50")
 
 h = 1.6
@@ -1347,9 +1355,9 @@ ii2 = (18, 22, 30, 22, 18)
 ji2 = (20, 30, 13, 23, 4)
 k2 = (30,40,3,7, 20)
 
-org_names = ["TSG", "GF OG", "VLD", "RVL N", "RVL O", "RVL W", "RVL M", "RVL SW", "RVL S"] #tomb1
-org_percents = (("23", "22", "55"), ("10", "40", "50"), ("25", "35", "40"))
-org_participants = ("40", "42", "33", "23", "55", "15", "67", "89", "56")
+org_names = ["Child6", "Child5", "Child4", "Child3", "Child2", "Child1", "TSG", "Parent", "Aktual" ] #tomb1
+org_percents = (("0", "22", "55"), ("10", "40", "50"), ("25", "35", "40"))
+org_participants = ("40", "42", "33", "23", "55", "15", "67", "89", "0")
 n = 9#len(org_names)
 print(n)
 diff = [1, 1, 0, -1, 9, 2, -3, 2, 0, 1, -1, 5, -8, -14, 5, 0] 
