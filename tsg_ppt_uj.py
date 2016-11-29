@@ -754,6 +754,27 @@ def fill_slide_3(org_name, org, tsg_ppt, diff=1): #, diff):
     pic = slide.shapes.add_picture(img_path, left, top, height=height)
   return tsg_ppt
 
+def series_from_orglist_1(orglist, question):
+  lista = tuple()
+  for my_org in orglist[::-1]:
+    lista = lista + (structure.orgstructure[my_org][question][0] + structure.orgstructure[my_org][question][1], )
+  return lista
+
+
+def series_from_orglist_2(orglist, question):
+  lista = tuple()
+  for my_org in orglist[::-1]:
+    lista = lista + (structure.orgstructure[my_org][question][2], )
+  return lista
+
+
+def series_from_orglist_3(orglist, question):
+  lista = tuple()
+  for my_org in orglist[::-1]:
+    lista = lista + (structure.orgstructure[my_org][question][3] + structure.orgstructure[my_org][question][4], )
+  return lista
+
+
 def fill_slide_4(org_name, org, tsg_ppt, diff=1):
   #1. kérdéshez minden org
   #+ diff -- TODO
@@ -771,10 +792,14 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
   elif my_level == 5: # 5 4 1
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
 
+  n = len(my_orgs)
   slide = tsg_ppt.slides[3]  
   chart_data = ChartData()
   chart_data.categories = my_orgs[::-1]
-
+  chart_data.add_series('1', series_from_orglist_1(my_orgs, 'q1'))
+  chart_data.add_series('2', series_from_orglist_2(my_orgs, 'q1'))
+  chart_data.add_series('3', series_from_orglist_3(my_orgs, 'q1'))
+  
   if len(my_orgs)==3: #n: orgs tömb
     #nevek. 1: utolsó org
     #  2: TSG
@@ -782,49 +807,22 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
     #a[0]: utolsó org 1. kérdés 1+2 válasz
     #b[0]: TSG 1. kérdés 1+2 válasz
     #c[0] self, 1+2 válasz
-    chart_data.add_series('1', tuple([structure.orgstructure[my_orgs[-1]]['q1'][0]+structure.orgstructure[my_orgs[-1]]['q1'][1], structure.orgstructure[my_orgs[-2]]['q1'][0]+structure.orgstructure[my_orgs[-2]]['q1'][1], structure.orgstructure[my_orgs[-3]]['q1'][0]+structure.orgstructure[my_orgs[-3]]['q1'][1]]))
-    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2]]))
-    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4]]))
     my_bar_plot_gap_width = 248
   elif n==5:
-    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1]]))
-    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2]])) 
-    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4]]))
     my_bar_plot_gap_width = 108
   elif n==8:
-    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1]]))
-    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2]])) #(a[1], b[1], c[1], d[1], e[1], f[1], ii[1], ji[1]))
-    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4]])) #(a[2], b[2], c[2], d[2], e[2], f[2], ii[2], ji[2]))
     my_bar_plot_gap_width = 33
-  elif n==9:  
-    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1]]))
-    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2]]))
-    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4]]))
+  elif n==9:
     my_bar_plot_gap_width = 23
   elif n==11:  
-    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1], my_orgs[-10]['q1'][0]+my_orgs[-10]['q1'][1], my_orgs[-11]['q1'][0]+my_orgs[-11]['q1'][1]]))
-    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2], my_orgs[-10]['q1'][2], my_orgs[-11]['q1'][2]]))
-    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4], my_orgs[-10]['q1'][3]+my_orgs[-10]['q1'][4], my_orgs[-11]['q1'][3]+my_orgs[-11]['q1'][4]]))
     my_bar_plot_gap_width = 13
   elif n==13:  
-    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1], my_orgs[-10]['q1'][0]+my_orgs[-10]['q1'][1], my_orgs[-11]['q1'][0]+my_orgs[-11]['q1'][1], my_orgs[-12]['q1'][0]+my_orgs[-12]['q1'][1], my_orgs[-13]['q1'][0]+my_orgs[-13]['q1'][1]]))
-    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2], my_orgs[-10]['q1'][2], my_orgs[-11]['q1'][2], my_orgs[-12]['q1'][2], my_orgs[-13]['q1'][2]]))
-    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4], my_orgs[-10]['q1'][3]+my_orgs[-10]['q1'][4], my_orgs[-11]['q1'][3]+my_orgs[-11]['q1'][4], my_orgs[-12]['q1'][3]+my_orgs[-12]['q1'][4], my_orgs[-13]['q1'][3]+my_orgs[-13]['q1'][4]]))
     my_bar_plot_gap_width = 13
   elif n==14:  
-    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1], my_orgs[-10]['q1'][0]+my_orgs[-10]['q1'][1], my_orgs[-11]['q1'][0]+my_orgs[-11]['q1'][1], my_orgs[-12]['q1'][0]+my_orgs[-12]['q1'][1], my_orgs[-13]['q1'][0]+my_orgs[-13]['q1'][1], my_orgs[-14]['q1'][0]+my_orgs[-14]['q1'][1]]))
-    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2], my_orgs[-10]['q1'][2], my_orgs[-11]['q1'][2], my_orgs[-12]['q1'][2], my_orgs[-13]['q1'][2],  my_orgs[-14]['q1'][2]]))
-    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4], my_orgs[-10]['q1'][3]+my_orgs[-10]['q1'][4], my_orgs[-11]['q1'][3]+my_orgs[-11]['q1'][4], my_orgs[-12]['q1'][3]+my_orgs[-12]['q1'][4], my_orgs[-13]['q1'][3]+my_orgs[-13]['q1'][4], my_orgs[-14]['q1'][3]+my_orgs[-14]['q1'][4]]))
     my_bar_plot_gap_width = 13
   elif n==15:  
-    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1], my_orgs[-10]['q1'][0]+my_orgs[-10]['q1'][1], my_orgs[-11]['q1'][0]+my_orgs[-11]['q1'][1], my_orgs[-12]['q1'][0]+my_orgs[-12]['q1'][1], my_orgs[-13]['q1'][0]+my_orgs[-13]['q1'][1], my_orgs[-14]['q1'][0]+my_orgs[-14]['q1'][1], my_orgs[-15]['q1'][0]+my_orgs[-15]['q1'][1]]))
-    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2], my_orgs[-10]['q1'][2], my_orgs[-11]['q1'][2], my_orgs[-12]['q1'][2], my_orgs[-13]['q1'][2],  my_orgs[-14]['q1'][2], my_orgs[-15]['q1'][2]]))
-    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4], my_orgs[-10]['q1'][3]+my_orgs[-10]['q1'][4], my_orgs[-11]['q1'][3]+my_orgs[-11]['q1'][4], my_orgs[-12]['q1'][3]+my_orgs[-12]['q1'][4], my_orgs[-13]['q1'][3]+my_orgs[-13]['q1'][4], my_orgs[-14]['q1'][3]+my_orgs[-14]['q1'][4], my_orgs[-15]['q1'][3]+my_orgs[-15]['q1'][4]]))
     my_bar_plot_gap_width = 13
   elif n==16:  
-    chart_data.add_series('1', tuple([my_orgs[-1]['q1'][0]+my_orgs[-1]['q1'][1], my_orgs[-2]['q1'][0]+my_orgs[-2]['q1'][1], my_orgs[-3]['q1'][0]+my_orgs[-3]['q1'][1], my_orgs[-4]['q1'][0]+my_orgs[-4]['q1'][1], my_orgs[-5]['q1'][0]+my_orgs[-5]['q1'][1], my_orgs[-6]['q1'][0]+my_orgs[-6]['q1'][1], my_orgs[-7]['q1'][0]+my_orgs[-7]['q1'][1], my_orgs[-8]['q1'][0]+my_orgs[-8]['q1'][1], my_orgs[-9]['q1'][0]+my_orgs[-9]['q1'][1], my_orgs[-10]['q1'][0]+my_orgs[-10]['q1'][1], my_orgs[-11]['q1'][0]+my_orgs[-11]['q1'][1], my_orgs[-12]['q1'][0]+my_orgs[-12]['q1'][1], my_orgs[-13]['q1'][0]+my_orgs[-13]['q1'][1], my_orgs[-14]['q1'][0]+my_orgs[-14]['q1'][1], my_orgs[-15]['q1'][0]+my_orgs[-15]['q1'][1], my_orgs[-16]['q1'][0]+my_orgs[-16]['q1'][1]]))
-    chart_data.add_series('2', tuple([my_orgs[-1]['q1'][2], my_orgs[-2]['q1'][2], my_orgs[-3]['q1'][2],my_orgs[-4]['q1'][2], my_orgs[-5]['q1'][2], my_orgs[-6]['q1'][2], my_orgs[-7]['q1'][2], my_orgs[-8]['q1'][2], my_orgs[-9]['q1'][2], my_orgs[-10]['q1'][2], my_orgs[-11]['q1'][2], my_orgs[-12]['q1'][2], my_orgs[-13]['q1'][2],  my_orgs[-14]['q1'][2], my_orgs[-15]['q1'][2], my_orgs[-16]['q1'][2]]))
-    chart_data.add_series('3', tuple([my_orgs[-1]['q1'][3]+my_orgs[-1]['q1'][4], my_orgs[-2]['q1'][3]+my_orgs[-2]['q1'][4], my_orgs[-3]['q1'][3]+my_orgs[-3]['q1'][4], my_orgs[-4]['q1'][3]+my_orgs[-4]['q1'][4], my_orgs[-5]['q1'][3]+my_orgs[-5]['q1'][4], my_orgs[-6]['q1'][3]+my_orgs[-6]['q1'][4], my_orgs[-7]['q1'][3]+my_orgs[-7]['q1'][4], my_orgs[-8]['q1'][3]+my_orgs[-8]['q1'][4], my_orgs[-9]['q1'][3]+my_orgs[-9]['q1'][4], my_orgs[-10]['q1'][3]+my_orgs[-10]['q1'][4], my_orgs[-11]['q1'][3]+my_orgs[-11]['q1'][4], my_orgs[-12]['q1'][3]+my_orgs[-12]['q1'][4], my_orgs[-13]['q1'][3]+my_orgs[-13]['q1'][4], my_orgs[-14]['q1'][3]+my_orgs[-14]['q1'][4], my_orgs[-15]['q1'][3]+my_orgs[-15]['q1'][4], my_orgs[-16]['q1'][3]+my_orgs[-16]['q1'][4]]))
     my_bar_plot_gap_width = 13
 
   x,y,cx,cy = Inches(0.3), Inches(2.25), Cm(14.14), Cm(11.39)
@@ -849,7 +847,8 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
   category_axis.has_major_gridlines = False
   value_axis.has_major_gridlines = False
   value_axis.visible = False
-    
+  
+  
   for i in range(0, n):
     be=10
     if n==3:
