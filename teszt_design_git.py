@@ -1257,7 +1257,7 @@ def fill_slide_4_to_10(tsg_ppt, s, n):
   chart_data.add_series('1', (a[0], b[0], c[0], d[0], e[0], f[0], ii[0], ji[0], k[0]))
   chart_data.add_series('2', (a[1], b[1], c[1], d[1], e[1], f[1], ii[1], ji[1], k[1]))
   chart_data.add_series('3', (a[2], b[2], c[2], d[2], e[2], f[2], ii[2], ji[2], k[2]))
-  x,y,cx,cy = Inches(0.3), Inches(2.25), Cm(23.34), Cm(11.39)
+  x,y,cx,cy = Inches(0.35), Inches(1.95), Cm(23.34), Cm(12.18)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
@@ -1290,7 +1290,7 @@ def fill_slide_11_12(tsg_ppt, s, n):
   chart_data.add_series('3', (a2[2], b2[2], c2[2], d2[2], e2[2], f2[2], ii2[2], ji2[2], k2[2]))
   chart_data.add_series('4', (a2[3], b2[3], c2[3], d2[3], e2[3], f2[3], ii2[3], ji2[3], k2[3]))
   chart_data.add_series('5', (a2[4], b2[4], c2[4], d2[4], e2[4], f2[4], ii2[4], ji2[4], k2[4]))
-  x,y,cx,cy = Inches(0.3), Inches(2.25), Cm(23.34), Cm(11.39)
+  x,y,cx,cy = Inches(0.35), Inches(1.95), Cm(23.34), Cm(12.18)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
@@ -1302,7 +1302,7 @@ def fill_slide_11_12(tsg_ppt, s, n):
   chart.has_legend = False
   data_labels.font.size = Pt(12)
   data_labels.number_format = '0'
-  data_labels.font.color.rgb = RGBColor(0, 0, 0)
+  data_labels.font.color.rgb = RGBColor(255, 255, 255)
   category_axis = chart.category_axis
   category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
   category_axis.tick_labels.font.size = Pt(12)
