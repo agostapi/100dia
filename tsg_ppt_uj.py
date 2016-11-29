@@ -846,20 +846,22 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
   value_axis.has_major_gridlines = False
   value_axis.visible = False
   
-  
-  for i in range(0, n):
-    be=10
+ 
+  #4-5 összevont érték és diff dict-ben levő érték külömbsége kiirva
+  #org - tavalyi
+  for i,org in enumerate(my_orgs[::-1]):
+    be=10 # font size
     if n==3:
       t=7.34
       he=3.55
       if diff > 0:
         img_path='zoldnyil.png'
         left = Inches(6.25)
-        height = Cm(0.6)
+        height_a = Cm(0.6)
         top = Cm(t+i*he)
-        pic = slide.shapes.add_picture(img_path, left, top, height=height)
-	rows=1
-        cols=1
+        pic = slide.shapes.add_picture(img_path, left, top, height = height_a)
+	      rows = 1
+        cols = 1
         left = Inches(5.83)
         top = Cm(t+i*he)
         width = Inches(0.8)
@@ -867,10 +869,10 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         table = slide.shapes.add_table(rows, cols, left, top, width, height).table
         table.columns[0].width = Inches(0.39)
         table.cell(0, 0).text = "+" + str(diff)
-  	cell = table.rows[0].cells[0]
+  	    cell = table.rows[0].cells[0]
         paragraph = cell.textframe.paragraphs[0]
         paragraph.font.size = Pt(be)
-	paragraph.font.color.rgb = RGBColor(255, 255, 255)
+	      paragraph.font.color.rgb = RGBColor(255, 255, 255)
         cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
         cell.vertical_anchor = MSO_ANCHOR.MIDDLE
         cell.fill.solid()
@@ -880,7 +882,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         left = Inches(6.25)
         height = Cm(0.6)
         top = Cm(t+i*he)
-	pic = slide.shapes.add_picture(img_path, left, top, height=height)
+	      pic = slide.shapes.add_picture(img_path, left, top, height=height)
       	rows=1
         cols=1
         left = Inches(5.83)
@@ -890,7 +892,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         table = slide.shapes.add_table(rows, cols, left, top, width, height).table
         table.columns[0].width = Inches(0.39)
         table.cell(0, 0).text = " " + str(diff)
-  	cell = table.rows[0].cells[0]
+  	    cell = table.rows[0].cells[0]
         paragraph = cell.textframe.paragraphs[0]
         paragraph.font.size = Pt(be)
         paragraph.font.color.rgb = RGBColor(255, 255, 255)
