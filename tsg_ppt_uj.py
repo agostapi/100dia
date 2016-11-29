@@ -776,7 +776,7 @@ def series_from_orglist_3(orglist, question):
 
 
 def fill_slide_4(org_name, org, tsg_ppt, diff=1):
-  #1. kérdéshez minden org
+  #1. kérdéshez a válaszok
   #+ diff -- TODO
 
   my_level = structure.orgstructure[org_name]['level']
@@ -794,6 +794,8 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
 
   n = len(my_orgs)
   slide = tsg_ppt.slides[3]  
+  asdf_text = slide.placeholders[17]
+  asdf_text.text = org['long name']
   chart_data = ChartData()
   chart_data.categories = my_orgs[::-1]
   chart_data.add_series('1', series_from_orglist_1(my_orgs, 'q1'))
@@ -801,12 +803,6 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
   chart_data.add_series('3', series_from_orglist_3(my_orgs, 'q1'))
   
   if len(my_orgs)==3: #n: orgs tömb
-    #nevek. 1: utolsó org
-    #  2: TSG
-    # 3: saját
-    #a[0]: utolsó org 1. kérdés 1+2 válasz
-    #b[0]: TSG 1. kérdés 1+2 válasz
-    #c[0] self, 1+2 válasz
     my_bar_plot_gap_width = 248
   elif n==5:
     my_bar_plot_gap_width = 108
@@ -824,6 +820,8 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
     my_bar_plot_gap_width = 13
   elif n==16:  
     my_bar_plot_gap_width = 13
+  else:
+    print('n not in 5,8,11,13,14,15,16')
 
   x,y,cx,cy = Inches(0.3), Inches(2.25), Cm(14.14), Cm(11.39)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
