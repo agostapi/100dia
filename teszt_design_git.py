@@ -1354,11 +1354,36 @@ h2 = [15, 24, 11, 30, 20 ]
 ii2 = (18, 22, 30, 22, 18)
 ji2 = (20, 30, 13, 23, 4)
 k2 = (30,40,3,7, 20)
+org_names = ["Child6", "Child5", "Child4", "Child3", "Child2", "Child1", "TSG", "Parent", "Aktual" ]
+org_names_3 = ["Child1", "TSG", "Aktual" ]
+org_names_5 = ["Child2", "Child1", "TSG", "Parent", "Aktual" ]
+org_names_8 = ["Child5", "Child4", "Child3", "Child2", "Child1", "TSG", "Parent", "Aktual" ]
+org_names_9 = ["Child6", "Child5", "Child4", "Child3", "Child2", "Child1", "TSG", "Parent", "Aktual" ] #tomb1
+org_names_11 = ["Child8", "Child7", "Child6", "Child5", "Child4", "Child3", "Child2", "Child1", "TSG", "Parent", "Aktual" ] 
+org_names_13 = ["Child10", "Child9", "Child8", "Child7", "Child6", "Child5", "Child4", "Child3", "Child2", "Child1", "TSG", "Parent", "Aktual" ]
+org_names_14 = ["Child11", "Child10", "Child9", "Child8", "Child7", "Child6", "Child5", "Child4", "Child3", "Child2", "Child1", "TSG", "Parent", "Aktual" ]
+org_names_15 = ["Child12", "Child11", "Child10", "Child9", "Child8", "Child7", "Child6", "Child5", "Child4", "Child3", "Child2", "Child1", "TSG", "Parent", "Aktual" ]
+org_names_16 = ["Child13", "Child12", "Child11", "Child10", "Child9", "Child8", "Child7", "Child6", "Child5", "Child4", "Child3", "Child2", "Child1", "TSG", "Parent", "Aktual" ]
 
-org_names = ["Child6", "Child5", "Child4", "Child3", "Child2", "Child1", "TSG", "Parent", "Aktual" ] #tomb1
+
+
+org_participants = ("40", "42", "33", "23", "55", "15", "67", "89", "12")
+
 org_percents = (("0", "22", "55"), ("10", "40", "50"), ("25", "35", "40"))
-org_participants = ("40", "42", "33", "23", "55", "15", "67", "89", "0")
-n = 9#len(org_names)
+org_participants_9 = ("40", "42", "33", "23", "55", "15", "67", "89", "12")
+org_participants_3 = ("40", "42", "33")
+org_participants_5 = ("40", "42", "33", "23", "55")
+org_participants_8 = ("40", "42", "33", "55", "15", "67", "89", "12")
+org_participants_11 = ("45", "20", "40", "42", "33", "23", "55", "15", "67", "89", "12")
+org_participants_13 = ("12", "23", "20", "32","40", "42", "33", "23", "55", "15", "67", "89", "12")
+org_participants_14 = ("23", "34", "45", "20", "32","40", "42", "33", "23", "55", "15", "67", "89", "12")
+org_participants_15 = ("65", "23", "34", "45", "20", "32","40", "42", "33", "23", "55", "15", "67", "89", "12")
+org_participants_16 = ("12", "65", "23", "34", "45", "20", "32","40", "42", "33", "23", "55", "15", "67", "89", "12")
+
+
+
+
+n = 5#len(org_names)
 print(n)
 diff = [1, 1, 0, -1, 9, 2, -3, 2, 0, 1, -1, 5, -8, -14, 5, 0] 
 #picture_insert(tsg_ppt, 3, n, h)
