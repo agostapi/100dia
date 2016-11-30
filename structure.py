@@ -190,6 +190,11 @@ def count_percent(list_a, numbers):
       
   return list_a, my_sums, my_means
 
+def sort_orgchild():
+  for org in orgstructure.keys():
+    if orgstructure[org]['child']:
+      orgstructure[org]['child'].sort(reverse=True)
+
 ########MAIN################
 
 
@@ -206,6 +211,8 @@ finally:
   
 #print(my_header)
 fill_in_org()
+sort_orgchild()
+print(orgstructure)
   
 #level5_users,level5_numbers = fill_in_users(list5, "u_org_5", users_number5)
 #level4_users = fill_in_users(list4, 'u_org_4')
