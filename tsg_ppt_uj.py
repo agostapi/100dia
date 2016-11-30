@@ -892,73 +892,35 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
       he=2.12
       if diff > 0:
         img_path='zoldnyil.png'
-        left = Inches(6.25)
         height = Cm(0.6)
         top = Cm(t+i*he)
-        pic = slide.shapes.add_picture(img_path, left, top, height=height)
-        rows=1
-        cols=1
-        left = Inches(5.83)
-        top = Cm(t+i*he)
-        width = Inches(0.8)
-        height = Inches (0.425)# set column widths
-        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
-        table.columns[0].width = Inches(0.39)
-        table.cell(0, 0).text = "+" + str(diff)
-        cell = table.rows[0].cells[0]
-        paragraph = cell.textframe.paragraphs[0]
-        paragraph.font.size = Pt(be)
-        paragraph.font.color.rgb = RGBColor(255, 255, 255)
-        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
-        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
-        cell.fill.solid()
-        cell.fill.fore_color.rgb = RGBColor(124,124,124)
       elif diff < 0:
         img_path='pirosnyil.png'
-        left = Inches(6.25)
         height = Cm(0.6)
         top = Cm(t+i*he)
-        pic = slide.shapes.add_picture(img_path, left, top, height=height)
-        rows=1
-        cols=1
-        left = Inches(5.83)
-        top = Cm(t+i*he)
-        width = Inches(0.8)
-        height = Inches (0.425)# set column widths
-        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
-        table.columns[0].width = Inches(0.39)
-        table.cell(0, 0).text = " " + str(diff)
-        cell = table.rows[0].cells[0]
-        paragraph = cell.textframe.paragraphs[0]
-        paragraph.font.size = Pt(be)
-        paragraph.font.color.rgb = RGBColor(255, 255, 255)
-        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
-        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
-        cell.fill.solid()
-        cell.fill.fore_color.rgb = RGBColor(124,124,124)
       else:
         img_path='keknyil.png'
-        left = Inches(6.25)
         height = Cm(0.43)
         top = Cm(t+0.2+i*he)
-        pic = slide.shapes.add_picture(img_path, left, top, height=height)
-        rows=1
-        cols=1
-        left = Inches(5.83)
-        top = Cm(t+i*he)
-        width = Inches(0.8)
-        height = Inches (0.425)# set column widths
-        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
-        table.columns[0].width = Inches(0.39)
-        table.cell(0, 0).text = " " + str(diff)
-        cell = table.rows[0].cells[0]
-        paragraph = cell.textframe.paragraphs[0]
-        paragraph.font.size = Pt(be)
-        paragraph.font.color.rgb = RGBColor(255, 255, 255)
-        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
-        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
-        cell.fill.solid()
-        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+      left = Inches(6.25)
+      pic = slide.shapes.add_picture(img_path, left, top, height)
+      rows=1
+      cols=1
+      left = Inches(5.83)
+      top = Cm(t+i*he)
+      width = Inches(0.8)
+      height = Inches (0.425)# set column widths
+      table = slide.shapes.add_table(rows, cols, left, top, width, height).table
+      table.columns[0].width = Inches(0.39)
+      table.cell(0, 0).text = "+" + str(diff)
+      cell = table.rows[0].cells[0]
+      paragraph = cell.textframe.paragraphs[0]
+      paragraph.font.size = Pt(be)
+      paragraph.font.color.rgb = RGBColor(255, 255, 255)
+      cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+      cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+      cell.fill.solid()
+      cell.fill.fore_color.rgb = RGBColor(124,124,124)
     elif n==8:
       t=6.26
       he=1.32
