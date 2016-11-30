@@ -1383,7 +1383,7 @@ org_participants_16 = ("12", "65", "23", "34", "45", "20", "32","40", "42", "33"
 
 
 
-n = 5#len(org_names)
+n = 16#len(org_names)
 print(n)
 diff = [1, 1, 0, -1, 9, 2, -3, 2, 0, 1, -1, 5, -8, -14, 5, 0] 
 #picture_insert(tsg_ppt, 3, n, h)
