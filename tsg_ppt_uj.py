@@ -384,7 +384,6 @@ try:
 finally:
   file1_in.close()
 
-structure.fill_in_org()
 
 ############
 #Fill in org lists
@@ -408,9 +407,11 @@ filled_list_2,my_sums_2,my_means_2 = structure.count_percent(list_full_2, level2
 level1_users,level1_numbers,level1_filledin_users = structure.fill_in_users(structure.list1, "u_org_1", structure.users_number1)
 list_full_1 = (structure.printout(structure.list1,level1_users))
 filled_list_1,my_sums_1,my_means_1 = structure.count_percent(list_full_1, level1_numbers)
+print(level5_filledin_users)
 
 #lista1, lista2 = getchildresults('TSG', structure.list2, filled_list_2)
 
+#structure.fill_in_org(level5_filledin_users, level4_filledin_users, level3_filledin_users, level2_filledin_users, level1_filledin_users)
 
 def fill_in_orgstruct_questions():
   for org in structure.list1:
@@ -845,84 +846,47 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
   category_axis.has_major_gridlines = False
   value_axis.has_major_gridlines = False
   value_axis.visible = False
-  
+ 
  
   #4-5 összevont érték és diff dict-ben levő érték külömbsége kiirva
   #org - tavalyi
   for i,org in enumerate(my_orgs[::-1]):
+    diff = structure.orgstructure[org]['q1'][3] + structure.orgstructure[org]['q1'][4] - orgs.org_last_yr[org]
     be=10 # font size
     if n==3:
       t=7.34
       he=3.55
       if diff > 0:
         img_path='zoldnyil.png'
-        left = Inches(6.25)
-        height_a = Cm(0.6)
-        top = Cm(t+i*he)
-        pic = slide.shapes.add_picture(img_path, left, top, height = height_a)
-	      rows = 1
-        cols = 1
-        left = Inches(5.83)
-        top = Cm(t+i*he)
-        width = Inches(0.8)
-        height = Inches (0.425)# set column widths
-        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
-        table.columns[0].width = Inches(0.39)
-        table.cell(0, 0).text = "+" + str(diff)
-  	    cell = table.rows[0].cells[0]
-        paragraph = cell.textframe.paragraphs[0]
-        paragraph.font.size = Pt(be)
-	      paragraph.font.color.rgb = RGBColor(255, 255, 255)
-        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
-        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
-        cell.fill.solid()
-        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+        height = Cm(0.6)
+        top_pic = top_table = Cm(t+i*he)
       elif diff < 0:
         img_path='pirosnyil.png'
-        left = Inches(6.25)
         height = Cm(0.6)
-        top = Cm(t+i*he)
-	      pic = slide.shapes.add_picture(img_path, left, top, height=height)
-      	rows=1
-        cols=1
-        left = Inches(5.83)
-        top = Cm(t+i*he)
-        width = Inches(0.8)
-        height = Inches (0.425)# set column widths
-        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
-        table.columns[0].width = Inches(0.39)
-        table.cell(0, 0).text = " " + str(diff)
-  	    cell = table.rows[0].cells[0]
-        paragraph = cell.textframe.paragraphs[0]
-        paragraph.font.size = Pt(be)
-        paragraph.font.color.rgb = RGBColor(255, 255, 255)
-        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
-        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
-        cell.fill.solid()
-        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+        top_pic = top_table = Cm(t+i*he)
       else:
         img_path='keknyil.png'
-        left = Inches(6.25)
         height = Cm(0.43)
-        top = Cm(t+0.33+i*he)
-        pic = slide.shapes.add_picture(img_path, left, top, height=height)
-       	rows=1
-        cols=1
-        left = Inches(5.83)
-        top = Cm(t-0.02+i*he)
-        width = Inches(0.8)
-        height = Inches (0.425)# set column widths
-        table = slide.shapes.add_table(rows, cols, left, top, width, height).table
-        table.columns[0].width = Inches(0.39)
-        table.cell(0, 0).text = " " + str(diff)
-  	cell = table.rows[0].cells[0]
-        paragraph = cell.textframe.paragraphs[0]
-        paragraph.font.size = Pt(be)
-        paragraph.font.color.rgb = RGBColor(255, 255, 255)
-        cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
-        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
-        cell.fill.solid()
-        cell.fill.fore_color.rgb = RGBColor(124,124,124)
+        top_pic = Cm(t+0.33+i*he)
+        top_table = Cm(t-0.02+i*he)
+      left = Inches(6.25)
+      pic = slide.shapes.add_picture(img_path, left, top_pic, height)
+      rows = 1
+      cols = 1
+      left = Inches(5.83)
+      width = Inches(0.8)
+      height = Inches (0.425)# set column widths
+      table = slide.shapes.add_table(rows, cols, left, top_table, width, height).table
+      table.columns[0].width = Inches(0.39)
+      table.cell(0, 0).text = "+" + str(diff)
+      cell = table.rows[0].cells[0]
+      paragraph = cell.textframe.paragraphs[0]
+      paragraph.font.size = Pt(be)
+      paragraph.font.color.rgb = RGBColor(255, 255, 255)
+      cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
+      cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+      cell.fill.solid()
+      cell.fill.fore_color.rgb = RGBColor(124,124,124)
     elif n==5:
       t=6.66
       he=2.12
@@ -932,7 +896,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         height = Cm(0.6)
         top = Cm(t+i*he)
         pic = slide.shapes.add_picture(img_path, left, top, height=height)
-	rows=1
+        rows=1
         cols=1
         left = Inches(5.83)
         top = Cm(t+i*he)
@@ -941,7 +905,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         table = slide.shapes.add_table(rows, cols, left, top, width, height).table
         table.columns[0].width = Inches(0.39)
         table.cell(0, 0).text = "+" + str(diff)
-  	cell = table.rows[0].cells[0]
+        cell = table.rows[0].cells[0]
         paragraph = cell.textframe.paragraphs[0]
         paragraph.font.size = Pt(be)
         paragraph.font.color.rgb = RGBColor(255, 255, 255)
@@ -954,8 +918,8 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         left = Inches(6.25)
         height = Cm(0.6)
         top = Cm(t+i*he)
-	pic = slide.shapes.add_picture(img_path, left, top, height=height)
-      	rows=1
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+        rows=1
         cols=1
         left = Inches(5.83)
         top = Cm(t+i*he)
@@ -964,7 +928,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         table = slide.shapes.add_table(rows, cols, left, top, width, height).table
         table.columns[0].width = Inches(0.39)
         table.cell(0, 0).text = " " + str(diff)
-  	cell = table.rows[0].cells[0]
+        cell = table.rows[0].cells[0]
         paragraph = cell.textframe.paragraphs[0]
         paragraph.font.size = Pt(be)
         paragraph.font.color.rgb = RGBColor(255, 255, 255)
@@ -978,7 +942,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         height = Cm(0.43)
         top = Cm(t+0.2+i*he)
         pic = slide.shapes.add_picture(img_path, left, top, height=height)
-       	rows=1
+        rows=1
         cols=1
         left = Inches(5.83)
         top = Cm(t+i*he)
@@ -987,7 +951,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         table = slide.shapes.add_table(rows, cols, left, top, width, height).table
         table.columns[0].width = Inches(0.39)
         table.cell(0, 0).text = " " + str(diff)
-  	cell = table.rows[0].cells[0]
+        cell = table.rows[0].cells[0]
         paragraph = cell.textframe.paragraphs[0]
         paragraph.font.size = Pt(be)
         paragraph.font.color.rgb = RGBColor(255, 255, 255)
@@ -1004,7 +968,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         height = Cm(0.6)
         top = Cm(t+i*he)
         pic = slide.shapes.add_picture(img_path, left, top, height=height)
-	rows=1
+        rows=1
         cols=1
         left = Inches(5.83)
         top = Cm(t+i*he)
@@ -1013,7 +977,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         table = slide.shapes.add_table(rows, cols, left, top, width, height).table
         table.columns[0].width = Inches(0.39)
         table.cell(0, 0).text = "+" + str(diff)
-  	cell = table.rows[0].cells[0]
+        cell = table.rows[0].cells[0]
         paragraph = cell.textframe.paragraphs[0]
         paragraph.font.size = Pt(be)
         paragraph.font.color.rgb = RGBColor(255, 255, 255)
@@ -1026,8 +990,8 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         left = Inches(6.25)
         height = Cm(0.6)
         top = Cm(t+i*he)
-	pic = slide.shapes.add_picture(img_path, left, top, height=height)
-      	rows=1
+        pic = slide.shapes.add_picture(img_path, left, top, height=height)
+        rows=1
         cols=1
         left = Inches(5.83)
         top = Cm(t+i*he)
@@ -1036,7 +1000,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         table = slide.shapes.add_table(rows, cols, left, top, width, height).table
         table.columns[0].width = Inches(0.39)
         table.cell(0, 0).text = " " + str(diff)
-  	cell = table.rows[0].cells[0]
+        cell = table.rows[0].cells[0]
         paragraph = cell.textframe.paragraphs[0]
         paragraph.font.size = Pt(be)
         paragraph.font.color.rgb = RGBColor(255, 255, 255)
@@ -1050,7 +1014,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         height = Cm(0.43)
         top = Cm(t+0.2+i*he)
         pic = slide.shapes.add_picture(img_path, left, top, height=height)
-       	rows=1
+        rows=1
         cols=1
         left = Inches(5.83)
         top = Cm(t+i*he)
@@ -1059,7 +1023,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         table = slide.shapes.add_table(rows, cols, left, top, width, height).table
         table.columns[0].width = Inches(0.39)
         table.cell(0, 0).text = " " + str(diff)
-  	cell = table.rows[0].cells[0]
+        cell = table.rows[0].cells[0]
         paragraph = cell.textframe.paragraphs[0]
         paragraph.font.size = Pt(be)
         paragraph.font.color.rgb = RGBColor(255, 255, 255)
@@ -1520,6 +1484,8 @@ def create_ppt(org_name, org):
 #create ppts from new structure:
 for org in structure.orgstructure.keys():
   if org != 'TSG' and structure.orgstructure[org]['filled_in_users'] > 5:
+    if org == 'RSP':
+      print("filled: ",  structure.orgstructure[org]['filled_in_users'])
     create_ppt(org, structure.orgstructure[org])
     if org == 'GF OG':
       print(structure.orgstructure[org])

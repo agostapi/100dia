@@ -66,28 +66,28 @@ def fill_in_users(lista, u_org, listaaa): #list5, 'u_org_5'
 
 def fill_in_org():
   for rows in my_content:
-    if rows[my_header.index('u_org_1')] not in list1 and rows[my_header.index('u_org_1')] and rows[my_header.index('u_org_1')] != '-99':
+    if rows[my_header.index('u_org_1')] not in list1 and rows[my_header.index('u_org_1')] and rows[my_header.index('u_org_1')] != '-99' and orgs.org_last_yr.has_key(rows[my_header.index('u_org_1')]):
       list1.append(rows[my_header.index('u_org_1')])
       #if the org does not exist in structure, add it
       if rows[my_header.index('u_org_1')] not in orgstructure.keys():
         orgstructure.update({rows[my_header.index('u_org_1')] : { 'parent' : None, 'child' : [], 'level' : 1, 'long name' : orgs.org_short_to_long[rows[my_header.index('u_org_1')]]}})
-    if rows[my_header.index('u_org_2')] not in list2 and rows[my_header.index('u_org_2')] and rows[my_header.index('u_org_2')] != '-99':
+    if rows[my_header.index('u_org_2')] not in list2 and rows[my_header.index('u_org_2')] and rows[my_header.index('u_org_2')] != '-99' and orgs.org_last_yr.has_key(rows[my_header.index('u_org_2')]):
       list2.append(rows[my_header.index('u_org_2')])
       #if the org does not exist in structure, add it with all the parents, and add itself to the parent's child list
       if rows[my_header.index('u_org_2')] not in orgstructure.keys():
         orgstructure.update({rows[my_header.index('u_org_2')] : { 'parent' : rows[my_header.index('u_org_1')], 'child' : [], 'level' : 2, 'long name' : orgs.org_short_to_long[rows[my_header.index('u_org_2')]]}})
         orgstructure[rows[my_header.index('u_org_1')]]['child'].append(rows[my_header.index('u_org_2')])
-    if rows[my_header.index('u_org_3')] not in list3 and rows[my_header.index('u_org_3')] and rows[my_header.index('u_org_3')] != '-99':
+    if rows[my_header.index('u_org_3')] not in list3 and rows[my_header.index('u_org_3')] and rows[my_header.index('u_org_3')] != '-99' and orgs.org_last_yr.has_key(rows[my_header.index('u_org_3')]):
       list3.append(rows[my_header.index('u_org_3')])
       if rows[my_header.index('u_org_3')] not in orgstructure.keys():
         orgstructure.update({rows[my_header.index('u_org_3')] : { 'parent' : [rows[my_header.index('u_org_2')],rows[my_header.index('u_org_1')]] , 'child' : [], 'level' : 3, 'long name' : orgs.org_short_to_long[rows[my_header.index('u_org_3')]]}})
         orgstructure[rows[my_header.index('u_org_2')]]['child'].append(rows[my_header.index('u_org_3')])
-    if rows[my_header.index('u_org_4')] not in list4 and rows[my_header.index('u_org_4')] and rows[my_header.index('u_org_4')] != '-99':
+    if rows[my_header.index('u_org_4')] not in list4 and rows[my_header.index('u_org_4')] and rows[my_header.index('u_org_4')] != '-99' and orgs.org_last_yr.has_key(rows[my_header.index('u_org_4')]):
       list4.append(rows[my_header.index('u_org_4')])
       if rows[my_header.index('u_org_4')] not in orgstructure.keys():
         orgstructure.update({rows[my_header.index('u_org_4')] : { 'parent' : [rows[my_header.index('u_org_3')], rows[my_header.index('u_org_2')],rows[my_header.index('u_org_1')]], 'child' : [], 'level' : 4, 'long name' : orgs.org_short_to_long[rows[my_header.index('u_org_4')]]}})
         orgstructure[rows[my_header.index('u_org_3')]]['child'].append(rows[my_header.index('u_org_4')])
-    if rows[my_header.index('u_org_5')] not in list5 and rows[my_header.index('u_org_5')] and rows[my_header.index('u_org_5')] != '-99':
+    if rows[my_header.index('u_org_5')] not in list5 and rows[my_header.index('u_org_5')] and rows[my_header.index('u_org_5')] != '-99' and orgs.org_last_yr.has_key(rows[my_header.index('u_org_5')]):
       list5.append(rows[my_header.index('u_org_5')])
       if rows[my_header.index('u_org_5')] not in orgstructure.keys():
         orgstructure.update({rows[my_header.index('u_org_5')] : { 'parent' : [rows[my_header.index('u_org_4')], rows[my_header.index('u_org_3')], rows[my_header.index('u_org_2')],rows[my_header.index('u_org_1')]], 'child' : None , 'level' : 5, 'long name' : orgs.org_short_to_long[rows[my_header.index('u_org_5')]]}})
