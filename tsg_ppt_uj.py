@@ -860,15 +860,18 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         img_path='zoldnyil.png'
         height = Cm(0.6)
         top_pic = top_table = Cm(t+i*he)
+        diff_text = "+"
       elif diff < 0:
         img_path='pirosnyil.png'
         height = Cm(0.6)
         top_pic = top_table = Cm(t+i*he)
+        diff_text = " "
       else:
         img_path='keknyil.png'
         height = Cm(0.43)
         top_pic = Cm(t+0.33+i*he)
         top_table = Cm(t-0.02+i*he)
+        diff_text = " "
       left = Inches(6.25)
       pic = slide.shapes.add_picture(img_path, left, top_pic, height)
       rows = 1
@@ -878,7 +881,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
       height = Inches (0.425)# set column widths
       table = slide.shapes.add_table(rows, cols, left, top_table, width, height).table
       table.columns[0].width = Inches(0.39)
-      table.cell(0, 0).text = "+" + str(diff)
+      table.cell(0, 0).text = diff_text + str(diff)
       cell = table.rows[0].cells[0]
       paragraph = cell.textframe.paragraphs[0]
       paragraph.font.size = Pt(be)
@@ -894,14 +897,17 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
         img_path='zoldnyil.png'
         height = Cm(0.6)
         top = Cm(t+i*he)
+        diff_text = "+"
       elif diff < 0:
         img_path='pirosnyil.png'
         height = Cm(0.6)
         top = Cm(t+i*he)
+        diff_text = " "
       else:
         img_path='keknyil.png'
         height = Cm(0.43)
         top = Cm(t+0.2+i*he)
+        diff_text = " "
       left = Inches(6.25)
       pic = slide.shapes.add_picture(img_path, left, top, height)
       rows=1
@@ -912,7 +918,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
       height = Inches (0.425)# set column widths
       table = slide.shapes.add_table(rows, cols, left, top, width, height).table
       table.columns[0].width = Inches(0.39)
-      table.cell(0, 0).text = "+" + str(diff)
+      table.cell(0, 0).text = diff_text + str(diff)
       cell = table.rows[0].cells[0]
       paragraph = cell.textframe.paragraphs[0]
       paragraph.font.size = Pt(be)
