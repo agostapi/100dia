@@ -851,7 +851,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
   #4-5 összevont érték és diff dict-ben levő érték külömbsége kiirva
   #org - tavalyi
   for i,org in enumerate(my_orgs[::-1]):
-    diff = structure.orgstructure[org]['q1'][3] + structure.orgstructure[org]['q1'][4] - orgs.org_last_yr[org]
+    diff = round(structure.orgstructure[org]['q1'][3] + structure.orgstructure[org]['q1'][4] - orgs.org_last_yr[org])
     be=10 # font size
     if n==3:
       t=7.34
