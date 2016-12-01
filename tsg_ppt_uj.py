@@ -520,13 +520,14 @@ def fill_slide_2(org_name, org, tsg_ppt):
   #bar_plot.fill.solid()
   #bar_plot.fill.fore_color.rgb=RGBColor(0,0,0)
 
-def fill_slide_3(org_name, org, tsg_ppt, diff=1): #, diff):
+def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   #5 chart
   #1. chart_data: q1, q2 válaszok (1+2,3,4+5) ; a: q4, b: q1
   # c: q6, d: q5
   #q9, q8, q7
   #g: q2
   #h: q3
+  #diff: org[0]+org[1] - org_last_yr
   slide = tsg_ppt.slides[2]
   asdf_text = slide.placeholders[17]
   asdf_text.text = org['long name']
