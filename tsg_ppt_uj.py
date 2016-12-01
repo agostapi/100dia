@@ -1208,16 +1208,18 @@ def fill_slide_5_to_10(org_name, question, s, tsg_ppt): #org_name, q1, 5, tsg_pp
 
   if my_level == 2: # 2 1 3
     my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
-    my_orgs.extend(structure.orgstructure[org_name]['child'])
+    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
   elif my_level == 3: # 3 2 1 4
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'])
+    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
   elif my_level == 4: # 4 3 1 5
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'])
+    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
   elif my_level == 5: # 5 4 1
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
 
+  asdf_text = slide.placeholders[17]
+  asdf_text.text = structure.orgstructure[org_name]['long name']
   chart_data = ChartData()
   chart_data.categories = my_orgs
   my_orgs_answer1 = tuple()
@@ -1261,13 +1263,13 @@ def fill_slide_11_to_12(org_name, question, s, tsg_ppt):
 
   if my_level == 2: # 2 1 3
     my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
-    my_orgs.extend(structure.orgstructure[org_name]['child'])
+    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
   elif my_level == 3: # 3 2 1 4
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'])
+    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
   elif my_level == 4: # 4 3 1 5
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'])
+    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
   elif my_level == 5: # 5 4 1
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
 
@@ -1283,6 +1285,8 @@ def fill_slide_11_to_12(org_name, question, s, tsg_ppt):
     my_orgs_answer4 = my_orgs_answer4 + (int(round(structure.orgstructure[org][question][3])),)
     my_orgs_answer5 = my_orgs_answer5 + (int(round(structure.orgstructure[org][question][4])),)
 
+  asdf_text = slide.placeholders[17]
+  asdf_text.text = structure.orgstructure[org_name]['long name']
   chart_data = ChartData()
   chart_data.categories = my_orgs
   chart_data.add_series('1', my_orgs_answer1)
