@@ -483,6 +483,7 @@ def fill_slide_2(org_name, org, tsg_ppt):
     my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
   elif my_level == 5: # 5 4 1
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
+  my_orgs.reverse()
   my_percents = get_percent(my_orgs)
   slide = tsg_ppt.slides[1]
   asdf_text = slide.placeholders[17]
@@ -979,6 +980,7 @@ def fill_slide_5_to_10(org_name, question, s, tsg_ppt): #org_name, q1, 5, tsg_pp
     my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
   elif my_level == 5: # 5 4 1
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
+  my_orgs.reverse()
 
   asdf_text = slide.placeholders[17]
   asdf_text.text = structure.orgstructure[org_name]['long name']
@@ -988,18 +990,18 @@ def fill_slide_5_to_10(org_name, question, s, tsg_ppt): #org_name, q1, 5, tsg_pp
   my_orgs_answer2 = tuple()
   my_orgs_answer3 = tuple()
   for n, org in enumerate(my_orgs):
-    #if (int(round(structure.orgstructure[org][question][0] + structure.orgstructure[org][question][1])) == 0):
-    #  my_orgs_answer1 = my_orgs_answer1 + ('',)
-    #else:
-    my_orgs_answer1 = my_orgs_answer1 + (int(round(structure.orgstructure[org][question][0] + structure.orgstructure[org][question][1])),)
-    #if (int(round(structure.orgstructure[org][question][2])) == 0):
-    #  my_orgs_answer2 = my_orgs_answer2 + ('',)
-    #else:
-    my_orgs_answer2 = my_orgs_answer2 + (int(round(structure.orgstructure[org][question][2])),)
-    #if (int(round(structure.orgstructure[org][question][3] + structure.orgstructure[org][question][4])) == 0):
-    #  my_orgs_answer3 = my_orgs_answer3 + ('',)
-    #else:
-    my_orgs_answer3 = my_orgs_answer3 + (int(round(structure.orgstructure[org][question][3] + structure.orgstructure[org][question][4])),)
+    if (int(round(structure.orgstructure[org][question][0] + structure.orgstructure[org][question][1])) == 0):
+      my_orgs_answer1 = my_orgs_answer1 + ('',)
+    else:
+      my_orgs_answer1 = my_orgs_answer1 + (int(round(structure.orgstructure[org][question][0] + structure.orgstructure[org][question][1])),)
+    if (int(round(structure.orgstructure[org][question][2])) == 0):
+      my_orgs_answer2 = my_orgs_answer2 + ('',)
+    else:
+      my_orgs_answer2 = my_orgs_answer2 + (int(round(structure.orgstructure[org][question][2])),)
+    if (int(round(structure.orgstructure[org][question][3] + structure.orgstructure[org][question][4])) == 0):
+      my_orgs_answer3 = my_orgs_answer3 + ('',)
+    else:
+      my_orgs_answer3 = my_orgs_answer3 + (int(round(structure.orgstructure[org][question][3] + structure.orgstructure[org][question][4])),)
   chart_data.add_series('1', my_orgs_answer1)
   chart_data.add_series('2', my_orgs_answer2)
   chart_data.add_series('3', my_orgs_answer3)
@@ -1044,6 +1046,7 @@ def fill_slide_11_to_12(org_name, question, s, tsg_ppt):
     my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
   elif my_level == 5: # 5 4 1
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
+  my_orgs.reverse()
 
   my_orgs_answer1 = tuple()
   my_orgs_answer2 = tuple()
@@ -1051,11 +1054,26 @@ def fill_slide_11_to_12(org_name, question, s, tsg_ppt):
   my_orgs_answer4 = tuple()
   my_orgs_answer5 = tuple()
   for n, org in enumerate(my_orgs):
-    my_orgs_answer1 = my_orgs_answer1 + (int(round(structure.orgstructure[org][question][0])),)
-    my_orgs_answer2 = my_orgs_answer2 + (int(round(structure.orgstructure[org][question][1])),)
-    my_orgs_answer3 = my_orgs_answer3 + (int(round(structure.orgstructure[org][question][2])),)
-    my_orgs_answer4 = my_orgs_answer4 + (int(round(structure.orgstructure[org][question][3])),)
-    my_orgs_answer5 = my_orgs_answer5 + (int(round(structure.orgstructure[org][question][4])),)
+    if (int(round(structure.orgstructure[org][question][0])) == 0):
+      my_orgs_answer1 = my_orgs_answer1 + ('',)
+    else:
+      my_orgs_answer1 = my_orgs_answer1 + (int(round(structure.orgstructure[org][question][0])),)
+    if (int(round(structure.orgstructure[org][question][1])) == 0):
+      my_orgs_answer2 = my_orgs_answer2 + ('',)
+    else:
+      my_orgs_answer2 = my_orgs_answer2 + (int(round(structure.orgstructure[org][question][1])),)
+    if (int(round(structure.orgstructure[org][question][2])) == 0):
+      my_orgs_answer3 = my_orgs_answer3 + ('',)
+    else:
+      my_orgs_answer3 = my_orgs_answer3 + (int(round(structure.orgstructure[org][question][2])),)
+    if (int(round(structure.orgstructure[org][question][3])) == 0):
+      my_orgs_answer4 = my_orgs_answer4 + ('',)
+    else:
+      my_orgs_answer4 = my_orgs_answer4 + (int(round(structure.orgstructure[org][question][3])),)
+    if (int(round(structure.orgstructure[org][question][4])) == 0):
+      my_orgs_answer5 = my_orgs_answer5 + ('',)
+    else:
+      my_orgs_answer5 = my_orgs_answer5 + (int(round(structure.orgstructure[org][question][4])),)
 
   asdf_text = slide.placeholders[17]
   asdf_text.text = structure.orgstructure[org_name]['long name']
