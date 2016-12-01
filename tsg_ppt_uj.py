@@ -1197,7 +1197,61 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
       cell.vertical_anchor = MSO_ANCHOR.MIDDLE
       cell.fill.solid()
       cell.fill.fore_color.rgb = RGBColor(124,124,124)
-  return tsg_ppt
+
+
+def fill_slide_5_to_11(org_name, question, s, tsg_ppt): #org_name, q1, 5, tsg_ppt
+  #4-5-6-7-8-9 kérdés minden szervezetre (a,b,c) a legutolsó, k: self
+  #k0: org['q4'][0]+org['q4'][1]
+  #
+  slide = tsg_ppt.slides[s]
+  my_level = structure.orgstructure[org_name]['level']
+
+  if my_level == 2: # 2 1 3
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
+  elif my_level == 3: # 3 2 1 4
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
+  elif my_level == 4: # 4 3 1 5
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
+  elif my_level == 5: # 5 4 1
+    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
+
+  chart_data = ChartData()
+  chart_data.categories = my_orgs
+  my_orgs_answer1 = tuple()
+  my_orgs_answer2 = tuple()
+  my_orgs_answer3 = tuple()
+  for n, org in enumerate(my_orgs):
+    my_orgs_answer1 = my_orgs_answer1 + (int(round(structure.orgstructure[org][question][0] + structure.orgstructure[org][question][1])),)
+    my_orgs_answer2 = my_orgs_answer2 + (int(round(structure.orgstructure[org][question][2])),)
+    my_orgs_answer3 = my_orgs_answer3 + (int(round(structure.orgstructure[org][question][3] + structure.orgstructure[org][question][4])),)
+  chart_data.add_series('1', my_orgs_answer1)
+  chart_data.add_series('2', my_orgs_answer2)
+  chart_data.add_series('3', my_orgs_answer3)
+  x,y,cx,cy = Inches(0.35), Inches(1.95), Cm(23.34), Cm(12.18)
+  graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
+  chart = graphic_frame.chart
+  value_axis = chart.value_axis
+  chart.plots[0].has_data_labels = True
+  data_labels = chart.plots[0].data_labels
+  data_labels.font.bold = True
+  bar_plot = chart.plots[0]
+  bar_plot.gap_width = 13
+  chart.has_legend = False
+  data_labels.font.size = Pt(12)
+  data_labels.number_format = '0'
+  data_labels.font.color.rgb = RGBColor(0, 0, 0)
+  category_axis = chart.category_axis
+  category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
+  category_axis.tick_labels.font.size = Pt(12)
+  value_axis.minor_tick_mark = XL_TICK_MARK.NONE
+  category_axis.major_tick_mark = XL_TICK_MARK.NONE
+  value_axis.major_tick_mark = XL_TICK_MARK.NONE
+  category_axis.has_major_gridlines = False
+  value_axis.has_major_gridlines = False
+  value_axis.visible = False
 
 
 def create_ppt(org_name, org):
@@ -1206,6 +1260,8 @@ def create_ppt(org_name, org):
   fill_slide_2(org_name, org, tsg_ppt)
   fill_slide_3(org_name, org, tsg_ppt)
   fill_slide_4(org_name, org, tsg_ppt)
+  for i, question in enumerate(['q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
+    fill_slide_5_to_11(org_name, question, i+5, tsg_ppt) #org_name, q1, 5, tsg_ppt
   tsg_ppt.save("out1/"+(org_name.replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
 
 
