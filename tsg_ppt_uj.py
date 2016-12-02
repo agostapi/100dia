@@ -529,7 +529,7 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   #g: q2
   #h: q3
   #diff: org[0]+org[1] - org_last_yr
-  diff = int((round(structure.orgstructure[org_name]['q1'][3]) + round(structure.orgstructure[org_name]['q1'][4]) - round(orgs.org_last_yr[org_name])))
+  diff = int((round(structure.orgstructure[org_name]['q1'][3]) + structure.orgstructure[org_name]['q1'][4]) - round(orgs.org_last_yr[org_name])))
   slide = tsg_ppt.slides[2]
   asdf_text = slide.placeholders[17]
   asdf_text.text = org['long name']
@@ -761,21 +761,21 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
 def series_from_orglist_1(orglist, question):
   lista = tuple()
   for my_org in orglist[::-1]:
-    lista = lista + (structure.orgstructure[my_org][question][0] + structure.orgstructure[my_org][question][1], )
+    lista = lista + (round(structure.orgstructure[my_org][question][0] + structure.orgstructure[my_org][question][1]), )
   return lista
 
 
 def series_from_orglist_2(orglist, question):
   lista = tuple()
   for my_org in orglist[::-1]:
-    lista = lista + (structure.orgstructure[my_org][question][2], )
+    lista = lista + (round(structure.orgstructure[my_org][question][2]), )
   return lista
 
 
 def series_from_orglist_3(orglist, question):
   lista = tuple()
   for my_org in orglist[::-1]:
-    lista = lista + (structure.orgstructure[my_org][question][3] + structure.orgstructure[my_org][question][4], )
+    lista = lista + (round(structure.orgstructure[my_org][question][3] + structure.orgstructure[my_org][question][4]), )
   return lista
 
 
@@ -854,7 +854,9 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
   #4-5 összevont érték és diff dict-ben levő érték külömbsége kiirva
   #org - tavalyi
   for i,org in enumerate(my_orgs):
-    diff = int((round(structure.orgstructure[org]['q1'][3]) + round(structure.orgstructure[org]['q1'][4]) - round(orgs.org_last_yr[org])))
+    #if org == 'TSG':
+    #print(round(structure.orgstructure[org]['q1'][3]), round(structure.orgstructure[org]['q1'][4]), round(orgs.org_last_yr[org]))
+    diff = int((round(structure.orgstructure[org]['q1'][3] +structure.orgstructure[org]['q1'][4]) - round(orgs.org_last_yr[org])))
     be=10 # font size
     height = Cm(0.6)
     diff_text = " "
