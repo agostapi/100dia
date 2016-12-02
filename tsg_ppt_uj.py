@@ -351,7 +351,7 @@ def id_to_questiontexts(v_id):
 
 ##################MAIN###########################
 
-tsg_ppt=Presentation('tsg_templ_uj.pptx')
+tsg_ppt=Presentation('tsg_templ_3.pptx')
 
 #while (van_graph_element):
 #fill_slide_title(tsg_ppt, 2, "Telekom Shop Vertriebsgesellschaft mbH")
@@ -529,7 +529,7 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   #g: q2
   #h: q3
   #diff: org[0]+org[1] - org_last_yr
-  diff = int((round(structure.orgstructure[org_name]['q1'][3]) + structure.orgstructure[org_name]['q1'][4]) - round(orgs.org_last_yr[org_name])))
+  diff = int(round(structure.orgstructure[org_name]['q1'][3] + structure.orgstructure[org_name]['q1'][4]) - round(orgs.org_last_yr[org_name]))
   slide = tsg_ppt.slides[2]
   asdf_text = slide.placeholders[17]
   asdf_text.text = org['long name']
