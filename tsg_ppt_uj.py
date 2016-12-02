@@ -474,13 +474,13 @@ def fill_slide_2(org_name, org, tsg_ppt):
   my_level = structure.orgstructure[org_name]['level']
   if my_level == 2: # 2 1 3
     my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
   elif my_level == 3: # 3 2 1 4
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
   elif my_level == 4: # 4 3 1 5
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
   elif my_level == 5: # 5 4 1
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
   my_orgs.reverse()
@@ -973,13 +973,13 @@ def fill_slide_5_to_10(org_name, question, s, tsg_ppt): #org_name, q1, 5, tsg_pp
 
   if my_level == 2: # 2 1 3
     my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
   elif my_level == 3: # 3 2 1 4
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
   elif my_level == 4: # 4 3 1 5
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
   elif my_level == 5: # 5 4 1
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
   my_orgs.reverse()
@@ -1030,13 +1030,13 @@ def fill_slide_11_to_12(org_name, question, s, tsg_ppt):
 
   if my_level == 2: # 2 1 3
     my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
   elif my_level == 3: # 3 2 1 4
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
   elif my_level == 4: # 4 3 1 5
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
+    my_orgs.extend(structure.orgstructure[org_name]['child'])
   elif my_level == 5: # 5 4 1
     my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
   my_orgs.reverse()
