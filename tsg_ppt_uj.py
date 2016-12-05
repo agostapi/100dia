@@ -351,7 +351,7 @@ def id_to_questiontexts(v_id):
 
 ##################MAIN###########################
 
-tsg_ppt=Presentation('tsg_templ_3.pptx')
+#tsg_ppt=Presentation('tsg_templ_uj_8-16.pptx')
 
 #while (van_graph_element):
 #fill_slide_title(tsg_ppt, 2, "Telekom Shop Vertriebsgesellschaft mbH")
@@ -467,31 +467,18 @@ def asdftemp(org_name, tsg_ppt):
   if my_level == 2: # 2 1 3
     my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
     my_orgs.extend(structure.orgstructure[org_name]['child'])
-    print(my_orgs)
+    #print(my_orgs)
 
-def fill_slide_2(org_name, org, tsg_ppt):
+def fill_slide_2(org_name, org, tsg_ppt, my_orgs):
   #own, one above, first, one below
-  my_level = structure.orgstructure[org_name]['level']
-  if my_level == 2: # 2 1 3
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
-  elif my_level == 3: # 3 2 1 4
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
-  elif my_level == 4: # 4 3 1 5
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
-  elif my_level == 5: # 5 4 1
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
-  my_orgs.reverse()
   my_percents = get_percent(my_orgs)
   slide = tsg_ppt.slides[1]
   asdf_text = slide.placeholders[17]
   asdf_text.text = org['long name']
   chart_data = ChartData()
   chart_data.categories= my_orgs #org_names
-  series=chart_data.add_series('01', my_percents)
-  x,y,cx,cy = Inches(0.3), Inches(2.0), Cm(13.7), Cm(11.9)
+  series=chart_data.add_series('Rücklaufsquote', my_percents)
+  x,y,cx,cy = Cm(dx), Cm(dy), Cm(dcx_2), Cm(dcy)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_CLUSTERED, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
   chart.series[0].fill.solid()
@@ -510,7 +497,7 @@ def fill_slide_2(org_name, org, tsg_ppt):
   category_axis.tick_labels.font.size = Pt(12)
   bar_plot = chart.plots[0]
   #bar_plot.ChartFormat()
-  bar_plot.gap_width = 20
+  bar_plot.gap_width = g
   bar_plot.overlap = -20
   value_axis.minor_tick_mark = XL_TICK_MARK.NONE
   category_axis.major_tick_mark = XL_TICK_MARK.NONE
@@ -521,7 +508,7 @@ def fill_slide_2(org_name, org, tsg_ppt):
   #bar_plot.fill.solid()
   #bar_plot.fill.fore_color.rgb=RGBColor(0,0,0)
 
-def fill_slide_3(org_name, org, tsg_ppt): #, diff):
+def fill_slide_3(org_name, org, tsg_ppt, my_orgs): #, diff):
   #5 chart
   #1. chart_data: q1, q2 válaszok (1+2,3,4+5) ; a: q4, b: q1
   # c: q6, d: q5
@@ -531,52 +518,53 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   #diff: org[0]+org[1] - org_last_yr
   diff = int(round(structure.orgstructure[org_name]['q1'][3] + structure.orgstructure[org_name]['q1'][4]) - round(orgs.org_last_yr[org_name]))
   slide = tsg_ppt.slides[2]
-  asdf_text = slide.placeholders[17]
-  asdf_text.text = org['long name']
+  g_3 = 60
+  asdf_text = slide.placeholders[0]
+  asdf_text.text = "Leadership Survey@TSG" + "\n" + "GESAMTSICHT " + "\n" + org['long name']
   chart_data = ChartData()
   chart_data_2 =  ChartData()
   chart_data_3 =  ChartData()
   chart_data_4 = ChartData()
   chart_data_5 = ChartData()
-  chart_data.categories=['1', '2']
-  chart_data_2.categories=['1', '2']
-  chart_data_3.categories=['1', '2', '3']
-  chart_data_4.categories=['1', '2']
-  chart_data_5.categories=['1', '2']
+  chart_data.categories=[org['long name'], org['long name']]
+  chart_data_2.categories=[org['long name'], org['long name']]
+  chart_data_3.categories=[org['long name'], org['long name'], org['long name']]
+  chart_data_4.categories=[org['long name'], org['long name']]
+  chart_data_5.categories=[org['long name'], org['long name']]
   #print(org['q4'][0]+org['q4'][1], org['q1'][0]+org['q1'][1])
-  chart_data.add_series('2', tuple([org['q4'][0]+org['q4'][1], org['q1'][0]+org['q1'][1]])) #(a[0], b[0]))
-  chart_data.add_series('3', tuple([org['q4'][2], org['q1'][2]])) #(a[1], b[1]))
-  chart_data.add_series('4', tuple([org['q4'][3]+org['q4'][4], org['q1'][3]+org['q1'][4]])) #(a[2], b[2]))
-  chart_data_2.add_series('2', tuple([org['q6'][0]+org['q6'][1], org['q5'][0]+org['q5'][1]])) #(c[0], d[0]))
-  chart_data_2.add_series('3',tuple([org['q6'][2], org['q5'][2]]))  #(c[1], d[1]))
-  chart_data_2.add_series('4',tuple([org['q6'][3]+org['q6'][4], org['q5'][3]+org['q5'][4]])) #(c[2], d[2]))
-  chart_data_3.add_series('2',tuple([org['q9'][0]+org['q9'][1], org['q8'][0]+org['q8'][1], org['q7'][0]+org['q7'][1]])) #(e[0], f[0], g[0]))
-  chart_data_3.add_series('2',tuple([org['q9'][2], org['q8'][2], org['q7'][2]])) #(e[1], f[1], g[1]))
-  chart_data_3.add_series('2',tuple([org['q9'][3]+org['q9'][4], org['q8'][3]+org['q8'][4], org['q7'][3]+org['q7'][4]])) #(e[2], f[2], g[2]))
-  chart_data_4.add_series('3',tuple([0, org['q2'][0]]))
-  chart_data_4.add_series('4',tuple([0, org['q2'][1]]))
-  chart_data_4.add_series('5',tuple([0, org['q2'][2]]))
-  chart_data_4.add_series('6',tuple([0, org['q2'][3]]))
-  chart_data_4.add_series('4',tuple([0, org['q2'][4]]))
-  chart_data_5.add_series('3',tuple([0, org['q3'][0]]))
-  chart_data_5.add_series('4',tuple([0, org['q3'][1]]))
-  chart_data_5.add_series('5',tuple([0, org['q3'][2]]))
-  chart_data_5.add_series('6',tuple([0, org['q3'][3]]))
-  chart_data_5.add_series('4',tuple([0, org['q3'][4]]))
+  chart_data.add_series('Trifft überhaupt nicht zu / Trifft eher nicht zu', tuple([org['q4'][0]+org['q4'][1], org['q1'][0]+org['q1'][1]])) #(a[0], b[0]))
+  chart_data.add_series('Teils-teils', tuple([org['q4'][2], org['q1'][2]])) #(a[1], b[1]))
+  chart_data.add_series('Trifft eher zu / Trifft voll zu', tuple([org['q4'][3]+org['q4'][4], org['q1'][3]+org['q1'][4]])) #(a[2], b[2]))
+  chart_data_2.add_series('Trifft überhaupt nicht zu / Trifft eher nicht zu', tuple([org['q6'][0]+org['q6'][1], org['q5'][0]+org['q5'][1]])) #(c[0], d[0]))
+  chart_data_2.add_series('Teils-teils',tuple([org['q6'][2], org['q5'][2]]))  #(c[1], d[1]))
+  chart_data_2.add_series('Trifft eher zu / Trifft voll zu',tuple([org['q6'][3]+org['q6'][4], org['q5'][3]+org['q5'][4]])) #(c[2], d[2]))
+  chart_data_3.add_series('Trifft überhaupt nicht zu / Trifft eher nicht zu',tuple([org['q9'][0]+org['q9'][1], org['q8'][0]+org['q8'][1], org['q7'][0]+org['q7'][1]])) #(e[0], f[0], g[0]))
+  chart_data_3.add_series('Teils-teils',tuple([org['q9'][2], org['q8'][2], org['q7'][2]])) #(e[1], f[1], g[1]))
+  chart_data_3.add_series('Trifft eher zu / Trifft voll zu',tuple([org['q9'][3]+org['q9'][4], org['q8'][3]+org['q8'][4], org['q7'][3]+org['q7'][4]])) #(e[2], f[2], g[2]))
+  chart_data_4.add_series('täglich',tuple([0, org['q2'][0]]))
+  chart_data_4.add_series('maximal 1x pro Woche',tuple([0, org['q2'][1]]))
+  chart_data_4.add_series('bis zu 1x pro Monat',tuple([0, org['q2'][2]]))
+  chart_data_4.add_series('halbjährlich',tuple([0, org['q2'][3]]))
+  chart_data_4.add_series('seltener',tuple([0, org['q2'][4]]))
+  chart_data_5.add_series('1-3 min',tuple([0, org['q3'][0]]))
+  chart_data_5.add_series('3-5 min',tuple([0, org['q3'][1]]))
+  chart_data_5.add_series('5-15 min',tuple([0, org['q3'][2]]))
+  chart_data_5.add_series('15-30 min',tuple([0, org['q3'][3]]))
+  chart_data_5.add_series('länger',tuple([0, org['q3'][4]]))
   #chart_data_4.add_series('4',(h[5], g[5]))
 
-  x,y,cx,cy = Cm(10.5), Cm(4.5), Cm(4.6), Cm(3)
+  x,y,cx,cy = Cm(dx_3), Cm(dy_3_1), Cm(dcx_3), Cm(dcy_3_1)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
   chart.plots[0].has_data_labels = True
   data_labels = chart.plots[0].data_labels
   bar_plot = chart.plots[0]
-  bar_plot.gap_width = 10
+  bar_plot.gap_width = g_3
   #nehasznaaalddata_labels.position = XL_LABEL_POSITION.OUTSIDE_END
   chart.has_legend = False
   data_labels.font.size = Pt(12)
-  data_labels.number_format = '0'
+  data_labels.number_format = nf
   data_labels.font.color.rgb = RGBColor(0, 0, 0)
   data_labels.font.bold = True
   category_axis = chart.category_axis
@@ -589,18 +577,18 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   value_axis.has_major_gridlines = False
   value_axis.visible = False
   category_axis.visible = False
-  x,y,cx,cy = Cm(10.5), Cm(6.68), Cm(4.6), Cm(3)
+  x,y,cx,cy = Cm(dx_3), Cm(dy_3_2), Cm(dcx_3), Cm(dcy_3_1)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data_2)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
   chart.plots[0].has_data_labels = True
   data_labels = chart.plots[0].data_labels
   bar_plot = chart.plots[0]
-  bar_plot.gap_width = 10
+  bar_plot.gap_width = g_3
   data_labels.font.bold = True
   chart.has_legend = False
   data_labels.font.size = Pt(12)
-  data_labels.number_format = '0'
+  data_labels.number_format = nf
   data_labels.font.color.rgb = RGBColor(0, 0, 0)
   category_axis = chart.category_axis
   category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
@@ -613,18 +601,18 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   value_axis.visible = False
   category_axis.visible = False
 
-  x,y,cx,cy = Cm(10.5), Cm(8.86), Cm(4.6), Cm(4.1)
+  x,y,cx,cy = Cm(dx_3), Cm(dy_3_3), Cm(dcx_3), Cm(dcy_3_2)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data_3)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
   chart.plots[0].has_data_labels = True
   data_labels = chart.plots[0].data_labels
   bar_plot = chart.plots[0]
-  bar_plot.gap_width = 10
+  bar_plot.gap_width = g_3
   data_labels.font.bold = True
   chart.has_legend = False
   data_labels.font.size = Pt(12)
-  data_labels.number_format = '0'
+  data_labels.number_format = nf
   data_labels.font.color.rgb = RGBColor(0, 0, 0)
   category_axis = chart.category_axis
   category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
@@ -637,7 +625,7 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   value_axis.visible = False
   category_axis.visible = False
 
-  x,y,cx,cy = Cm(10.5), Cm(12.18), Cm(4.6), Cm(3)
+  x,y,cx,cy = Cm(dx_3), Cm(dy_3_4), Cm(dcx_3), Cm(dcy_3_1)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data_4)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
@@ -645,11 +633,11 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   data_labels = chart.plots[0].data_labels
   data_labels.font.bold = True
   bar_plot = chart.plots[0]
-  bar_plot.gap_width = 10
+  bar_plot.gap_width = g_3
   #nehasznaaalddata_labels.position = XL_LABEL_POSITION.OUTSIDE_END
   chart.has_legend = False
   data_labels.font.size = Pt(12)
-  data_labels.number_format = '0'
+  data_labels.number_format = nf
   data_labels.font.color.rgb = RGBColor(255, 255, 255)
   category_axis = chart.category_axis
   category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
@@ -672,7 +660,7 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   chart.series[4].fill.solid()
   chart.series[4].fill.fore_color.rgb = RGBColor(99, 106, 29)
 
-  x,y,cx,cy = Cm(10.5), Cm(13.28), Cm(4.6), Cm(3)
+  x,y,cx,cy = Cm(dx_3), Cm(dy_3_5), Cm(dcx_3), Cm(dcy_3_1)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data_5)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
@@ -680,11 +668,11 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   data_labels = chart.plots[0].data_labels
   data_labels.font.bold = True
   bar_plot = chart.plots[0]
-  bar_plot.gap_width = 10
+  bar_plot.gap_width = g_3
   #nehasznaaalddata_labels.position = XL_LABEL_POSITION.OUTSIDE_END
   chart.has_legend = False
   data_labels.font.size = Pt(12)
-  data_labels.number_format = '0'
+  data_labels.number_format = nf
   data_labels.font.color.rgb = RGBColor(255, 255, 255)
   category_axis = chart.category_axis
   category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
@@ -712,27 +700,27 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   
   rows=1
   cols=1
-  left = Inches(5.83)
-  top = Inches(1.94)
-  width = Inches(0.8)
-  height = Inches (0.425)# set column widths
+  left = Cm(23.15)
+  top = Cm(4.52)
+  width = Cm(0.66)
+  height = Cm(0.66)# set column widths
   table = slide.shapes.add_table(rows, cols, left, top, width, height).table
-  table.columns[0].width = Inches(0.39)
+  table.columns[0].width = Cm(1)
   if diff > 0:
     table.cell(0, 0).text = "+" + str(diff)
   elif diff < 0:
     table.cell(0, 0).text = " " + str(diff)
   elif diff==0:
-    table.cell(0, 0).text = " " + str(diff)
-  left = Inches(6.25)
-  height = Inches(0.3)
-  top = Inches(2)
+    table.cell(0, 0).text = "  " + str(diff)
+  left = Cm(24.3)
+  height = Cm(0.6)
+  top = Cm(4.52)
   #pic = slide.shapes.add_picture(img_path, left, top, height=height)
   #return tsg_ppt
   #table.cell(0, 0).text = str(d)
   cell = table.rows[0].cells[0]
   paragraph = cell.textframe.paragraphs[0]
-  paragraph.font.size = Pt(12)
+  paragraph.font.size = Pt(be)
   paragraph.font.color.rgb = RGBColor(255, 255, 255)
   #cell.horizontal_anchor = MSO_ANCHOR.MIDDLE
   cell.vertical_anchor = MSO_ANCHOR.MIDDLE
@@ -740,94 +728,76 @@ def fill_slide_3(org_name, org, tsg_ppt): #, diff):
   cell.fill.fore_color.rgb = RGBColor(124,124,124)
   if diff > 0:
     img_path='zoldnyil.png'
-    left = Inches(6.25)
-    height = Cm(0.6)
-    top = Inches(2)
     pic = slide.shapes.add_picture(img_path, left, top, height=height)
   elif diff < 0:
     img_path='pirosnyil.png'
-    left = Inches(6.25)
-    height = Cm(0.6)
-    top = Inches(2)
     pic = slide.shapes.add_picture(img_path, left, top, height=height)
   else:
+    top = Cm(4.65)
     img_path='keknyil.png'
-    left = Inches(6.25)
-    height = Cm(0.43)
-    top = Inches(2.05)
+    height= Cm(bah)
     pic = slide.shapes.add_picture(img_path, left, top, height=height)
   return tsg_ppt
 
 def series_from_orglist_1(orglist, question):
   lista = tuple()
-  for my_org in orglist[::-1]:
+  for my_org in orglist:
     lista = lista + (round(structure.orgstructure[my_org][question][0] + structure.orgstructure[my_org][question][1]), )
   return lista
 
 
 def series_from_orglist_2(orglist, question):
   lista = tuple()
-  for my_org in orglist[::-1]:
+  for my_org in orglist:
     lista = lista + (round(structure.orgstructure[my_org][question][2]), )
   return lista
 
 
 def series_from_orglist_3(orglist, question):
   lista = tuple()
-  for my_org in orglist[::-1]:
+  for my_org in orglist:
     lista = lista + (round(structure.orgstructure[my_org][question][3] + structure.orgstructure[my_org][question][4]), )
   return lista
 
 
-def fill_slide_4(org_name, org, tsg_ppt, diff=1):
+def fill_slide_4(org_name, org, tsg_ppt, my_orgs):
   #1. kérdéshez a válaszok
   #+ diff -- TODO
 
   my_level = structure.orgstructure[org_name]['level']
-  if my_level == 2: # 2 1 3
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
-    my_orgs.extend(structure.orgstructure[org_name]['child'])
-  elif my_level == 3: # 3 2 1 4
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'])
-  elif my_level == 4: # 4 3 1 5
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'])
-  elif my_level == 5: # 5 4 1
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
 
   n = len(my_orgs)
   slide = tsg_ppt.slides[3]  
   asdf_text = slide.placeholders[17]
   asdf_text.text = org['long name']
   chart_data = ChartData()
-  chart_data.categories = my_orgs[::-1]
-  chart_data.add_series('1', series_from_orglist_1(my_orgs, 'q1'))
-  chart_data.add_series('2', series_from_orglist_2(my_orgs, 'q1'))
-  chart_data.add_series('3', series_from_orglist_3(my_orgs, 'q1'))
+  chart_data.categories = my_orgs
+  chart_data.add_series('Trifft überhaupt nicht zu / Trifft eher nicht zu', series_from_orglist_1(my_orgs, 'q1'))
+  chart_data.add_series('Teils-teils', series_from_orglist_2(my_orgs, 'q1'))
+  chart_data.add_series('Trifft eher zu / Trifft voll zu', series_from_orglist_3(my_orgs, 'q1'))
   
   if len(my_orgs)==3: #n: orgs tömb
-    my_bar_plot_gap_width = 248
+    my_bar_plot_gap_width = g
   elif n==5:
-    my_bar_plot_gap_width = 108
+    my_bar_plot_gap_width = g
   elif n==8:
-    my_bar_plot_gap_width = 33
+    my_bar_plot_gap_width = g
   elif n==9:
-    my_bar_plot_gap_width = 23
+    my_bar_plot_gap_width = g
   elif n==11:  
-    my_bar_plot_gap_width = 13
+    my_bar_plot_gap_width = g
   elif n==13:  
-    my_bar_plot_gap_width = 13
+    my_bar_plot_gap_width = g
   elif n==14:  
-    my_bar_plot_gap_width = 13
+    my_bar_plot_gap_width = g
   elif n==15:  
-    my_bar_plot_gap_width = 13
+    my_bar_plot_gap_width = g
   elif n==16:  
-    my_bar_plot_gap_width = 13
+    my_bar_plot_gap_width = g
   else:
     print('n not in 5,8,11,13,14,15,16')
 
-  x,y,cx,cy = Inches(0.3), Inches(2.25), Cm(14.14), Cm(11.39)
+  x,y,cx,cy = Cm(dx), Cm(dy), Cm(dcx_4), Cm(dcy)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
@@ -837,7 +807,7 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
   bar_plot.gap_width = my_bar_plot_gap_width
   chart.has_legend = False
   data_labels.font.size = Pt(12)
-  data_labels.number_format = '0'
+  data_labels.number_format = nf
   data_labels.font.color.rgb = RGBColor(0, 0, 0)
   data_labels.font.bold = True
   category_axis = chart.category_axis
@@ -853,12 +823,11 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
  
   #4-5 összevont érték és diff dict-ben levő érték külömbsége kiirva
   #org - tavalyi
-  for i,org in enumerate(my_orgs):
+  for i,org in enumerate(my_orgs[::-1]):
     #if org == 'TSG':
     #print(round(structure.orgstructure[org]['q1'][3]), round(structure.orgstructure[org]['q1'][4]), round(orgs.org_last_yr[org]))
     diff = int((round(structure.orgstructure[org]['q1'][3] +structure.orgstructure[org]['q1'][4]) - round(orgs.org_last_yr[org])))
-    be=10 # font size
-    height = Cm(0.6)
+    height = Cm(ph)
     diff_text = " "
     if diff > 0:
       img_path='zoldnyil.png'
@@ -867,89 +836,60 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
       img_path='pirosnyil.png'
     else:
       img_path='keknyil.png'
-      height = Cm(0.43)
+      height = Cm(bah)
+      diff_text = "  "
     if n==3:
-      ch = 1.08
-      t=7.34
-      he=3.55
       top_table = Cm(t+i*he)
       top_pic = Cm(t+i*he)
       if diff == 0:
-        top_pic = Cm(t+0.33+i*he)
-        top_table = Cm(t-0.02+i*he)
+        top_pic = Cm((t+i*he)+0.2)
+        #top_table = Cm(t-0.02+i*he)
     elif n==5:
-      ch = 1.08
-      t=6.66
-      he=2.12
       top_table = Cm(t+i*he)
       top_pic = Cm(t+i*he)
       if diff == 0:
-        top_pic = Cm(t+0.2+i*he)
+        top_pic = Cm((t+i*he)+0.2)
     elif n==8:
-      ch = 1.08
-      t=6.26
-      he=1.32
       top_table = Cm(t+i*he)
       top_pic = Cm(t+i*he)
       if diff == 0:
-        top_pic = Cm(t+0.2+i*he)
+        top_pic = Cm((t+i*he)+0.14)
     elif n==9:
-      ch = 1.08
-      t=6.18
-      he=1.18
       top_table = Cm(t+i*he)
       top_pic = Cm(t+i*he)
       if diff == 0:
-        top_pic = Cm(t+0.2+i*he)
+        top_pic = Cm((t+i*he)+0.14)
     elif n==11:
-      ch = 0.9
-      t=6.15
-      he=0.97
       top_table = Cm(t+i*he)
       top_pic = Cm(t+i*he)
       if diff == 0:
-        top_pic = Cm(t+0.2+i*he)
+        top_pic = Cm((t+i*he)+0.14)
     elif n==13:
-      ch = 0.8
-      t=6.15
-      he=0.815
       top_table = Cm(t+i*he)
       top_pic = Cm(t+i*he)
       if diff == 0:
-        top_pic = Cm(t+0.2+i*he)
+        top_pic = Cm((t+i*he)+0.14)
     elif n==14:
-      be=10
-      ch=0.68
-      t=6.15
-      he=0.76
       top_table = Cm(t+i*he)
       top_pic = Cm(t+i*he)
       if diff == 0:
-        top_pic = Cm(t+0.2+i*he)
+        top_pic = Cm((t+i*he)+0.14)
     elif n==15:
-      be=10
-      ch=0.68
-      t=6.12
-      he=0.71
       top_table = Cm(t+i*he)
       top_pic = Cm(t+i*he)
       if diff == 0:
-        top_pic = Cm(t+0.2+i*he)
+        top_pic = Cm((t+i*he)+0.14)
     elif n==16:
-      be=10
-      ch=0.68
-      t=6.1
-      he=0.665
       top_table = Cm(t+i*he)
       top_pic = Cm(t+i*he)
       if diff == 0:
-        top_pic = Cm(t+0.2+i*he)
-    left = Inches(6.25)
-    pic = slide.shapes.add_picture(img_path, left, top_pic, height)
+        top_pic = Cm((t+i*he)+0.14)
+    left = Cm(aleft_4)
+    pic = slide.shapes.add_picture(img_path, left, top_pic,  height=height)
     rows = 1
     cols = 1
-    left = Inches(5.83)
-    width = Inches(0.8)
+    left = Cm(dleft_4)
+    width = Cm(1)
     height = Cm(ch)# set column widths
     table = slide.shapes.add_table(rows, cols, left, top_table, width, height).table
     table.columns[0].width = Cm(1)
@@ -964,25 +904,12 @@ def fill_slide_4(org_name, org, tsg_ppt, diff=1):
     cell.fill.fore_color.rgb = RGBColor(124,124,124)
 
 
-def fill_slide_5_to_10(org_name, question, s, tsg_ppt): #org_name, q1, 5, tsg_ppt
+def fill_slide_5_to_10(org_name, question, s, tsg_ppt, my_orgs): #org_name, q1, 5, tsg_ppt
   #4-5-6-7-8-9 kérdés minden szervezetre (a,b,c) a legutolsó, k: self
   #k0: org['q4'][0]+org['q4'][1]
   #
   slide = tsg_ppt.slides[s-1]
   my_level = structure.orgstructure[org_name]['level']
-
-  if my_level == 2: # 2 1 3
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
-  elif my_level == 3: # 3 2 1 4
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
-  elif my_level == 4: # 4 3 1 5
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
-  elif my_level == 5: # 5 4 1
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
-  my_orgs.reverse()
 
   asdf_text = slide.placeholders[17]
   asdf_text.text = structure.orgstructure[org_name]['long name']
@@ -995,10 +922,10 @@ def fill_slide_5_to_10(org_name, question, s, tsg_ppt): #org_name, q1, 5, tsg_pp
     my_orgs_answer1 = my_orgs_answer1 + (int(round(structure.orgstructure[org][question][0] + structure.orgstructure[org][question][1])),)
     my_orgs_answer2 = my_orgs_answer2 + (int(round(structure.orgstructure[org][question][2])),)
     my_orgs_answer3 = my_orgs_answer3 + (int(round(structure.orgstructure[org][question][3] + structure.orgstructure[org][question][4])),)
-  chart_data.add_series('1', my_orgs_answer1)
-  chart_data.add_series('2', my_orgs_answer2)
-  chart_data.add_series('3', my_orgs_answer3)
-  x,y,cx,cy = Inches(0.35), Inches(1.95), Cm(23.34), Cm(12.18)
+  chart_data.add_series('Trifft überhaupt nicht zu / Trifft eher nicht zu', my_orgs_answer1)
+  chart_data.add_series('Teils-teils', my_orgs_answer2)
+  chart_data.add_series('Trifft eher zu / Trifft voll zu', my_orgs_answer3)
+  x,y,cx,cy = Cm(dx), Cm(dy), Cm(dcx), Cm(dcy)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
@@ -1006,11 +933,11 @@ def fill_slide_5_to_10(org_name, question, s, tsg_ppt): #org_name, q1, 5, tsg_pp
   data_labels = chart.plots[0].data_labels
   data_labels.font.bold = True
   bar_plot = chart.plots[0]
-  bar_plot.gap_width = 13
+  bar_plot.gap_width = g
   chart.has_legend = False
   #print(chart_data[1][0])
   data_labels.font.size = Pt(12)
-  data_labels.number_format = '0'
+  data_labels.number_format = nf
   data_labels.font.color.rgb = RGBColor(0, 0, 0)
   category_axis = chart.category_axis
   category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
@@ -1023,24 +950,23 @@ def fill_slide_5_to_10(org_name, question, s, tsg_ppt): #org_name, q1, 5, tsg_pp
   value_axis.visible = False
 
 
-def fill_slide_11_to_12(org_name, question, s, tsg_ppt):
+def fill_slide_11_to_12(org_name, question, s, tsg_ppt, my_orgs):
   #utolsó: 2-3 kérdés, külön 5 válasz, minden org-ra
   slide = tsg_ppt.slides[s-1]
   my_level = structure.orgstructure[org_name]['level']
-
-  if my_level == 2: # 2 1 3
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent']]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
-  elif my_level == 3: # 3 2 1 4
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][1]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
-  elif my_level == 4: # 4 3 1 5
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][2]]
-    my_orgs.extend(structure.orgstructure[org_name]['child'][::-1])
-  elif my_level == 5: # 5 4 1
-    my_orgs = [org_name, structure.orgstructure[org_name]['parent'][0], structure.orgstructure[org_name]['parent'][3]]
-  my_orgs.reverse()
-
+  if question == 'q2':
+    m1 = 'täglich'
+    m2 = "maximal 1x pro Woche"
+    m3 = "bis zu 1x  pro  Monat"
+    m4 = "halbjährlich"
+    m5 = "seltener"
+  else:
+    m1 = '1-3 min'
+    m2 = "3-5 min"
+    m3 = "5-15 min"
+    m4 = "15-30 min"
+    m5 = "länger"
+ 
   my_orgs_answer1 = tuple()
   my_orgs_answer2 = tuple()
   my_orgs_answer3 = tuple()
@@ -1057,12 +983,12 @@ def fill_slide_11_to_12(org_name, question, s, tsg_ppt):
   asdf_text.text = structure.orgstructure[org_name]['long name']
   chart_data = ChartData()
   chart_data.categories = my_orgs
-  chart_data.add_series('1', my_orgs_answer1)
-  chart_data.add_series('2', my_orgs_answer2)
-  chart_data.add_series('3', my_orgs_answer3)
-  chart_data.add_series('4', my_orgs_answer4)
-  chart_data.add_series('5', my_orgs_answer5)
-  x,y,cx,cy = Inches(0.35), Inches(1.95), Cm(23.34),  Cm(12.18)
+  chart_data.add_series( m1, my_orgs_answer1)
+  chart_data.add_series( m2, my_orgs_answer2)
+  chart_data.add_series( m3, my_orgs_answer3)
+  chart_data.add_series( m4, my_orgs_answer4)
+  chart_data.add_series( m5, my_orgs_answer5)
+  x,y,cx,cy = Cm(dx), Cm(dy), Cm(dcx),  Cm(dcy)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_STACKED_100, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
   value_axis = chart.value_axis
@@ -1070,10 +996,10 @@ def fill_slide_11_to_12(org_name, question, s, tsg_ppt):
   data_labels = chart.plots[0].data_labels
   data_labels.font.bold = True
   bar_plot = chart.plots[0]
-  bar_plot.gap_width = 13
+  bar_plot.gap_width = g
   chart.has_legend = False
   data_labels.font.size = Pt(12)
-  data_labels.number_format = '0'
+  data_labels.number_format = nf
   data_labels.font.color.rgb = RGBColor(255, 255, 255)
   category_axis = chart.category_axis
   category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
@@ -1086,25 +1012,142 @@ def fill_slide_11_to_12(org_name, question, s, tsg_ppt):
   value_axis.visible = False
 
 
-def create_ppt(org_name, org):
-  tsg_ppt=Presentation('tsg_templ_uj.pptx')
+def create_ppt(org_name, org, my_orgs):
   fill_slide_1(org, tsg_ppt)
-  fill_slide_2(org_name, org, tsg_ppt)
-  fill_slide_3(org_name, org, tsg_ppt)
-  fill_slide_4(org_name, org, tsg_ppt)
+  fill_slide_2(org_name, org, tsg_ppt, my_orgs)
+  fill_slide_3(org_name, org, tsg_ppt, my_orgs)
+  fill_slide_4(org_name, org, tsg_ppt, my_orgs)
   for i, question in enumerate(['q4', 'q5', 'q6', 'q7', 'q8', 'q9']):
-    fill_slide_5_to_10(org_name, question, i+5, tsg_ppt) #org_name, q1, 5, tsg_ppt
+    fill_slide_5_to_10(org_name, question, i+5, tsg_ppt, my_orgs) #org_name, q1, 5, tsg_ppt
   for i, question in enumerate(['q2', 'q3']):
-    fill_slide_11_to_12(org_name, question, i+11, tsg_ppt) #org_name, q1, 5, tsg_ppt
+    fill_slide_11_to_12(org_name, question, i+11, tsg_ppt, my_orgs) #org_name, q1, 5, tsg_ppt
   tsg_ppt.save("out1/"+(org_name.replace(" ", "_")).replace("/","_")+"_TSG_Leadership_Survey"+".pptx")
 
 
 #create ppts from new structure:
+
 for org in structure.orgstructure.keys():
-  if org == 'ZM' or org == 'VB West':
-    print(structure.orgstructure[org])
   if org != 'TSG' and structure.orgstructure[org]['filled_in_users'] > 4:
-    create_ppt(org, structure.orgstructure[org])
+    my_level = structure.orgstructure[org]['level']
+    if my_level == 2: # 2 1 3
+      my_orgs = [org, structure.orgstructure[org]['parent']]
+      my_orgs.extend(structure.orgstructure[org]['child'])
+    elif my_level == 3: # 3 2 1 4
+      my_orgs = [org, structure.orgstructure[org]['parent'][0], structure.orgstructure[org]['parent'][1]]
+      my_orgs.extend(structure.orgstructure[org]['child'])
+    elif my_level == 4: # 4 3 1 5
+      my_orgs = [org, structure.orgstructure[org]['parent'][0], structure.orgstructure[org]['parent'][2]]
+      my_orgs.extend(structure.orgstructure[org]['child'])
+    elif my_level == 5: # 5 4 1
+      my_orgs = [org, structure.orgstructure[org]['parent'][0], structure.orgstructure[org]['parent'][3]]
+    my_orgs.reverse()
+
+    n = len(my_orgs)
+###minden dia
+  #number format
+    nf = "0;-0; "
+    # diagrammok pos hor, pos vert, width
+    dx = 0.76
+    dy = 5.08
+    dcx = 23.2
+    # nyilak height
+    ahp = 0.6
+    ahz = 0.6
+    ahk = 0.6
+    bah = 0.41
+# doboz betumeret
+    be = 8
+#3. slided
+# diagram pos hor
+    dx_3 = 15.4
+#diagramok pos vert
+    dy_3_1 = 3.98  
+    dy_3_2 = 6.03
+    dy_3_3 = 8.08
+    dy_3_4 = 11.13
+    dy_3_5 = 12.15
+#diagram width
+    dcx_3 = 7.9
+#diagram height
+    dcy_3_1 = 2.78
+    dcy_3_2 = 3.81
+#gap height
+    g_3 = 60
+#nyilleft
+    aleft_3 = 24.5
+#dobozleft
+    dleft_3 = 23.15 
+#kiveve 2. slide
+    dcx_2 = 13.94 
+#kiveve 4. slide 
+#diagram width
+    dcx_4 = 20.65
+#nyilleft
+    aleft_4 = 23.05
+#dobozleft
+    dleft_4 = 21.7
+    ph = 0.6
+    if n==3:
+###minden dia   
+  # diagram height
+      dcy = 4.59
+  # diagram gap height
+      g = 60
+##4. slide 
+  #dobozok kozotti tavolsag betweengap
+      he = 1.26
+      t = 5.69
+  #doboz szelesseg
+      ch = 0.86
+      tsg_ppt=Presentation('tsg_templ_uj_3.pptx')
+    elif n==5:
+      dcy = 7.45
+      g = 60
+      he = 1.33
+      t = 5.72
+      ch = 0.86
+      tsg_ppt=Presentation('tsg_templ_uj_5.pptx')
+    else:
+      dcy = 12
+      tsg_ppt=Presentation('tsg_templ_uj_8-16.pptx')
+      if n == 8:
+        g = 76
+        he = 1.40
+        t = 5.75
+        ch = 0.86
+      elif n == 9:
+        g = 56
+        he = 1.25
+        t = 5.68
+        ch = 0.86
+      elif n == 11:
+        g = 56
+        he = 1.02
+        t = 5.65
+        ch = 0.66
+      elif n == 13:
+        g = 35
+        he = 0.865
+        t = 5.56
+        ch = 0.66
+      elif n == 14:
+        g = 28
+        he = 0.8
+        t = 5.55
+        ch = 0.66
+      elif n == 15:
+        g = 21
+        he = 0.75
+        t = 5.51
+        ch = 0.66
+      elif n == 16:
+        g = 20 
+        he = 0.7
+        t = 5.51
+        ch = 0.66
+    create_ppt(org, structure.orgstructure[org], my_orgs)
+
+print "#############################################################TO DOOOOOOOO!!!!!###################################" + "\n" + "1. clear kamudiffertek by VKG 47 S: RVL,S, sajatmaga" + "\n" + "2. ubetuk fajlnevben" +"A:a-to-z" + "K:ellenorzes"
 
 #print(level1_users)
 #print(structure.orgstructure)
