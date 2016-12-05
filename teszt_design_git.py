@@ -50,6 +50,10 @@ def fill_slide_0_and_titles(tsg_ppt, orglongname):
       first_slide = tsg_ppt.slides[0]
       org_1 = first_slide.placeholders[1]
       org_1.text = orglongname + "\n"+(time.strftime("%d.%m.%Y"))
+    elif i==2:
+      second_slide = tsg_ppt.slides[2]
+      o = second_slide.placeholders[0]
+      o.text = "LEADERSHIP SURVEY @TSG" +"\n"+"Gesamtsicht" + "\n" + orglongname
     else:
       other_slide = tsg_ppt.slides[i]
       org = other_slide.placeholders[17]
@@ -62,9 +66,9 @@ def fill_slide_0_and_titles(tsg_ppt, orglongname):
 def fill_slide_1(tsg_ppt, org_names, org_participants):
   slide = tsg_ppt.slides[1]
   chart_data = ChartData()
-  chart_data.categories= org_names
-  series=chart_data.add_series('01', org_participants)
-  x,y,cx,cy = Inches(0.3), Inches(2.0), Cm(13.7), Cm(11.9)
+  chart_data.categories= org_names_3
+  series=chart_data.add_series('01', org_participants_3)
+  x,y,cx,cy = Cm(0.89), Cm(5.08), Cm(11.94), Cm(4.59)
   graphic_frame = slide.shapes.add_chart(XL_CHART_TYPE.BAR_CLUSTERED, x, y, cx, cy, chart_data)
   chart = graphic_frame.chart
   chart.series[0].fill.solid()
@@ -91,7 +95,7 @@ def fill_slide_1(tsg_ppt, org_names, org_participants):
   category_axis.tick_labels.font.size = Pt(12)
   bar_plot = chart.plots[0]
   #bar_plot.ChartFormat()
-  bar_plot.gap_width = 20
+  bar_plot.gap_width = 60
   bar_plot.overlap = -20
   value_axis.minor_tick_mark = XL_TICK_MARK.NONE
   category_axis.major_tick_mark = XL_TICK_MARK.NONE
@@ -1301,7 +1305,7 @@ def fill_slide_11_12(tsg_ppt, s, n):
   bar_plot.gap_width = 13
   chart.has_legend = False
   data_labels.font.size = Pt(12)
-  data_labels.number_format = '0'
+  data_labels.number_format = '0;-0; '
   data_labels.font.color.rgb = RGBColor(255, 255, 255)
   category_axis = chart.category_axis
   category_axis.minor_tick_mark = XL_TICK_MARK.OUTSIDE
@@ -1318,13 +1322,13 @@ def fill_slide_11_12(tsg_ppt, s, n):
 
 
 ############MAIN#####################  
-tsg_ppt=Presentation('tsg_templ_uj.pptx')
+tsg_ppt=Presentation('tsg_templ_uj_3.pptx')
 orglongname = "Ganz Name der OrgEinheit"
 orgshortname = "AbkürzDerOrgEinheit"
 q1 = ("20", "30", "50")
 
 h = 1.6
-a = (30, 40, 30)
+a = (0, 40, 60)
 b = (0, 30, 50)
 c = (20, 59.4, 20.6)
 d = (34, 16, 50)
@@ -1343,7 +1347,7 @@ p = [15, 75, 10]
 q = [34, 26, 40]
 r = [15, 24, 61]
 s = [18, 22, 70]
-a2 = (30, 40, 10, 10, 10)
+a2 = (0, 70, 10, 10, 10)
 b2 = (0, 30, 20, 10, 20)
 c2 = (20, 59.4, 10, 10, 0.6)
 d2 = (34, 16, 15, 25, 10)
@@ -1383,7 +1387,7 @@ org_participants_16 = ("12", "65", "23", "34", "45", "20", "32","40", "42", "33"
 
 
 
-n = 16#len(org_names)
+n =3#len(org_names)
 print(n)
 diff = [1, 1, 0, -1, 9, 2, -3, 2, 0, 1, -1, 5, -8, -14, 5, 0] 
 #picture_insert(tsg_ppt, 3, n, h)
